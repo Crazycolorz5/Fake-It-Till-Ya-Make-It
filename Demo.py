@@ -45,4 +45,4 @@ input("The student asks you: \"So, before class starts, what date exactly\n" +
 
 # query War of 1812
 
-input("\"The War of 1812 ended on February 7th, 1815\" Watson tells you, and you relay this to the student.\nThe bell rings. You have just finished your first class as a substitute teacher.'nWell done!")
+print("\"The War of 1812 ended on February 7th, 1815\" Watson tells you, and you relay this to the student.\nThe bell rings. You have just finished your first class as a substitute teacher.\nWell done!")
