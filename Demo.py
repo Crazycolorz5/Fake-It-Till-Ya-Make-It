@@ -23,4 +23,13 @@ input("You find yourself in a 7th grade history classroom. \n" +
 "There is a student with her hand raised, awaiting your help\n" + 
 "There is the teacher's desk, the surface clean, but there is a drawer as well\n>>")
 
-# Player types 
+# Player types talk to student
+
+input("The student asks you: \"So, before class starts, what date exactly\n" +
+"did the War of 1812 end?\n>>")
+
+#We don't know, so we ask Watson
+#query War of 1812 
+input("No information found.\n>>")
+
+# The treaty was unanimously ratified by the United States on February 17, 1815, ending the war with Status quo ante bellum (no boundary changes).

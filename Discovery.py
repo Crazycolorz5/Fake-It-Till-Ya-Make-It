@@ -8,11 +8,14 @@ discovery = DiscoveryV1(
 )
 environment_id = "14f0004b-c966-4644-89b7-b5465bcbc116"
 collection_id = "f13d7ea8-a3bb-4f87-bd0f-bba7cb3b94d3"
-
+# collection_id = "news-en"
+# environment_id = "system"
 
 collection = discovery.get_collection(environment_id, collection_id)
 print(json.dumps(collection, indent=2))
 
-qopts = {'query': "Wikipedia", "passages" : True}
+q = input("Input the query: ")
+
+qopts = {'query': q}
 my_query = discovery.query(environment_id, collection_id, qopts)
 print(json.dumps(my_query, indent=2))
