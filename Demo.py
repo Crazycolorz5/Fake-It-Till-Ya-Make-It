@@ -30,6 +30,19 @@ input("The student asks you: \"So, before class starts, what date exactly\n" +
 
 #We don't know, so we ask Watson
 #query War of 1812 
-input("No information found.\n>>")
+input("No information found. Try looking for documents with this information.\n>>")
 
 # The treaty was unanimously ratified by the United States on February 17, 1815, ending the war with Status quo ante bellum (no boundary changes).
+
+# Player says open drawer
+
+input("You open the drawer and find the teacher's notes about the War of 1812.\nThis document has been added to Watson Discovery.\n>>")
+
+# Player types talk to student
+
+input("The student asks you: \"So, before class starts, what date exactly\n" +
+"did the War of 1812 end?\n>>")
+
+# query War of 1812
+
+input("\"The War of 1812 ended on February 7th, 1815\" Watson tells you, and you relay this to the student.\nThe bell rings. You have just finished your first class as a substitute teacher.'nWell done!")
