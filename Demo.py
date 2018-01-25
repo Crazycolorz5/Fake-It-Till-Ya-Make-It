@@ -27,7 +27,7 @@ input("You find yourself in a 5th grade history classroom. \n" +
 # Player types talk to student
 
 input("The student asks you: \"So, before class starts, what date exactly\n" +
-"did the War of 1812 end?\n>>")
+"did the War of 1812 end?\"\n>>")
 
 #We don't know, so we ask Watson
 #query War of 1812 
@@ -42,7 +42,7 @@ input("You open the drawer and find the teacher's notes about the War of 1812.\n
 # Player types talk to student
 
 input("The student asks you: \"So, before class starts, what date exactly\n" +
-"did the War of 1812 end?\n>>")
+"did the War of 1812 end?\"\n>>")
 
 # query War of 1812
 
