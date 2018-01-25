@@ -20,7 +20,7 @@ input("room contents: Looks around the room and tells you possible interactable 
 
 # Player types room contents
 
-input("You find yourself in a 7th grade history classroom. \n" +
+input("You find yourself in a 5th grade history classroom. \n" +
 "There is a student with her hand raised, awaiting your help\n" + 
 "There is the teacher's desk, the surface clean, but there is a drawer as well\n>>")
 
