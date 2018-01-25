@@ -15,7 +15,8 @@ input("Type help for possible commands, or feel free to get started!\n>>")
 
 input("room contents: Looks around the room and tells you possible interactable objects\n" + 
     "help: gives a brief description of basic commands user can enter \n" +
-    "move x: moves focus of subsitute teacher to content x\n>>")
+    "move x: moves focus of subsitute teacher to content x\n" + 
+    "query x: queries Watson for keyword/keyphrase x\n>>")
 
 # Player types room contents
 
