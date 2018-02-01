@@ -1,15 +1,66 @@
 # coding=utf-8
-# from __future__ import print_function
-from watson_developer_cloud import DiscoveryV1
-import json
+from Discovery import *
 
-name = input("Welcome to Washington Elementary! Please input your name: \n>>")
+helpstring = '''help: gives a brief description of basic commands user can enter
+quit: quits the demo
+answer _: submits an answer to the current question
+query _: queries Watson for given keyword/keyphrase
+find _: Finds a document to add to the database. Valid documents:
+    document 1: A document on the War of 1812
+    document 2: A document on Mitosis'''
+
+def formatResponse(stringArr):
+    if len(stringArr) == 0:
+        return "No results!"
+    i = 1
+    acc = ""
+    for x in stringArr:
+        acc += "Result {0}: {1}\n\n".format(i, x)
+        i += 1
+    return acc.strip()
+
+name = input("Welcome to Washington Elementary! Please input your name: \n>> ")
+
+watson = Watson()
+
+testDocs = { "document 1" : '98e9b50f1327e045364f669dab17a2ea',
+             "document 2" : 'ad9d680ed1a99a7c856a89991d25d6f7'}
 
 print("Nice to meet you, %s. \nGood luck as your first day as a substitute teacher!\n" % name)
 
 print("You enter the room of your history class. There are students eagerly awaiting your teaching.\n")
 
-input("Type help for possible commands, or feel free to get started!\n>>")
+print("Type help for possible commands, or feel free to get started!")
+
+while True:
+    currentLine = input(">> ")
+    words = currentLine.split(' ', 1)
+    if len(words) == 0:
+        continue
+    firstWord = words[0]
+    if firstWord.lower() == "help":
+        print(helpstring)
+    elif firstWord.lower() == "quit":
+        quit()
+    elif len(words) == 1:
+            print("Missing argument.")
+            continue
+    else:
+        argument = words[1].strip('"')
+        if firstWord.lower() == "answer":
+            pass # TODO: Answer.
+        elif firstWord.lower() == "query":
+            print(formatResponse(watson.ask(argument)))
+        elif firstWord.lower() == "find":
+            if testDocs[argument.lower()] not in docIDToName:
+                print("Invalid document!")
+            else:
+                watson.findDocument(testDocs[argument.lower()])
+                print("Document successfully added.")
+
+
+
+# Unreachable previous demo code:
 
 # Player types help
 
