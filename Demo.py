@@ -11,15 +11,26 @@ find _: Finds a document to add to the database. Valid documents:
 question: tells you the question your student is currently asking you'''
     
 # For answering questions
-question_number = 0;
+questionNumber = 0;
 
-def AnswerQuestion(answer_number, answer):
-    if answer_number == 0:
+def answerQuestion(answerNumber, answer):
+    if answerNumber == 0:
         return answer == '12/24/1814'
+    if answerNumber == 1:
+        return answer.lower() == "james madison"
+    if answerNumber == 2:
+        return answer.lower() == "prophase"
         
-def ReceiveQuestion(question_number):
-    if question_number == 0:
-        print("What date was the treaty of Ghent signed, ending the War of 1812? (format: MM/DD/YYYY)")
+        
+def receiveQuestion(questionNumber):
+    if questionNumber == 0:
+        print("=================================\nWhat date was the treaty of Ghent signed? (format: MM/DD/YYYY)\n=================================\n")
+        return
+    elif questionNumber == 1:
+        print("=================================\nWho was the president during the War of 1812? (first and last name)\n=================================\n")
+        return
+    elif questionNumber == 2:
+        print("=================================\nWhat is the first phase of mitosis? (one word)\n=================================\n")
         return
     else:
         print("All questions answered!")
@@ -59,17 +70,17 @@ while True:
     elif firstWord.lower() == "quit":
         quit()
     elif firstWord.lower() == "question":
-        ReceiveQuestion(question_number)
+        receiveQuestion(questionNumber)
     elif len(words) == 1:
             print("Missing argument.")
             continue
     else:
         argument = words[1].strip('"')
         if firstWord.lower() == "answer":
-            if question_number > 0: print("All questions answered!")
-            elif AnswerQuestion(question_number, argument): 
+            if questionNumber > 2: print("All questions answered!")
+            elif answerQuestion(questionNumber, argument): 
                 print("That is a correct answer!")
-                question_number += 1
+                questionNumber += 1
             else: print("That is not a correct answer!")
         elif firstWord.lower() == "query":
             print(formatResponse(watson.ask(argument)))
