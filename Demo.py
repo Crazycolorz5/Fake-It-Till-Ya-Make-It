@@ -7,7 +7,23 @@ answer _: submits an answer to the current question
 query _: queries Watson for given keyword/keyphrase
 find _: Finds a document to add to the database. Valid documents:
     document 1: A document on the War of 1812
-    document 2: A document on Mitosis'''
+    document 2: A document on Mitosis
+question: tells you the question your student is currently asking you'''
+    
+# For answering questions
+question_number = 0;
+
+def AnswerQuestion(answer_number, answer):
+    if answer_number == 0:
+        return answer == '12/24/1814'
+        
+def ReceiveQuestion(question_number):
+    if question_number == 0:
+        print("What date was the treaty of Ghent signed, ending the War of 1812? (format: MM/DD/YYYY)")
+        return
+    else:
+        print("All questions answered!")
+        return
 
 def formatResponse(stringArr):
     if len(stringArr) == 0:
@@ -42,13 +58,19 @@ while True:
         print(helpstring)
     elif firstWord.lower() == "quit":
         quit()
+    elif firstWord.lower() == "question":
+        ReceiveQuestion(question_number)
     elif len(words) == 1:
             print("Missing argument.")
             continue
     else:
         argument = words[1].strip('"')
         if firstWord.lower() == "answer":
-            pass # TODO: Answer.
+            if question_number > 0: print("All questions answered!")
+            elif AnswerQuestion(question_number, argument): 
+                print("That is a correct answer!")
+                question_number += 1
+            else: print("That is not a correct answer!")
         elif firstWord.lower() == "query":
             print(formatResponse(watson.ask(argument)))
         elif firstWord.lower() == "find":
