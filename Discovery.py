@@ -35,6 +35,7 @@ class Watson:
     
     def __init__(self):
         self.foundDocuments = set()
+        #cachedQueries is of the form/type { query : [(document_id, passage_text)] }
         self.cachedQueries = dict()
         
     def ask(self, query):
@@ -42,7 +43,8 @@ class Watson:
             return self.processResults(self.cachedQueries[query])
         qopts = {'natural_language_query': query, 'passages' : True, 'count' : 0} #'passages.count' : 3
         myQuery = discovery.query(environment_id, collection_id, qopts)
-        results = myQuery["passages"]
+        results = list(map(lambda x: (x['document_id'], x['passage_text']), myQuery["passages"])) #Get only the results we want.
+        #Note that we don't take only 3 results now, as we will have to filter based on document after retreiving from cache.
         self.cachedQueries[query] = results
         return self.processResults(results)
 
@@ -50,9 +52,9 @@ class Watson:
         self.foundDocuments.add(identifier)
 
     def processResults(self, passages):
-        return list(map(lambda x: x['passage_text'], 
+        return list(map(lambda x: x[1], 
                 islice(
-                filter(lambda x: x['document_id'] in self.foundDocuments, 
+                filter(lambda x: x[0] in self.foundDocuments, 
                     passages),
                 Watson.NUM_RESULTS)))
     
