@@ -31,22 +31,32 @@ docIDToName['98e9b50f1327e045364f669dab17a2ea'] = "War of 1812 - Wikipedia"
 docNameToID = { docIDToName[iden] : iden for iden in docIDToName } #Invert the previous dictionary.
 
 class Watson:
+    NUM_RESULTS = 3
+    
     def __init__(self):
-        self.found_documents = set()
+        self.foundDocuments = set()
+        #cachedQueries is of the form/type { query : [(document_id, passage_text)] }
+        self.cachedQueries = dict()
         
     def ask(self, query):
+        if query in self.cachedQueries:
+            return self.processResults(self.cachedQueries[query])
         qopts = {'natural_language_query': query, 'passages' : True, 'count' : 0} #'passages.count' : 3
-        my_query = discovery.query(environment_id, collection_id, qopts)
-        results = my_query["passages"]
-        return list(map(lambda x: x['passage_text'], 
-                    islice(
-                    filter(lambda x: x['document_id'] in self.found_documents, 
-                       results),
-                    3)))
+        myQuery = discovery.query(environment_id, collection_id, qopts)
+        results = list(map(lambda x: (x['document_id'], x['passage_text']), myQuery["passages"])) #Get only the results we want.
+        #Note that we don't take only 3 results now, as we will have to filter based on document after retreiving from cache.
+        self.cachedQueries[query] = results
+        return self.processResults(results)
 
     def findDocument(self, identifier):
-        self.found_documents.add(identifier)
+        self.foundDocuments.add(identifier)
 
+    def processResults(self, passages):
+        return list(map(lambda x: x[1], 
+                islice(
+                filter(lambda x: x[0] in self.foundDocuments, 
+                    passages),
+                Watson.NUM_RESULTS)))
     
 
 # found_documents = set()
