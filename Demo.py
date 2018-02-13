@@ -3,11 +3,38 @@ from Discovery import *
 
 helpstring = '''help: gives a brief description of basic commands user can enter
 quit: quits the demo
+question: tells you the question your student is currently asking you
 answer _: submits an answer to the current question
 query _: queries Watson for given keyword/keyphrase
 find _: Finds a document to add to the database. Valid documents:
     document 1: A document on the War of 1812
     document 2: A document on Mitosis'''
+    
+# For answering questions
+questionNumber = 0;
+
+def answerQuestion(answerNumber, answer):
+    if answerNumber == 0:
+        return answer == '12/24/1814'
+    if answerNumber == 1:
+        return answer.lower() == "james madison"
+    if answerNumber == 2:
+        return answer.lower() == "telophase"
+        
+        
+def receiveQuestion(questionNumber):
+    if questionNumber == 0:
+        print("=================================\nWhat date was the treaty of Ghent signed? (format: MM/DD/YYYY)\n=================================\n")
+        return
+    elif questionNumber == 1:
+        print("=================================\nWho was the president during the War of 1812? (first and last name)\n=================================\n")
+        return
+    elif questionNumber == 2:
+        print("=================================\nWhat is the final phase of mitosis? (one word)\n=================================\n")
+        return
+    else:
+        print("All questions answered!")
+        return
 
 def formatResponse(stringArr):
     if len(stringArr) == 0:
@@ -42,21 +69,31 @@ while True:
         print(helpstring)
     elif firstWord.lower() == "quit":
         quit()
+    elif firstWord.lower() == "question":
+        receiveQuestion(questionNumber)
     elif len(words) == 1:
-            print("Missing argument.")
+            print("Invalid command! Type \"help\" for a complete list of commands.")
             continue
     else:
         argument = words[1].strip('"')
         if firstWord.lower() == "answer":
-            pass # TODO: Answer.
+            if questionNumber > 2: print("All questions answered!")
+            elif answerQuestion(questionNumber, argument): 
+                print("That is a correct answer!")
+                questionNumber += 1
+            else: print("That is not a correct answer!")
         elif firstWord.lower() == "query":
             print(formatResponse(watson.ask(argument)))
         elif firstWord.lower() == "find":
-            if testDocs[argument.lower()] not in docIDToName:
-                print("Invalid document!")
-            else:
+            #if argument.lower() in testDocs and testDocs[argument.lower()] not in docIDToName:
+                #print("Invalid document!")
+            if argument.lower() in testDocs and testDocs[argument.lower()] in docIDToName:
                 watson.findDocument(testDocs[argument.lower()])
                 print("Document successfully added.")
+            else:
+                print("Invalid document!")
+        else:
+            print("Invalid command! Type \"help\" for a complete list of commands.")
 
 
 
