@@ -1,5 +1,8 @@
 # coding=utf-8
 from Discovery import *
+import websockets
+import asyncio
+
 
 helpstring = '''help: gives a brief description of basic commands user can enter
 quit: quits the demo
@@ -11,7 +14,7 @@ find _: Finds a document to add to the database. Valid documents:
     document 2: A document on Mitosis'''
     
 # For answering questions
-questionNumber = 0;
+
 
 def answerQuestion(answerNumber, answer):
     if answerNumber == 0:
@@ -22,18 +25,18 @@ def answerQuestion(answerNumber, answer):
         return answer.lower() == "telophase"
         
         
-def receiveQuestion(questionNumber):
+async def receiveQuestion(websocket, questionNumber):
     if questionNumber == 0:
-        print("=================================\nWhat date was the treaty of Ghent signed? (format: MM/DD/YYYY)\n=================================\n")
+        await websocket.send("=================================\nWhat date was the treaty of Ghent signed? (format: MM/DD/YYYY)\n=================================\n")
         return
     elif questionNumber == 1:
-        print("=================================\nWho was the president during the War of 1812? (first and last name)\n=================================\n")
+        await websocket.send("=================================\nWho was the president during the War of 1812? (first and last name)\n=================================\n")
         return
     elif questionNumber == 2:
-        print("=================================\nWhat is the final phase of mitosis? (one word)\n=================================\n")
+        await websocket.send("=================================\nWhat is the final phase of mitosis? (one word)\n=================================\n")
         return
     else:
-        print("All questions answered!")
+        await websocket.send("All questions answered!")
         return
 
 def formatResponse(stringArr):
@@ -46,19 +49,73 @@ def formatResponse(stringArr):
         i += 1
     return acc.strip()
 
-name = input("Welcome to Washington Elementary! Please input your name: \n>> ")
 
-watson = Watson()
+async def websocketHandler(websocket, path):
+    print('local address  : {0}'.format(websocket.local_address))
+    print('remote address : {0}'.format(websocket.remote_address))
 
-testDocs = { "document 1" : '98e9b50f1327e045364f669dab17a2ea',
-             "document 2" : 'ad9d680ed1a99a7c856a89991d25d6f7'}
+    watson = Watson()
+    testDocs = {"document 1" : '98e9b50f1327e045364f669dab17a2ea', "document 2" : 'ad9d680ed1a99a7c856a89991d25d6f7'}
+    questionNumber = 0;
 
-print("Nice to meet you, %s. \nGood luck as your first day as a substitute teacher!\n" % name)
+    try:
+        await websocket.send("You enter the room of your history class. There are students eagerly awaiting your teaching.")
+        await websocket.send("Type help for possible commands, or feel free to get started!")
 
-print("You enter the room of your history class. There are students eagerly awaiting your teaching.\n")
+        async for message in websocket:
+            print(message)
 
-print("Type help for possible commands, or feel free to get started!")
+            words = message.split(' ', 1)
+            if len(words) == 0:
+                continue
+            firstWord = words[0]
+            if firstWord.lower() == "help":
+                await websocket.send(helpstring)
+            elif firstWord.lower() == "quit":
+                quit()
+            elif firstWord.lower() == "question":
+                await receiveQuestion(websocket, questionNumber)
+            elif len(words) == 1:
+                await websocket.send("Invalid command! Type \"help\" for a complete list of commands.")
+                continue
+            else:
+                argument = words[1].strip('"')
+                if firstWord.lower() == "answer":
+                    if questionNumber > 2: await websocket.send("All questions answered!")
+                    elif answerQuestion(questionNumber, argument): 
+                        await websocket.send("That is a correct answer!")
+                        questionNumber += 1
+                    else: await websocket.send("That is not a correct answer!")
+                elif firstWord.lower() == "query":
+                    await websocket.send(formatResponse(watson.ask(argument)))
+                elif firstWord.lower() == "find":
+                    if argument.lower() in testDocs and testDocs[argument.lower()] in docIDToName:
+                        watson.findDocument(testDocs[argument.lower()])
+                        await websocket.send("Document successfully added.")
+                    else:
+                        await websocket.send("Invalid document!")
+                else:
+                    await websocket.send("Invalid command! Type \"help\" for a complete list of commands.")
+    except websockets.exceptions.ConnectionClosed as e:
+        quit()
 
+
+
+print('listening')
+asyncio.get_event_loop().run_until_complete(
+    websockets.serve(websocketHandler, 'localhost', 10000))
+asyncio.get_event_loop().run_forever()
+
+
+
+#name = input("Welcome to Washington Elementary! Please input your name: \n>> ")
+
+#print("Nice to meet you, %s. \nGood luck as your first day as a substitute teacher!\n" % name)
+
+
+
+
+'''
 while True:
     currentLine = input(">> ")
     words = currentLine.split(' ', 1)
@@ -95,43 +152,4 @@ while True:
         else:
             print("Invalid command! Type \"help\" for a complete list of commands.")
 
-
-
-# Unreachable previous demo code:
-
-# Player types help
-
-input("room contents: Looks around the room and tells you possible interactable objects\n" + 
-    "help: gives a brief description of basic commands user can enter \n" +
-    "move x: moves focus of subsitute teacher to content x\n" + 
-    "query x: queries Watson for keyword/keyphrase x\n>>")
-
-# Player types room contents
-
-input("You find yourself in a 5th grade history classroom. \n" +
-"There is a student with her hand raised, awaiting your help\n" + 
-"There is the teacher's desk, the surface clean, but there is a drawer as well\n>>")
-
-# Player types talk to student
-
-input("The student asks you: \"So, before class starts, what date exactly\n" +
-"did the War of 1812 end?\"\n>>")
-
-#We don't know, so we ask Watson
-#query War of 1812 
-input("No information found. Try looking for documents with this information.\n>>")
-
-# The treaty was unanimously ratified by the United States on February 17, 1815, ending the war with Status quo ante bellum (no boundary changes).
-
-# Player says open drawer
-
-input("You open the drawer and find the teacher's notes about the War of 1812.\nThis document has been added to Watson Discovery.\n>>")
-
-# Player types talk to student
-
-input("The student asks you: \"So, before class starts, what date exactly\n" +
-"did the War of 1812 end?\"\n>>")
-
-# query War of 1812
-
-print("\"The War of 1812 ended on February 7th, 1815\" Watson tells you, and you relay this to the student.\nThe bell rings. Now comes the easy part.\nYou tell the students they have the whole class to free read.\nYou have just finished your first challenge as a substitute teacher.\nWell done!")
+'''
