@@ -2,6 +2,7 @@
 from Discovery import *
 import websockets
 import asyncio
+import _thread
 
 
 helpstring = '''help: gives a brief description of basic commands user can enter
@@ -72,7 +73,8 @@ async def websocketHandler(websocket, path):
             if firstWord.lower() == "help":
                 await websocket.send(helpstring)
             elif firstWord.lower() == "quit":
-                quit()
+                #quit()
+                await websocket.close()
             elif firstWord.lower() == "question":
                 await receiveQuestion(websocket, questionNumber)
             elif len(words) == 1:
@@ -102,10 +104,25 @@ async def websocketHandler(websocket, path):
 
 
 print('listening')
+'''
 asyncio.get_event_loop().run_until_complete(
     websockets.serve(websocketHandler, 'localhost', 10000))
 asyncio.get_event_loop().run_forever()
+'''
 
+loop = asyncio.get_event_loop()
+asyncio.ensure_future(websockets.serve(websocketHandler, 'localhost', 10000))
+
+def gameLoop():
+    loop.run_forever()
+
+
+_thread.start_new_thread(gameLoop, ())
+
+line = input('>>>')
+while (line != 'quit'):
+    print(line)
+    line = input('>>>')
 
 
 #name = input("Welcome to Washington Elementary! Please input your name: \n>> ")
