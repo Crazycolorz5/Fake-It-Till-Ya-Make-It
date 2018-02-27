@@ -84,10 +84,35 @@ class LocationState:
             return self.commandDictionary[intent](playerState, self)
         else
             return None
+        
+    def leaveHook(self):
+        pass
+
+class Student:
+    def __init__(self, firstTalk, subsequentTalk, answeredTalk, answer): #, answeredCorrect, answeredIncorrect):
+        self.firstTalk = firstTalk
+        self.subsequentTalk = subsequentTalk
+        self.answeredTalk = answeredTalk
+        self.answer = answer
+        self.talkedTo = False
+        self.answered = False
+    def talkTo(self):
+        if self.answered:
+            return answeredTalk
+        elif self.talkedTo:
+            return subsequentTalk
+        else:
+            return firstTalk
+    def answer(self, string): #Intend to overwrite?
+        if string is self.answer:
+            pass #TODO!!
+        else:
+            pass
 
 def makeMoveCommand(location, msgString):
     def moveCommand(playerState, locationState):
         playerState.location = location
+        locationState.leaveHook()
         return msgString
     return moveCommand
 
@@ -103,6 +128,7 @@ def talkToHallwayStudent(playerState, locationState):
         locationState.talkedToStudent = True;
         return "Hey Prof. {0}, I have a question. What date was the treaty of Ghent signed? (format: MM/DD/YYYY)".format(playerState.name)
 
+    
 hallwayCommands = {
     "move to classroom" : makeMoveCommand(Classroom, "You move to the classroom.")
     "talk to student" : talkToHallwayStudent
