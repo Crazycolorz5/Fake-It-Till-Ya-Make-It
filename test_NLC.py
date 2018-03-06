@@ -13,7 +13,7 @@ def test_classify():
     
     query = 'Would you please enter the hallway for me?'
     result = nlc.classify(query)
-    assert result == 'move to hallway'
+    assert result == 'default'
     
     query = 'I must exit the classroom immediately!'
     result = nlc.classify(query)

@@ -1,16 +1,26 @@
+move to room,move to classroom
+go to the room,move to classroom
+move to the classroom,move to classroom
 Move to classroom.,move to classroom
 Go to classroom.,move to classroom
+go to the classroom,move to classroom
 Enter the classroom.,move to classroom
 enter the class,move to classroom
 Go to hallway.,move to hallway
 Exit classroom.,move to hallway
+exit the classroom,move to hallway
+leave the classroom,move to hallway
 Enter hallway.,move to hallway
+enter the hallway,move to hallway
+move to the hallway,move to hallway
 Move to hallway.,move to hallway
 Talk to student.,talk to student
 Interact with students.,talk to student
 Ask student if he has a question.,talk to student
 Talk to girl.,talk to student
+receive question,talk to student
 go to student,talk to student
+get next question,talk to student
 Talk to boy,talk to student
 what are the contents of the room,look around
 what is around me,look around

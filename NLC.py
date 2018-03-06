@@ -17,7 +17,7 @@ naturalLanguageClassifier = NaturalLanguageClassifierV1(
 #interact with computer
 #look around
 
-# classifier "f7ea68x308-nlc-154"
+# classifier "f7e6f0x306-nlc-174"
 # Operational
 #move to classroom
 #move to hallway
@@ -35,13 +35,13 @@ naturalLanguageClassifier = NaturalLanguageClassifierV1(
 classifiers = naturalLanguageClassifier.list()
 #print(json.dumps(classifiers, indent = 2))
 
-classifierID = 'f7ea68x308-nlc-154'
+classifierID = 'f7e6f0x306-nlc-174'
 status = naturalLanguageClassifier.status(classifierID)
 
 class NLC:
 
     def __init__(self):
-        classifierID = 'f7ea68x308-nlc-154'
+        classifierID = 'f7e6f0x306-nlc-174'
         status = naturalLanguageClassifier.status(classifierID)
 
     #returns the intent of the classifier given a string
