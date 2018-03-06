@@ -7,48 +7,47 @@ from GameState import PlayerState
 from sys import argv
 
 class IOHandler:
-  def out(string):
-    raise NotImplementedError()
-  def inp(string):
-    raise NotImplementedError()
-    
+    def out(string):
+        raise NotImplementedError()
+    def inp(string):
+        raise NotImplementedError()
+        
 class Console(IOHandler):
-  def out(self, string): print(self, string)
-  inp = lambda self, prompt: input(prompt)
+    async def out(self, string): 
+        print(string)
+    async def inp(self, prompt): 
+        return input(prompt)
 
 class WebsocketHandler(IOHandler):
-  def __init__(self, websocket):
-    self.websocket = websocket
-  def out(self, string):
-    await self.websocket.send(string)
-  def inp(self, string):
-    self.out(string)
-    return await ws.recv()
+    def __init__(self, websocket):
+        self.websocket = websocket
+    async def out(self, string):
+        await self.websocket.send(string)
+    async def inp(self, string):
+        await self.out(string)
+        return await self.websocket.recv()
+
+async def websocketHandler(websocket, path):
+    await gameLoop(WebsocketHandler(websocket))
+
+async def gameLoop(handler):
+    try:
+        name = await handler.inp("Welcome to Washington Elementary! Please input your name: \n>> ")
+        player = PlayerState(name)
+        await handler.out("Nice to meet you, %s. \nGood luck as your first day as a substitute teacher!\n" % player.name)
+        await handler.out("You enter the room of your history class. There are students eagerly awaiting your teaching.\n")
+        await handler.out("Type help for possible commands, or feel free to get started!")
+        while True:
+            currentLine = await handler.inp(">> ")
+            await handler.out(player.act(currentLine))
+    except websockets.exceptions.ConnectionClosed as e:
+            quit()
 
 if "--websocket" in argv:
-  loop = asyncio.get_event_loop()
-  asyncio.ensure_future(websockets.serve(websocketHandler, 'localhost', 10000))
+    handler = websockets.serve(websocketHandler, 'localhost', 10000)
 else:
-  gameLoop(Console())
-
-def websocketHandler(websocket, path):
-  gameLoop(WebsocketHandler(websocket))
-
-def gameLoop(handler):
-  try:
-    name = handler.inp("Welcome to Washington Elementary! Please input your name: \n>> ")
-    handler.out("Nice to meet you, %s. \nGood luck as your first day as a substitute teacher!\n" % player.name)
-    handler.out("You enter the room of your history class. There are students eagerly awaiting your teaching.\n")
-    handler.out("Type help for possible commands, or feel free to get started!")
-    player = PlayerState(name)
-    while True:
-      currentLine = handler.inp(">> ")
-      handler.out(player.act(currentLine))
-  except websockets.exceptions.ConnectionClosed as e:
-      quit()
-
+    handler = asyncio.ensure_future(gameLoop(Console()))
     
-print("Nice to meet you, %s. \nGood luck as your first day as a substitute teacher!\n" % player.name)
-
-      
-_thread.start_new_thread(gameLoop, ())
+loop = asyncio.get_event_loop()
+asyncio.ensure_future(handler)
+_thread.start_new_thread(loop.run_forever())

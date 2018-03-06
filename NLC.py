@@ -22,11 +22,11 @@ naturalLanguageClassifier = NaturalLanguageClassifierV1(
 #        training_data = training_data
 #        )
 
-classifiers = naturalLanguageClassifier.list_classifiers()
+classifiers = naturalLanguageClassifier.list()
 print(json.dumps(classifiers, indent = 2))
 
 classifierID = '8fc642x299-nlc-3055'
-status = naturalLanguageClassifier.get_classifier(classifierID)
+status = naturalLanguageClassifier.status(classifierID)
 
 class NLC:
 
