@@ -15,7 +15,7 @@ def test_Player_act():
     wat = Watson()
     query = 'query war of 1812'
     result = player.act(query)
-    assert result == formatResponse(wat.ask(query))
+    assert result == PlayerState.formatResponse(wat.ask(query))
     '''
     query = 'move to the room'
     result = player.act(query)
