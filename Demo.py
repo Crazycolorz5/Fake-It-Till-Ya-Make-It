@@ -73,7 +73,6 @@ async def websocketHandler(websocket, path):
             if firstWord.lower() == "help":
                 await websocket.send(helpstring)
             elif firstWord.lower() == "quit":
-                #quit()
                 await websocket.close()
             elif firstWord.lower() == "question":
                 await receiveQuestion(websocket, questionNumber)
@@ -99,7 +98,7 @@ async def websocketHandler(websocket, path):
                 else:
                     await websocket.send("Invalid command! Type \"help\" for a complete list of commands.")
     except websockets.exceptions.ConnectionClosed as e:
-        quit()
+        await websocket.close()
 
 
 
