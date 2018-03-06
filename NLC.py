@@ -38,8 +38,12 @@ class NLC:
 
     #returns the intent of the classifier given a string
     def classify(self, string):
-        topClass = None
+        topClass = 'default'
+        confidence = None
         if status['status'] == 'Available':
             classes = naturalLanguageClassifier.classify(classifierID, string)
-            topClass = classes['top_class']
+            confidence = classes['classes'][0]['confidence']
+            print(confidence)
+            if confidence > 0.9:
+                topClass = classes['top_class']
         return topClass
