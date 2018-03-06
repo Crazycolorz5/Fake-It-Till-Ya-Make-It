@@ -1,5 +1,5 @@
 from Discovery import Watson
-from NLC import classify #TODO: Not a real import.
+from NLC import NLC #TODO: Not a real import.
 
 # This used to be in the demo, just here so we can re-implement the questions for testing.
 # For answering questions
@@ -29,7 +29,7 @@ from NLC import classify #TODO: Not a real import.
         #return
         
 class PlayerState:
-    helpstring = '''help: gives a brief description of basic commands user can enter
+    helpString = '''help: gives a brief description of basic commands user can enter
 quit: quits the demo
 question: tells you the question your student is currently asking you
 answer _: submits an answer to the current question
@@ -58,7 +58,8 @@ query _: queries Watson for given keyword/keyphrase'''
                 argument = words[1].strip('"')
                 return formatResponse(self.watson.query(argument))
         else:
-            intent = classify(inputString) #TODO: Fake method
+            nlc = NLC()
+            intent = nlc.classify(inputString) #TODO: Fake method
             retStr = self.location.actOnIntent(self, intent)
             return "Invalid command." if retStr is None else retStr
     
@@ -82,7 +83,7 @@ class LocationState:
     def actOnIntent(self, playerState, intent):
         if intent in self.commandDictionary:
             return self.commandDictionary[intent](playerState, self)
-        else
+        else:
             return None
         
     def leaveHook(self):
@@ -131,7 +132,7 @@ def talkToHallwayStudent(playerState, locationState):
     
 hallwayCommands = {
     "move to classroom" : makeMoveCommand(Classroom, "You move to the classroom.")
-    "talk to student" : talkToHallwayStudent
+    #"talk to student" : talkToHallwayStudent
     }
 
 Hallway.talkedToStudent = False
