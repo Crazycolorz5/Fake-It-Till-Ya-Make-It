@@ -56,7 +56,7 @@ query _: queries Watson for given keyword/keyphrase'''
                 return "No query specified!"
             else:
                 argument = words[1].strip('"')
-                return PlayerState.formatResponse(self.watson.query(argument))
+                return PlayerState.formatResponse(self.watson.ask(argument))
         elif words[0] == "answer":
             if len(words) == 1:
                 return "No answer specified!"
