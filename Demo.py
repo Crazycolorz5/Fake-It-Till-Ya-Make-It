@@ -28,7 +28,10 @@ class WebsocketHandler(IOHandler):
         return await self.websocket.recv()
 
 async def websocketHandler(websocket, path):
+    print('websocket new connection')
     await gameLoop(WebsocketHandler(websocket))
+    websocket.close()
+    quit()
 
 async def gameLoop(handler):
     try:
@@ -41,13 +44,15 @@ async def gameLoop(handler):
             currentLine = await handler.inp(">> ")
             await handler.out(player.act(currentLine))
     except websockets.exceptions.ConnectionClosed as e:
-            quit()
+        print('websocket closed')
+
 
 if "--websocket" in argv:
     handler = websockets.serve(websocketHandler, 'localhost', 10000)
+    print('websocket running')
 else:
     handler = asyncio.ensure_future(gameLoop(Console()))
-    
+
 loop = asyncio.get_event_loop()
 asyncio.ensure_future(handler)
 _thread.start_new_thread(loop.run_forever())
