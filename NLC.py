@@ -40,13 +40,13 @@ class NLC:
 
     def __init__(self):
         classifierID = 'f7e6f0x306-nlc-174'
-        status = naturalLanguageClassifier.status(classifierID)
+        self.status = naturalLanguageClassifier.status(classifierID)
 
     #returns the intent of the classifier given a string
     def classify(self, string):
         topClass = 'default'
         confidence = None
-        if status['status'] == 'Available':
+        if self.status['status'] == 'Available':
             classes = naturalLanguageClassifier.classify(classifierID, string)
             confidence = classes['classes'][0]['confidence']
             #print(classes['top_class'])
