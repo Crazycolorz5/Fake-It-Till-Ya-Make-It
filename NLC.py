@@ -51,8 +51,8 @@ class NLC:
         if status['status'] == 'Available':
             classes = naturalLanguageClassifier.classify(classifierID, string)
             confidence = classes['classes'][0]['confidence']
-            print(classes['top_class'])
-            print(confidence)
+            #print(classes['top_class'])
+            #print(confidence)
             if confidence > 0.8:
                 topClass = classes['top_class']
         return topClass
