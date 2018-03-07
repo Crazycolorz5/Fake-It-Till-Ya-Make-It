@@ -10,7 +10,8 @@ def test_classify():
     query = 'Exit the classroom, please'
     result = nlc.classify(query)
     assert result == 'move to hallway'
-    
+
+    #does not classify with a high confidence - returns 'default'
     query = 'Would you please enter the hallway for me?'
     result = nlc.classify(query)
     assert result == 'default'
