@@ -17,6 +17,8 @@ class Console(IOHandler):
         print(string)
     async def inp(self, prompt): 
         return input(prompt)
+    def multiInstance(self):
+        return False
 
 class WebsocketHandler(IOHandler):
     def __init__(self, websocket):
@@ -26,12 +28,15 @@ class WebsocketHandler(IOHandler):
     async def inp(self, string):
         await self.out(string)
         return await self.websocket.recv()
+    def multiInstance(self):
+        return True
 
 async def websocketHandler(websocket, path):
-    print('websocket new connection')
+    print('new connection')
     await gameLoop(WebsocketHandler(websocket))
+    print('websocket closed')
     websocket.close()
-    quit()
+
 
 async def gameLoop(handler):
     try:
@@ -40,15 +45,23 @@ async def gameLoop(handler):
         await handler.out("Nice to meet you, %s. \nGood luck as your first day as a substitute teacher!\n" % player.name)
         await handler.out("You enter the room of your history class. There are students eagerly awaiting your teaching.\n")
         await handler.out("Type help for possible commands, or feel free to get started!")
+
         while True:
             currentLine = await handler.inp(">> ")
+            if "quit" == currentLine:
+                if handler.multiInstance():
+                    return
+                else:
+                    quit()
+
             await handler.out(player.act(currentLine))
+
     except websockets.exceptions.ConnectionClosed as e:
-        print('websocket closed')
+        return
 
 
 if "--websocket" in argv:
-    handler = websockets.serve(websocketHandler, 'localhost', 10000)
+    handler = websockets.serve(websocketHandler, None, 10000)
     print('websocket running')
 else:
     handler = asyncio.ensure_future(gameLoop(Console()))

@@ -110,6 +110,7 @@ $(document).ready(function() {
         ws = new WebSocket("ws://localhost:10000")
 
         ws.onopen = function(e) {
+            $("#div_output").html("")
             $("#div_output").show()
             $("#input_user").show()
         }
@@ -120,22 +121,13 @@ $(document).ready(function() {
         }
 
         ws.onerror = function(e) {
-            $("#div_output").html("error!")
-
             ws = null
             $("#btn_connect").show()
             $("#div_output").hide()
             $("#input_user").hide()
         }
 
-        ws.onclose = function(e) {
-            $("#div_output").html("connection closed")
-
-            ws = null
-            $("#btn_connect").show()
-            $("#div_output").hide()
-            $("#input_user").hide()
-        }
+        ws.onclose = ws.onerror
 
         $("#btn_connect").hide()
     })

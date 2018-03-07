@@ -52,8 +52,6 @@ query _: queries Watson for given keyword/keyphrase'''
             return "No command specified!"
         elif words[0] == "help":
             return PlayerState.helpString
-        elif words[0] == "quit":
-            quit() #TODO: Handle elsewhere?
         elif words[0] == "query":
             if len(words) == 1:
                 return "No query specified!"
