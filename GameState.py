@@ -161,11 +161,33 @@ Hallway.student = Student("Hey Prof., I have a question. What date was the treat
                           "Thanks for that answer!",
                           "Hm, I don't think that's quite right...")
 
+def classroomLookaround(playerState, locationState):
+    studentStatus = "There's a student looking at a diagram of cells, loking somewhat confused." if not locationState.student.answered else "There's the student you answered, sitting at their desk."
+    deskStatus = "There's a teacher's desk." if not locationState.gotNotes else "There's a teacher's desk, where you got the lecture notes from."
+    computerStatus = "There are several computers in the corner of the room, presumably for students to use during a free period." if not locationState.gotWikipedia else "There are several computers, including the one you get the Wikipedia article from. You have to remember to tell your students not to cite Wikipedia."
+    door = "There is a door to the hallway."
+    return "%s\n%s\n%s\n%s" % (studentStatus, deskStatus, computerStatus, door)
 
+def classroomDesk(playerState, locationState):
+    pass
+
+def classroomComputer(playerState, locationState):
+    pass
 
 classroomCommands = {
     "move to hallway": makeMoveCommand(Hallway, "You move to the hallway."),
-    "talk to sudent" : talkToStudent
+    "talk to student" : talkToStudent,
+    "look around" : classroomLookaround,
+    "interact with desk" : classroomDesk,
+    "interact with computer" : classroomComputer
     }
 
+Classroom.gotNotes = False
+Classroom.gotWikipedia = False
 Classroom.commandDictionary = classroomCommands
+Classroom.student = Student("Hey there Prof! Say, since you're just subbing, could you help me with this question on my Biology homework? What's the final phase of mitosis? (format: all lowercase)",
+                            "The question was, what's the final phase of mitosis?",
+                            "Thanks for the help!",
+                            "telophase",
+                            "Yeah, I do think the notes said something like that.",
+                            "I don't think that sounds right.")
