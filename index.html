@@ -1,6 +1,8 @@
 <html>
 <head>
 
+<title>Fake It Till Ya Make It</title>
+
 <style>
 * {
     margin: 0;
@@ -17,12 +19,25 @@ body {
 #main_container {
     margin-left: auto;
     margin-right: auto;
-    width: 800px;
+    width: 1000px;
+}
+
+.title {
+    text-align: center;
+    font-family: Verdana;
+    font-size: 36px;
+    color: #fff;
+    margin: 20px 0 30px;
+    text-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
 }
 
 #btn_connect {
-    width: 100%;
+    display: block;
+    width: 40%;
     height: 24px;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
     font-size: 16px;
     border-radius: 4px;
     outline: none;
@@ -43,7 +58,7 @@ body {
     margin-top: 10px;
     border: 1px solid #ccc;
     width: 100%;
-    height: 400px;
+    height: 600px;
     font-size: 20px;
     overflow-y: auto;
     border-radius: 4px;
@@ -52,7 +67,7 @@ body {
     background: #fff;
 }
 
-input {
+#input_user {
     margin-top: 20px;
     width: 100%;
     font-size: 20px;
@@ -88,11 +103,15 @@ function formatResponse(text) {
 
 
 $(document).ready(function() {
+    $("#div_output").hide()
+    $("#input_user").hide()
+
     $("#btn_connect").click(function() {
         ws = new WebSocket("ws://localhost:10000")
 
         ws.onopen = function(e) {
-            //$("#div_output").html("connected<br />")
+            $("#div_output").show()
+            $("#input_user").show()
         }
 
         ws.onmessage = function(e) {
@@ -105,6 +124,8 @@ $(document).ready(function() {
 
             ws = null
             $("#btn_connect").show()
+            $("#div_output").hide()
+            $("#input_user").hide()
         }
 
         ws.onclose = function(e) {
@@ -112,16 +133,23 @@ $(document).ready(function() {
 
             ws = null
             $("#btn_connect").show()
+            $("#div_output").hide()
+            $("#input_user").hide()
         }
 
         $("#btn_connect").hide()
     })
 
 
-    $("input").keydown(function(e) {
+    $("#input_user").keydown(function(e) {
         if (ws && 13 == e.keyCode) {
-            ws.send($("input").val())
-            $("input").val("")
+            input = $("#input_user").val()
+            $("#input_user").val("")
+
+            ws.send(input)
+
+            last = $("#div_output p").last()
+            last.html(last.html() + input)
         }
     })
 })
@@ -133,9 +161,10 @@ $(document).ready(function() {
 <body>
 
 <div id="main_container">
-    <div><button id="btn_connect">Connect</button></div>
+    <div class="title">Fake It Till Ya Make It</div>
+    <button id="btn_connect">Connect</button>
     <div id="div_output"></div>
-    <input type="text" />
+    <input type="text" id="input_user" />
 </div>
 
 </body>
