@@ -33,10 +33,8 @@ naturalLanguageClassifier = NaturalLanguageClassifierV1(
 #        )
 
 classifiers = naturalLanguageClassifier.list()
-#print(json.dumps(classifiers, indent = 2))
 
 classifierID = 'f7e6f0x306-nlc-174'
-status = naturalLanguageClassifier.status(classifierID)
 
 class NLC:
 

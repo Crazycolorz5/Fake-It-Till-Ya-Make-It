@@ -10,6 +10,7 @@
 
 import json
 from watson_developer_cloud import DiscoveryV1
+import watson_developer_cloud
 from itertools import islice
 
 discovery = DiscoveryV1(
@@ -41,8 +42,12 @@ class Watson:
     def ask(self, query):
         if query in self.cachedQueries:
             return self.processResults(self.cachedQueries[query])
-        qopts = {'natural_language_query': query, 'passages' : True, 'count' : 0} #'passages.count' : 3
-        myQuery = discovery.query(environment_id, collection_id, qopts)
+
+        if watson_developer_cloud.__version__ >= '1.0.0':
+            myQuery = discovery.query(environment_id, collection_id, natural_language_query = query, passages = True)
+        else:
+            qopts = {'natural_language_query': query, 'passages' : True, 'count' : 0} #'passages.count' : 3
+            myQuery = discovery.query(environment_id, collection_id, qopts)
         results = list(map(lambda x: (x['document_id'], x['passage_text']), myQuery["passages"])) #Get only the results we want.
         #Note that we don't take only 3 results now, as we will have to filter based on document after retreiving from cache.
         self.cachedQueries[query] = results
