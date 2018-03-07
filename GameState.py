@@ -138,7 +138,7 @@ def makeMoveCommand(location, msgString):
 Hallway = LocationState()
 Classroom = LocationState()
 
-def talkToHallwayStudent(playerState, locationState):
+def talkToStudent(playerState, locationState):
     return locationState.student.talkTo();
 
 def hallwayLookaround(playerState, locationState): 
@@ -149,12 +149,10 @@ def hallwayLookaround(playerState, locationState):
     
 hallwayCommands = {
     "move to classroom" : makeMoveCommand(Classroom, "You move to the classroom."),
-    "talk to student" : talkToHallwayStudent,
+    "talk to student" : talkToStudent,
     "look around" : hallwayLookaround
     }
 
-Hallway.talkedToStudent = False
-Hallway.answeredStudent = False
 Hallway.commandDictionary = hallwayCommands
 Hallway.student = Student("Hey Prof., I have a question. What date was the treaty of Ghent signed? (format: MM/DD/YYYY)", #TODO: Allow replacing with player name.
                           "To repeat my question, what date was the treaty of Ghent signed? (format: MM/DD/YYYY)",
@@ -166,7 +164,8 @@ Hallway.student = Student("Hey Prof., I have a question. What date was the treat
 
 
 classroomCommands = {
-    "move to hallway": makeMoveCommand(Hallway, "You move to the hallway.")
+    "move to hallway": makeMoveCommand(Hallway, "You move to the hallway."),
+    "talk to sudent" : talkToStudent
     }
 
 Classroom.commandDictionary = classroomCommands
