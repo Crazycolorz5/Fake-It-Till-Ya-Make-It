@@ -27,6 +27,9 @@ from NLC import NLC
     #else:
         #print("All questions answered!")
         #return
+
+WAR_OF_1812_DOCUMENT = '98e9b50f1327e045364f669dab17a2ea'
+MITOSIS_DOCUMENT = 'ad9d680ed1a99a7c856a89991d25d6f7'
         
 class PlayerState:
     helpString = '''help: gives a brief description of basic commands user can enter
@@ -83,7 +86,6 @@ class LocationState:
         # commandDictionary :: Dictionary String ((PlayerState, LocationState) -> String)
         self.commandDictionary = dict()
         self.student = None
-        self.talkedToStudent = False
 
     # actOnIntent :: (LocationState, PlayerState, String) -> Maybe String
     def actOnIntent(self, playerState, intent):
@@ -169,10 +171,22 @@ def classroomLookaround(playerState, locationState):
     return "%s\n%s\n%s\n%s" % (studentStatus, deskStatus, computerStatus, door)
 
 def classroomDesk(playerState, locationState):
-    pass
+    if locationState.gotNotes:
+        return "You've already gotten the lecture notes from the teacher's desk."
+    else:
+        locationState.gotNotes = True
+        playerState.watson.findDocument(WAR_OF_1812_DOCUMENT)
+        return "You open the drawer and grab the lecture notes the regular teacher left you. To reduce prep time, you pull out your phone, take a picture of the notes, and send it to IBM Watson for analysis.\nYou got a document on the War of 1812!"
 
 def classroomComputer(playerState, locationState):
-    pass
+    if locationState.gotWikipedia:
+        return "You have no further use for the computer at this time."
+    elif locationState.student.talkedTo:
+        locationState.gotWikipedia = True
+        playerState.watson.findDocument(MITOSIS_DOCUMENT)
+        return "As per the student's request, you search the web for an article on mitosis.\nYou grab the Wikipedia page and send it to IBM Watson for analysis.\nYou got a document on mitosis!"
+    else:
+        return "You have no reason to use a computer at the moment."
 
 classroomCommands = {
     "move to hallway": makeMoveCommand(Hallway, "You move to the hallway."),
