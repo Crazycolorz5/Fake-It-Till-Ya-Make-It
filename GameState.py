@@ -1,33 +1,6 @@
 from Discovery import Watson
 from NLC import NLC
 
-# This used to be in the demo, just here so we can re-implement the questions for testing.
-# For answering questions
-#questionNumber = 0;
-
-#def answerQuestion(answerNumber, answer):
-    #if answerNumber == 0:
-        #return answer == '12/24/1814'
-    #if answerNumber == 1:
-        #return answer.lower() == "james madison"
-    #if answerNumber == 2:
-        #return answer.lower() == "telophase"
-        
-        
-#def receiveQuestion(questionNumber):
-    #if questionNumber == 0:
-        #print("=================================\nWhat date was the treaty of Ghent signed? (format: MM/DD/YYYY)\n=================================\n")
-        #return
-    #elif questionNumber == 1:
-        #print("=================================\nWho was the president during the War of 1812? (first and last name)\n=================================\n")
-        #return
-    #elif questionNumber == 2:
-        #print("=================================\nWhat is the final phase of mitosis? (one word)\n=================================\n")
-        #return
-    #else:
-        #print("All questions answered!")
-        #return
-
 WAR_OF_1812_DOCUMENT = '98e9b50f1327e045364f669dab17a2ea'
 MITOSIS_DOCUMENT = 'ad9d680ed1a99a7c856a89991d25d6f7'
         
@@ -38,11 +11,12 @@ answer _: submits an answer to the current question
 query _: queries Watson for given keyword/keyphrase'''
     
     def __init__(self, name):
-        self.location = Hallway
         self.name = name
         self.questionNumber = 0 #TODO
         self.watson = Watson()
         self.nlc = NLC()
+        self.gameState = GameState(name)
+        self.location = self.gameState.Hallway
 
     # act :: (PlayerState, String) -> String
     def act(self, inputString):
@@ -128,15 +102,36 @@ class Student:
         else:
             return self.answeredIncorrect
 
-def makeMoveCommand(location, msgString):
+class GameState:
+    def __init__(self, playerName):
+        self.Hallway = LocationState()
+        self.Classroom = LocationState()
+        self.Hallway.commandDictionary = hallwayCommands
+        self.Classroom.commandDictionary = classroomCommands
+        self.Hallway.student = Student("Hey Prof. %s, I have a question. What date was the treaty of Ghent signed? (format: MM/DD/YYYY)" % playerName,
+                          "To repeat my question, what date was the treaty of Ghent signed? (format: MM/DD/YYYY)",
+                          "Thank you for answering my question!",
+                          '12/24/1814',
+                          "Thanks for that answer!",
+                          "Hm, I don't think that's quite right...")
+        self.Classroom.gotNotes = False
+        self.Classroom.gotWikipedia = False
+        self.Classroom.student = Student("Hey there Prof! Say, since you're just subbing, could you help me with this question on my Biology homework? What's the final phase of mitosis? (format: all lowercase)",
+                                    "The question was, what's the final phase of mitosis?",
+                                    "Thanks for the help!",
+                                    "telophase",
+                                    "Yeah, I do think the notes said something like that.",
+                                    "I don't think that sounds right.")
+
+
+
+
+def makeMoveCommand(locationAccessor, msgString):
     def moveCommand(playerState, locationState):
-        playerState.location = location
+        playerState.location = locationAccessor(playerState.gameState)
         locationState.leaveHook()
         return msgString
     return moveCommand
-
-Hallway = LocationState()
-Classroom = LocationState()
 
 def talkToStudent(playerState, locationState):
     return locationState.student.talkTo();
@@ -148,18 +143,10 @@ def hallwayLookaround(playerState, locationState):
         return "There's a student who appears to want to ask you a question. There is also a door to the singular classroom of the school."
     
 hallwayCommands = {
-    "move to classroom" : makeMoveCommand(Classroom, "You move to the classroom."),
+    "move to classroom" : makeMoveCommand(lambda gs: gs.Classroom, "You move to the classroom."),
     "talk to student" : talkToStudent,
     "look around" : hallwayLookaround
     }
-
-Hallway.commandDictionary = hallwayCommands
-Hallway.student = Student("Hey Prof., I have a question. What date was the treaty of Ghent signed? (format: MM/DD/YYYY)", #TODO: Allow replacing with player name.
-                          "To repeat my question, what date was the treaty of Ghent signed? (format: MM/DD/YYYY)",
-                          "Thank you for answering my question!",
-                          '12/24/1814',
-                          "Thanks for that answer!",
-                          "Hm, I don't think that's quite right...")
 
 def classroomLookaround(playerState, locationState):
     studentStatus = "There's a student looking at a diagram of cells, loking somewhat confused." if not locationState.student.answered else "There's the student you answered, sitting at their desk."
@@ -187,19 +174,9 @@ def classroomComputer(playerState, locationState):
         return "You have no reason to use a computer at the moment."
 
 classroomCommands = {
-    "move to hallway": makeMoveCommand(Hallway, "You move to the hallway."),
+    "move to hallway": makeMoveCommand(lambda gs: gs.Hallway, "You move to the hallway."),
     "talk to student" : talkToStudent,
     "look around" : classroomLookaround,
     "interact with desk" : classroomDesk,
     "interact with computer" : classroomComputer
-    }
-
-Classroom.gotNotes = False
-Classroom.gotWikipedia = False
-Classroom.commandDictionary = classroomCommands
-Classroom.student = Student("Hey there Prof! Say, since you're just subbing, could you help me with this question on my Biology homework? What's the final phase of mitosis? (format: all lowercase)",
-                            "The question was, what's the final phase of mitosis?",
-                            "Thanks for the help!",
-                            "telophase",
-                            "Yeah, I do think the notes said something like that.",
-                            "I don't think that sounds right.")
+}
