@@ -48,13 +48,13 @@ async def gameLoop(handler):
 
         while True:
             currentLine = await handler.inp()
-            if "quit" == currentLine:
+            currentCommand = currentLine.lower()
+            if "quit" == currentCommand:
                 if handler.multiInstance():
                     return
                 else:
                     quit()
-
-            await handler.out(player.act(currentLine))
+            await handler.out(player.act(currentCommand))
 
     except websockets.exceptions.ConnectionClosed as e:
         return
