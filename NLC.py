@@ -36,6 +36,8 @@ classifiers = naturalLanguageClassifier.list()
 
 classifierID = 'f7e6f0x306-nlc-174'
 
+CONFIDENCE_THRESHOLD = 0.8
+
 class NLC:
 
     def __init__(self):
@@ -51,6 +53,6 @@ class NLC:
             confidence = classes['classes'][0]['confidence']
             #print(classes['top_class'])
             #print(confidence)
-            if confidence > 0.8:
+            if confidence > CONFIDENCE_THRESHOLD:
                 topClass = classes['top_class']
         return topClass
