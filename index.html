@@ -13,6 +13,7 @@
 body {
     padding: 20px;
     background: #364e6f;
+    font-family: Arial;
 }
 
 
@@ -103,6 +104,9 @@ function formatResponse(text) {
 
 
 $(document).ready(function() {
+    var history = []
+    var historyIndex = 0
+
     $("#div_output").hide()
     $("#input_user").hide()
 
@@ -134,11 +138,33 @@ $(document).ready(function() {
 
 
     $("#input_user").keydown(function(e) {
-        if (ws && 13 == e.keyCode) {
+        if (38 == e.keyCode) {          // up
+            if (historyIndex >= 1)
+                historyIndex--;
+
+            if (historyIndex < history.length)
+                $("#input_user").val(history[historyIndex])
+        } else if (40 == e.keyCode) {   // down
+            if (historyIndex <= history.length - 1)
+                historyIndex++;
+
+            if (historyIndex < history.length)
+                $("#input_user").val(history[historyIndex])
+            else
+                $("#input_user").val("")
+        }
+
+        if (!ws)
+            return
+
+        if (13 == e.keyCode) {          // enter
             input = $("#input_user").val()
             $("#input_user").val("")
 
             ws.send(input)
+
+            history.push(input)
+            historyIndex = history.length
 
             last = $("#div_output p").last()
             last.html(last.html() + input)
