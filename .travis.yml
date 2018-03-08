@@ -9,6 +9,8 @@ install:
  
 script: 
  - python helloTravis.py
+ - python GameState.py
  - python Discovery.py
+ - python NLC.py
  - pytest
  
