@@ -7,16 +7,16 @@ from GameState import PlayerState
 from sys import argv
 
 class IOHandler:
-    def out(string):
+    def out(self, string):
         raise NotImplementedError()
-    def inp(string):
+    def inp(self):
         raise NotImplementedError()
         
 class Console(IOHandler):
     async def out(self, string): 
         print(string)
-    async def inp(self, prompt): 
-        return input(prompt)
+    async def inp(self): 
+        return input(">> ")
     def multiInstance(self):
         return False
 
@@ -25,8 +25,7 @@ class WebsocketHandler(IOHandler):
         self.websocket = websocket
     async def out(self, string):
         await self.websocket.send(string)
-    async def inp(self, string):
-        await self.out(string)
+    async def inp(self):
         return await self.websocket.recv()
     def multiInstance(self):
         return True
@@ -40,14 +39,15 @@ async def websocketHandler(websocket, path):
 
 async def gameLoop(handler):
     try:
-        name = await handler.inp("Welcome to Washington Elementary! Please input your name: \n>> ")
+        await handler.out("Welcome to Washington Elementary! Please input your name:")
+        name = await handler.inp()
         player = PlayerState(name)
-        await handler.out("Nice to meet you, %s. \nGood luck as your first day as a substitute teacher!\n" % player.name)
-        await handler.out("You enter the room of your history class. There are students eagerly awaiting your teaching.\n")
-        await handler.out("Type help for possible commands, or feel free to get started!")
+        await handler.out("Nice to meet you, %s. \nGood luck as your first day as a substitute teacher!" % player.name)
+        await handler.out("You enter the hallway outside of your history class.")
+        await handler.out("Type help for a few possible commands, or look around to get started!")
 
         while True:
-            currentLine = await handler.inp(">> ")
+            currentLine = await handler.inp()
             if "quit" == currentLine:
                 if handler.multiInstance():
                     return
