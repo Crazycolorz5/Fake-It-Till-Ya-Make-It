@@ -40,7 +40,7 @@ async def websocketHandler(websocket, path):
 
 async def gameLoop(handler):
     try:
-        await handler.out("Welcome to Washington Elementary! Please input your name:")
+        await handler.out("Welcome to Washington High School! Please input your name:")
         name = await handler.inp()
         player = PlayerState(name)
         await handler.out("Nice to meet you, %s. \nGood luck as your first day as a substitute teacher!" % player.name)
