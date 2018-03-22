@@ -78,7 +78,8 @@ class LocationState:
         pass
 
 class Student:
-    def __init__(self, firstTalk, subsequentTalk, answeredTalk, answer, answeredCorrect, answeredIncorrect):
+    def __init__(self, name, firstTalk, subsequentTalk, answeredTalk, answer, answeredCorrect, answeredIncorrect):
+        self.name = name
         self.firstTalk = firstTalk
         self.subsequentTalk = subsequentTalk
         self.answeredTalk = answeredTalk
@@ -108,20 +109,36 @@ class GameState:
         self.Classroom = LocationState()
         self.Hallway.commandDictionary = hallwayCommands
         self.Classroom.commandDictionary = classroomCommands
-        self.Hallway.student = Student("Hey Prof. %s, I have a question. What date was the treaty of Ghent signed? (format: MM/DD/YYYY)" % playerName,
+        # US History classroom student 1
+        self.Hallway.students.append(Student("Bobby Singer",
+                          "Hey Prof. %s, I have a question. What date was the treaty of Ghent signed? (format: MM/DD/YYYY)" % playerName,
                           "To repeat my question, what date was the treaty of Ghent signed? (format: MM/DD/YYYY)",
                           "Thank you for answering my question!",
                           '12/24/1814',
                           "Thanks for that answer!",
                           "Hm, I don't think that's quite right...")
+                          )
         self.Classroom.gotNotes = False
         self.Classroom.gotWikipedia = False
-        self.Classroom.student = Student("Hey there Prof! Say, since you're just subbing, could you help me with this question on my Biology homework? What's the final phase of mitosis? (format: all lowercase)",
+        # Biology classroom student 1
+        self.Classroom.students.append(Student("Dean Winchester",
+                                    "Hey there Prof! Say, since you're just subbing, could you help me with this question on my Biology homework? What's the final phase of mitosis? (format: all lowercase)",
                                     "The question was, what's the final phase of mitosis?",
                                     "Thanks for the help!",
                                     "telophase",
                                     "Yeah, I do think the notes said something like that.",
-                                    "I don't think that sounds right.")
+                                    "I don't think that sounds right."))
+                                    )
+        # Biology classroom student 2
+        SamWinchester = Student("Sam Winchester",
+                              "I can't remember what the latin name of the American Black Bear for our homework. Do you remember, Professor?",
+                              "What is the latin name of the American Black Bear?",
+                              "Thank you, Professor!",
+                              "ursus americanus",
+                              "Oh yeah, Ursus Americanus. Thank you!",
+                              "I'm not sure that's correct, Professor.")
+        # US History classroom student 24/1814
+        
 
 
 
