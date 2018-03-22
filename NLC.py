@@ -60,7 +60,7 @@ class NLC:
         return topClass
 
 class StudentNLC:
-def __init__(self):
+    def __init__(self):
         classifierID = 'f7e6f0x306-nlc-174'
         self.status = naturalLanguageClassifier.status(classifierID)
 
