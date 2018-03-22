@@ -18,7 +18,6 @@ query _: queries Watson for given keyword/keyphrase'''
     
     def __init__(self, name):
         self.name = name
-        self.questionNumber = 0 #TODO
         self.watson = Watson()
         self.nlc = NLC()
         self.studentNLC = StudentNLC()
