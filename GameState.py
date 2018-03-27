@@ -163,7 +163,6 @@ class GameState:
                           '12/24/1814',
                           "Thanks for that answer!",
                           "Hm, I don't think that's quite right...")
-                          )
         self.BiologyClassroom.gotNotes = False
         self.BiologyClassroom.gotWikipedia = False
         JohnDoe = Student("John Doe",
