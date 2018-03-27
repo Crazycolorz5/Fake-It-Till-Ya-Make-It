@@ -58,4 +58,4 @@ def test_classify():
     
     query = 'get a next question'
     result = nlc.classify(query)
-    assert result = 'talk to student'
+    assert result == 'talk to student'
