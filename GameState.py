@@ -52,7 +52,7 @@ query _: queries Watson for given keyword/keyphrase'''
                 return self.lastStudent.answer(words[1])        
         else:
             if self.state == PlayerState.DEFAULT:
-                self.lastStudent = None #Will be set by actOnIntent if we are to talk to a student.
+                self.lastStudent = None #Will be set later if we are to talk to a student.
                 intent = self.nlc.classify(inputString)
                 retStr = self.location.actOnIntent(self, intent)
                 return "Invalid command." if retStr is None else retStr
@@ -60,6 +60,9 @@ query _: queries Watson for given keyword/keyphrase'''
                 pass #TODO
             elif self.state == PlayerState.CHOOSE_STUDENT:
                 classifiedName = self.studentNLC.classify(inputString)
+                if classifiedName == "cancel":
+                    self.state = PlayerState.DEFAULT
+                    return "You decide against talking to a student right now."
                 studentList = self.location.students
                 for student in studentList:
                     if student.name.casefold() == classifiedName.casefold(): 
