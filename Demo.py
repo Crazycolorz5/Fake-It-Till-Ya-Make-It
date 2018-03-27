@@ -3,7 +3,7 @@ from Discovery import *
 import websockets
 import asyncio
 import _thread
-from GameState import PlayerState
+from GameState import Player
 from sys import argv
 
 class IOHandler:
