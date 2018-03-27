@@ -91,6 +91,12 @@ class LocationState:
         else:
             return None
         
+    def answered(self, studentName):
+        for student in self.students:
+            if student.name == studentName:
+                return student.answered
+        return False
+        
     def leaveHook(self):
         pass
 
@@ -123,10 +129,11 @@ class Student:
 class GameState:
     def __init__(self, playerName):
         self.Hallway = LocationState()
-        self.Classroom = LocationState()
+        self.BiologyClassroom = LocationState()
         self.Hallway.commandDictionary = hallwayCommands
-        self.Classroom.commandDictionary = classroomCommands
+        self.BiologyClassroom.commandDictionary = classroomCommands
         # US History classroom student 1
+        # In the hallway currently for testing.
         self.Hallway.students.append(Student("Lin-Manuel Miranda",
                           "Hey Prof. %s, I have a question. What date was the treaty of Ghent signed? (format: MM/DD/YYYY)" % playerName,
                           "To repeat my question, what date was the treaty of Ghent signed? (format: MM/DD/YYYY)",
@@ -135,18 +142,15 @@ class GameState:
                           "Thanks for that answer!",
                           "Hm, I don't think that's quite right...")
                           )
-        self.Classroom.gotNotes = False
-        self.Classroom.gotWikipedia = False
-        # Biology classroom student 1
-        self.Classroom.students.append(Student("John Doe",
-                                    "Hey there Prof! Say, since you're just subbing, could you help me with this question on my Biology homework? What's the final phase of mitosis? (format: all lowercase)",
-                                    "The question was, what's the final phase of mitosis?",
-                                    "Thanks for the help!",
-                                    "telophase",
-                                    "Yeah, I do think the notes said something like that.",
-                                    "I don't think that sounds right.")
-                                    )
-        # Biology classroom student 2
+        self.BiologyClassroom.gotNotes = False
+        self.BiologyClassroom.gotWikipedia = False
+        JohnDoe = Student("John Doe",
+                              "Hey there Prof! Say, since you're just subbing, could you help me with this question on my Biology homework? What's the final phase of mitosis? (format: all lowercase)",
+                              "The question was, what's the final phase of mitosis?",
+                              "Thanks for the help!",
+                              "telophase",
+                              "Yeah, I do think the notes said something like that.",
+                              "I don't think that sounds right.")
         SamWinchester = Student("Sam Winchester",
                               "I can't remember what the latin name of the American Black Bear for our homework. Do you remember, Professor? (format: genus species)",
                               "What is the latin name of the American Black Bear?",
@@ -154,6 +158,7 @@ class GameState:
                               "ursus americanus",
                               "Oh yeah, Ursus Americanus. Thank you!",
                               "I'm not sure that's correct, Professor.")
+        self.BiologyClassroom.students = [JohnDoe, SamWinchester]
         # US History classroom student 2
         ElizabethRoss = Student("Elizabeth Ross",
                               "Hey Professor, I'm really bad with dates. What date was the 13th Amendment ratified? (format: MM/DD/YYYY)",
@@ -263,11 +268,14 @@ hallwayCommands = {
     }
 
 def classroomLookaround(player, locationState):
-    studentStatus = "There's a student looking at a diagram of cells, loking somewhat confused." if not locationState.students[0].answered else "There's the student you answered, sitting at their desk." #TODO: Store this as a flag in the location.
+    answeredJohnDoe = locationState.answered("John Doe")
+    answeredSamWinchester = locationState.answered("Sam Winchester")
+    johnDoeStatus = "There's a student looking at a diagram of cells, loking somewhat confused." if not answeredJohnDoe else "John Doe is sitting at their desk." #TODO: Store this as a flag in the location.
+    samWinchesterStatus = "There's a student waiting by the teacher's desk to ask a question." if not answeredSamWinchester else "Sam Winchester has returned to their desk and is waiting for the school day to end."
     deskStatus = "There's a teacher's desk." if not locationState.gotNotes else "There's a teacher's desk, where you got the lecture notes from."
     computerStatus = "There are several computers in the corner of the room, presumably for students to use during a free period." if not locationState.gotWikipedia else "There are several computers, including the one you get the Wikipedia article from. You have to remember to tell your students not to cite Wikipedia."
     door = "There is a door to the hallway."
-    return "%s\n%s\n%s\n%s" % (studentStatus, deskStatus, computerStatus, door)
+    return "%s\n%s\n%s\n%s\n%s" % (johnDoeStatus, samWinchesterStatus, deskStatus, computerStatus, door)
 
 def classroomDesk(player, locationState):
     if locationState.gotNotes:
