@@ -86,8 +86,8 @@ class StudentNLC:
         if self.status['status'] == 'Available':
             classes = naturalLanguageClassifier.classify(studentClassifierID, string)
             confidence = classes['classes'][0]['confidence']
-            print(classes['top_class'])
-            print(confidence)
+            #print(classes['top_class'])
+            #print(confidence)
             if confidence > STUDENT_CONFIDENCE_THRESHOLD:
                 topClass = classes['top_class']
         return topClass
@@ -104,8 +104,8 @@ class SubjectNLC:
         if self.status['status'] == 'Available':
             classes = naturalLanguageClassifier.classify(subjectClassifierID, string)
             confidence = classes['classes'][0]['confidence']
-            print(classes['top_class'])
-            print(confidence)
+            #print(classes['top_class'])
+            #print(confidence)
             if confidence > SUBJECT_CONFIDENCE_THRESHOLD:
                 topClass = classes['top_class']
         return topClass
