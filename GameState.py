@@ -181,6 +181,8 @@ class GameState:
                               "Oh yeah, Ursus Americanus. Thank you!",
                               "I'm not sure that's correct, Professor.")
         self.BiologyClassroom.students = [JohnDoe, SamWinchester]
+        self.MathClassroom.students = [Francis Bacon, Betty White]
+        
         # US History classroom student 2
         ElizabethRoss = Student("Elizabeth Ross",
                               "Hey Professor, I'm really bad with dates. What date was the 13th Amendment ratified? (format: MM/DD/YYYY)",
