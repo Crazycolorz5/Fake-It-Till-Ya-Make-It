@@ -145,6 +145,12 @@ class GameState:
         self.Hallway.commandDictionary = hallwayCommands
    
         self.BiologyClassroom.commandDictionary = classroomCommands
+        self.MathClassroom.commandDictionary = classroomCommands
+        self.PhysicsClassroom.commandDictionary = classroomCommands
+        self.LitClassroom.commandDictionary = classroomCommands
+        self.USHistClassroom.commandDictionary = classroomCommands
+        self.WorldHistClassroom.commandDictioanry = classroomCommands
+        
         # US History classroom student 1
         # In the hallway currently for testing.
         self.Hallway.students.append(Student("Lin-Manuel Miranda",
