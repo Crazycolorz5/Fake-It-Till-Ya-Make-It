@@ -138,8 +138,22 @@ class GameState:
     def __init__(self, playerName):
         self.Hallway = LocationState()
         self.BiologyClassroom = LocationState()
+        self.MathClassroom= LocationState()
+        self.PhysicsClassroom = LocationState()
+        self.LitClassromm = LocationState()
+        self.USHistClassroom = LocationState()
+        self.WorldHistClassroom = LocationState()
+        
+        self.hallway2.commandDictionary = hallwayCommands
         self.Hallway.commandDictionary = hallwayCommands
+   
         self.BiologyClassroom.commandDictionary = classroomCommands
+        self.MathClassroom.commandDictionary = classroomCommands
+        self.PhysicsClassroom.commandDictionary = classroomCommands
+        self.LitClassroom.commandDictionary = classroomCommands
+        self.USHistClassroom.commandDictionary = classroomCommands
+        self.WorldHistClassroom.commandDictioanry = classroomCommands
+        
         # US History classroom student 1
         # In the hallway currently for testing.
         self.Hallway.students.append(Student("Lin-Manuel Miranda",
