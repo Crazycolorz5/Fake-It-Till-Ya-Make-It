@@ -152,11 +152,11 @@ class GameState:
         self.PhysicsClassroom.commandDictionary = classroomCommands
         self.LitClassroom.commandDictionary = classroomCommands
         self.USHistClassroom.commandDictionary = classroomCommands
-        self.WorldHistClassroom.commandDictioanry = classroomCommands
+        self.WorldHistClassroom.commandDictionary = classroomCommands
         
         # US History classroom student 1
         # In the hallway currently for testing.
-        self.Hallway.students.append(Student("Lin-Manuel Miranda",
+        LinManuelMiranda = Student("Lin-Manuel Miranda",
                           "Hey Prof. %s, I have a question. What date was the treaty of Ghent signed? (format: MM/DD/YYYY)" % playerName,
                           "To repeat my question, what date was the treaty of Ghent signed? (format: MM/DD/YYYY)",
                           "Thank you for answering my question!",
@@ -180,7 +180,6 @@ class GameState:
                               "ursus americanus",
                               "Oh yeah, Ursus Americanus. Thank you!",
                               "I'm not sure that's correct, Professor.")
-        self.BiologyClassroom.students = [JohnDoe, SamWinchester]
         # US History classroom student 2
         ElizabethRoss = Student("Elizabeth Ross",
                               "Hey Professor, I'm really bad with dates. What date was the 13th Amendment ratified? (format: MM/DD/YYYY)",
@@ -191,11 +190,11 @@ class GameState:
                               "I'm not entirely sure, but that doesn't sound like the right answer.")
         # US History classroom student 3
         FrankPierce = Student("Frank Pierce",
-                              "Hi! So, I don't have the Presidents memorized yet. Who was the 14th again? (format: first last)",
-                              "Hi again. If it isn't too much trouble, who was the 14th president of the U.S.?",
+                              "Hi! So, how many people have served as the President of the U.S.? Like, total?",
+                              "Hi again. If it isn't too much trouble, how many people have been president?",
                               "You're the best!",
-                              "franklin pierce",
-                              "Oh, I should have known that, it's so close to my name! Thank you!",
+                              "44",
+                              "Oh, I should have known that! Thank you!",
                               "Are you sure?")
         # World History classroom student 1
         MarieCurie = Student("Marie Curie",
@@ -215,10 +214,10 @@ class GameState:
                               "Hm, that doesn't sound like the right Greek goddess.")
         # Literature classroom student 1
         FrancisBacon = Student("Francis Bacon",
-                              "So in \"Tale of Two Cities\", by Charles Dickens, what is the name of the first book?",
-                              "I know, it's confusing to me too. \"Tale of Two Cities\" had like three books inside it. What's the first one?",
+                              "So what year was \"Tale of Two Cities\", by Charles Dickens, published?",
+                              "I know, it's confusing to me too. \"Tale of Two Cities\" was published in what year?",
                               "Thanks for your help!",
-                              "recalled to life",
+                              "1859",
                               "That's it! Thanks, Professor! I could have just looked in the book I guess, but I really hate it.",
                               "I don't think that's right.")
         # Literature classroom student 2
@@ -261,7 +260,15 @@ class GameState:
                               "entropy",
                               "Yeah, entropy! Thanks, Professor!",
                               "I think it was something else.")
-
+                              
+                              
+        # Add students to classrooms
+        self.BiologyClassroom.students = [JohnDoe, SamWinchester]
+        self.MathClassroom.students = [HoldenCaulfield, SteveBoxwell]
+        self.PhysicsClassroom.students = [BettyWhite, CharlesDickens]
+        self.LitClassroom.students = [FrancisBacon, KevinPrice]
+        self.USHistClassroom.students = [LinManuelMiranda, ElizabethRoss, FrankPierce]
+        self.WorldHistClassroom.students = [MarieCurie, RosalindFranklin]
 
 
 def makeMoveCommand(locationAccessor, msgString):
