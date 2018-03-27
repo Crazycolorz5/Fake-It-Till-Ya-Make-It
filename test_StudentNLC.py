@@ -9,7 +9,7 @@ def test_classify():
 
 	
 	query = 'talk Francis Bacon'
-	result = StudentNLC.classify(query)
+	result = nlc.classify(query)
 	assert result == 'Francis Bacon'
 	
 	
