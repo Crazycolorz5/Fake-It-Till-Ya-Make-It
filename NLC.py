@@ -27,14 +27,29 @@ naturalLanguageClassifier = NaturalLanguageClassifierV1(
 #look around
 #default
 
-#with open('nlc_training_set_0306.csv', 'rb') as training_data:
+#classifier "2fbbc6x326-nlc-1451"
+#created 03/27 from nlc data 03/23
+
+#stduent classifier '2fbda2x327-nlc-1432'
+#created 03/27 from student nlc data 03/27
+
+#subject classifier '2fbbc6x326-nlc-1454'
+#created 03/27 from subject nlc data 03/27
+
+
+
+#Create Classifier - keep commented
+#with open('student_nlc_training_set_0327.csv', 'rb') as training_data:
 #    classroomClassifier = naturalLanguageClassifier.create(      
-#        training_data = training_data,
+#        training_data = training_data
 #        )
+#print(json.dumps(classifiers, indent=2))
 
 classifiers = naturalLanguageClassifier.list()
 
-classifierID = 'f7e6f0x306-nlc-174'
+classifierID =        '2fbbc6x326-nlc-1451'
+studentClassifierID = '539e6dx331-nlc-551'
+subjectClassifierID = '2fbbc6x326-nlc-1454'
 
 CONFIDENCE_THRESHOLD = 0.8
 STUDENT_CONFIDENCE_THRESHOLD = 0.9
@@ -43,7 +58,7 @@ SUBJECT_CONFIDENCE_THRESHOLD = 0.9
 class NLC:
 
     def __init__(self):
-        classifierID = 'f7e6f0x306-nlc-174'
+        classifierID = '2fbbc6x326-nlc-1451'
         self.status = naturalLanguageClassifier.status(classifierID)
 
     #returns the intent of the classifier given a string
@@ -61,36 +76,36 @@ class NLC:
 
 class StudentNLC:
     def __init__(self):
-        classifierID = 'f7e6f0x306-nlc-174'
-        self.status = naturalLanguageClassifier.status(classifierID)
+        studentClassifierID = '539e6dx331-nlc-551'
+        self.status = naturalLanguageClassifier.status(studentClassifierID)
 
     #returns the intent of the classifier given a string
     def classify(self, string):
         topClass = 'default'
         confidence = None
         if self.status['status'] == 'Available':
-            classes = naturalLanguageClassifier.classify(classifierID, string)
+            classes = naturalLanguageClassifier.classify(studentClassifierID, string)
             confidence = classes['classes'][0]['confidence']
-            #print(classes['top_class'])
-            #print(confidence)
+            print(classes['top_class'])
+            print(confidence)
             if confidence > STUDENT_CONFIDENCE_THRESHOLD:
                 topClass = classes['top_class']
         return topClass
 
 class SubjectNLC:
     def __init__(self):
-        classifierID = 'f7e6f0x306-nlc-174'
-        self.status = naturalLanguageClassifier.status(classifierID)
+        subjectClassifierID = '2fbbc6x326-nlc-1454'
+        self.status = naturalLanguageClassifier.status(subjectClassifierID)
 
     #returns the intent of the classifier given a string
     def classify(self, string):
         topClass = 'default'
         confidence = None
         if self.status['status'] == 'Available':
-            classes = naturalLanguageClassifier.classify(classifierID, string)
+            classes = naturalLanguageClassifier.classify(subjectClassifierID, string)
             confidence = classes['classes'][0]['confidence']
-            #print(classes['top_class'])
-            #print(confidence)
+            print(classes['top_class'])
+            print(confidence)
             if confidence > SUBJECT_CONFIDENCE_THRESHOLD:
                 topClass = classes['top_class']
         return topClass
