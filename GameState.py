@@ -1,6 +1,7 @@
 from Discovery import Watson
-from NLC import NLC
+from NLC import *
 from enum import Enum
+from functools import * #I don't care, import them all!!
 
 WAR_OF_1812_DOCUMENT = '98e9b50f1327e045364f669dab17a2ea'
 MITOSIS_DOCUMENT = 'ad9d680ed1a99a7c856a89991d25d6f7'
@@ -48,10 +49,10 @@ query _: queries Watson for given keyword/keyphrase'''
             elif not self.lastStudent.talkedTo:
                 return "You haven't heard what this student has to say yet!"
             else:
-                return self.lastStudent.answer(string)        
+                return self.lastStudent.answer(words[1])        
         else:
             if self.state == PlayerState.DEFAULT:
-                self.lastStudent = None #Clear the last student; it will be set by actOnIntent.
+                self.lastStudent = None #Will be set by actOnIntent if we are to talk to a student.
                 intent = self.nlc.classify(inputString)
                 retStr = self.location.actOnIntent(self, intent)
                 return "Invalid command." if retStr is None else retStr
@@ -61,7 +62,8 @@ query _: queries Watson for given keyword/keyphrase'''
                 classifiedName = self.studentNLC.classify(inputString)
                 studentList = self.location.students
                 for student in studentList:
-                    if student.name == classifiedName:
+                    if student.name.casefold() == classifiedName.casefold(): 
+                        #Note: Student names (to the classifier) are case-insensitive, but commands ARE.
                         self.lastStudent = student
                         self.state = PlayerState.DEFAULT
                         return student.talkTo() #breaks control flow.
@@ -97,7 +99,8 @@ class LocationState:
                 return student.answered
         return False
         
-    def leaveHook(self):
+    def leaveHook(self, player):
+        player.lastStudent = None
         pass
 
 class Student:
@@ -120,7 +123,9 @@ class Student:
             self.talkedTo = True
             return self.firstTalk
     def answer(self, string): #Intend to overwrite?
-        if string.strip() == self.correctAnswer: #TODO: Better answer validation
+        if self.answered:
+            return self.answeredTalk
+        elif string.strip() == self.correctAnswer: #TODO: Better answer validation
             self.answered = True
             return self.answeredCorrect
         else:
@@ -245,7 +250,7 @@ class GameState:
 def makeMoveCommand(locationAccessor, msgString):
     def moveCommand(player, locationState):
         player.location = locationAccessor(player.gameState)
-        locationState.leaveHook()
+        locationState.leaveHook(player)
         return msgString
     return moveCommand
 
@@ -257,12 +262,18 @@ def hallwayLookaround(player, locationState):
 
 def selectStudent(player, locationState):
     studentList = locationState.students
+    if len(studentList) == 1:
+        return studentList[0].talkTo()
     studentNames = list(map(lambda x: x.name, studentList))
     studentString = [] if len(studentNames) == 0 else reduce(lambda a, b: a + ', ' + b, studentNames[1:], studentNames[0])
-    return "No students are available to talk to." if studentString == [] else ("Which student would you like to talk to: " + studentString + "?")
+    if not studentString:
+        return "No students are available to talk to." 
+    else:
+        player.state = PlayerState.CHOOSE_STUDENT
+        return ("Which student would you like to talk to: " + studentString + "?")
     
 hallwayCommands = {
-    "move to classroom" : makeMoveCommand(lambda gs: gs.Classroom, "You move to the classroom."),
+    "move to classroom" : makeMoveCommand(lambda gs: gs.BiologyClassroom, "You move to the biology classroom."), #TODO: Ask which classroom once we have more.
     "talk to student" : selectStudent,
     "look around" : hallwayLookaround
     }
