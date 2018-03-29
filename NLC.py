@@ -19,16 +19,16 @@ naturalLanguageClassifier = NaturalLanguageClassifierV1(
 
 
 #Create Classifier - keep commented
-#with open('student_nlc_training_set_0329.csv', 'rb') as training_data:
+#with open('nlc_training_set_0329.csv', 'rb') as training_data:
 #    classroomClassifier = naturalLanguageClassifier.create(      
 #        training_data = training_data,
-#        name = 'student0329'
+#        name = 'nlc0329'
 #        )
 #print(json.dumps(classifiers, indent=2))
 
 classifiers = naturalLanguageClassifier.list()
 #New classifiers
-classifierID =        '2fbda2x327-nlc-1447'
+classifierID =        '2fbf5cx328-nlc-1775'
 studentClassifierID = '2fbf5cx328-nlc-1761'
 subjectClassifierID = '2fbf5cx328-nlc-1457'
 
@@ -39,7 +39,7 @@ SUBJECT_CONFIDENCE_THRESHOLD = 0.9
 class NLC:
 
     def __init__(self):
-        classifierID = '2fbda2x327-nlc-1447'
+        classifierID = '2fbf5cx328-nlc-1775'
         self.status = naturalLanguageClassifier.status(classifierID)
 
     #returns the intent of the classifier given a string
