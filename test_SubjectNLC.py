@@ -9,7 +9,7 @@ from NLC import *
 def test_classify():
     nlc = SubjectNLC()
     
-    query = 'What questions does frank have'
+    query = 'does anyone have a math question'
     result = nlc.classify(query)
     assert result == 'math'
 	
