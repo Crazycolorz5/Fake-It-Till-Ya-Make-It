@@ -16,6 +16,10 @@ def test_classify():
     query = 'does anyone have a Mathematics question'
     result = nlc.classify(query)
     assert result == 'default'
+
+    query = 'does anyone have a Mathematics question'
+    result = nlc.classify(query)
+    assert result == 'Mathematics'
 	
 	
 	
