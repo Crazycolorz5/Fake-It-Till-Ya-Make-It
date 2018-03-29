@@ -5,7 +5,7 @@ from NLC import *
 
 
 def test_classify():
-    nlc = NLC()
+    nlc = studentNLC()
     
     query = 'talk to Francis Bacon'
     result = nlc.classify(query)
