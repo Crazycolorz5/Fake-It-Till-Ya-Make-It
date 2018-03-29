@@ -1,0 +1,201 @@
+move to room,move to classroom
+go to the room,move to classroom
+move to the classroom,move to classroom
+Move to classroom.,move to classroom
+Go to classroom.,move to classroom
+go to the classroom,move to classroom
+Enter the classroom.,move to classroom
+enter the class,move to classroom
+go to US History,move to classroom
+go to World History,move to classroom
+go to Math,move to classroom
+go to Biology,move to classroom
+go to Literature,move to classroom
+go to Physics,move to classroom
+move to class,move to classroom
+classrooms,move to classroom
+rooms,move to classroom
+class,move to classroom
+go to class,move to classroom
+room,move to classroom
+classroom,move to classroom
+Go to hallway.,move to hallway
+Exit classroom.,move to hallway
+exit the classroom,move to hallway
+leave the classroom,move to hallway
+Enter hallway.,move to hallway
+enter the hallway,move to hallway
+move to the hallway,move to hallway
+Move to hallway.,move to hallway
+hallway,move to hallway
+hallways,move to hallway
+leave class,move to hallway
+exit room,move to hallway
+go to other hallway,move to hallway
+enter other hallway,move to hallway
+leave class,move to hallway
+exit,move to hallway
+leave,move to hallway
+hall,move to hallway
+enter hall,move to hallway
+Talk to student.,talk to student
+Interact with students.,talk to student
+Ask student if he has a question.,talk to student
+Talk to girl.,talk to student
+receive question,talk to student
+go to student,talk to student
+get next question,talk to student
+Talk to boy,talk to student
+student,talk to student
+interact with student,talk to student
+students,talk to student
+boy,talk to student
+girl,talk to student
+get question,talk to student
+ask student,talk to student
+ask for a question,talk to student
+are there any questions,talk to student
+question,talk to student
+questions,talk to student
+talk to students,talk to student
+what are the contents of the room,look around
+what is around me,look around
+what is in the room,look around
+what is in the hallway,look around
+show me the items in the room,look around
+describe the hall contents,look around
+look around,look around
+look,look around
+contents,look around
+describe the area,look around
+what is here,look around
+room contents,look around
+get room contents,look around
+look around for me,look around
+describe the room,look around
+describe the hallway,look around
+describe the classroom,look around
+where am I,look around
+look around me,look around
+what is in the area,look around
+get items from desk,interact with desk
+get papers from desk,interact with desk
+interact with desk,interact with desk
+look in desk,interact with desk
+get document from desk,interact with desk
+go to desk,interact with desk
+grab desk item,interact with desk
+desk,interact with desk
+desks,interact with desk
+interact with desk,interact with desk
+look in desk drawer,interact with desk
+drawers,interact with desk
+check out the desk,interact with desk
+go to desk,interact with desk
+move to desk,interact with desk
+get teacher's notes from desk,interact with desk
+get student's notes from desk,interact with desk
+notes,interact with desk
+books,interact with desk
+desk items,interact with desk
+look at desk,interact with desk
+look at computer,interact with computer
+interact with computer,interact with computer
+read from computer,interact with computer
+go to computer,interact with computer
+get document from computer,interact with computer
+computer,interact with computer
+computers,interact with computer
+interact with computers,interact with computer
+browse web,interact with computer
+get online,interact with computer
+look at computers,interact with computer
+interact with computers,interact with computer
+go to the computers,interact with computer
+look online,interact with computer
+research online,interact with computer
+web,interact with computer
+internet,interact with computer
+check the internet,interact with computer
+laptop,interact with computer
+move to monitors,interact with computer
+go to book shelf,interact with bookshelf
+go to bookshelf,interact with bookshelf
+move to bookshelf,interact with bookshelf
+move to book shelf,interact with bookshelf
+bookshelf,interact with bookshelf
+book shelf,interact with bookshelf
+bookshelves,interact with bookshelf
+go to bookshelves,interact with bookshelf
+look at bookshelf,interact with bookshelf
+look at books,interact with bookshelf
+go to the library,interact with bookshelf
+move to the library,interact with bookshelf
+interact with bookshelf,interact with bookshelf
+interact with bookshelves,interact with bookshelf
+interact with book shelf,interact with bookshelf
+check the bookshelves,interact with bookshelf
+bookshelfs,interact with bookshelf
+check the bookshelf,interact with bookshelf
+search the bookshelf,interact with bookshelf
+search the bookshelves,interact with bookshelf
+go to backpack,interact with backpack
+go to bookbag,interact with backpack
+go to student's bag,interact with backpack
+look in backpack,interact with backpack
+look in bookbak,interact with backpack
+look in student's bag,interact with backpack
+search the backpack,interact with backpack
+search the bookbag,interact with backpack
+search the student's bag,interact with backpack
+move to backpack,interact with backpack
+move to book bag,interact with backpack
+move to student's bag,interact with backpack
+interact with backpack,interact with backpack
+interact with bookbag,interact with backpack
+interact with student's bag,interact with backpack
+bookbag,interact with backpack
+backpack,interact with backpack
+student's bag,interact with backpack
+bookbags,interact with backpack
+backpacks,interact with backpack
+go to podium,interact with podium
+go to teacher's podium,interact with podium
+go to teacher's stand,interact with podium
+move to podium,interact with podium
+move to teacher's stand,interact with podium
+interact with podium,interact with podium
+interact with teacher's stand,interact with podium
+podium,interact with podium
+podiums,interact with podium
+teacher's stand,interact with podium
+go to stand in front of the classroom,interact with podium
+look at podium,interact with podium
+look at stand,interact with podium
+search podium,interact with podium
+search stand,interact with podium
+teacher's podium,interact with podium
+presentation podium,interact with podium
+go to presentation podium,interact with podium
+look at podium contents,interact with podium
+get contents from podium,interact with podium
+dafdfas,default
+kjlkjl,default
+;;;;;;;,default
+yonda,default
+??????,default
+12345,default
+5490,default
+oiqethj,default
+nzdvnco,default
+kill,default
+die,default
+ndfi,default
+ball,default
+sports,default
+kick,default
+run,default
+shock,default
+fall,default
+yell,default
+how many eels are in my hovercraft,default

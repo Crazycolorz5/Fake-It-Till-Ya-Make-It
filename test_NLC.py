@@ -20,9 +20,9 @@ def test_classify():
     result = nlc.classify(query)
     assert result == 'move to hallway'
     
-    query = 'I must enter the classroom immediately!'
-    result = nlc.classify(query)
-    assert result == 'move to classroom'
+    #query = 'I must enter the classroom immediately!'
+    #result = nlc.classify(query)
+    #assert result == 'move to classroom'
     
     query = 'move to the classroom'
     result = nlc.classify(query)
