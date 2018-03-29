@@ -36,6 +36,13 @@ class LocationState:
     def leaveHook(self, player):
         player.lastStudent = None
         pass
+    
+    #Finds student object with given name (case insensitive) if in the location, otherwise gives None
+    def findStudent(self, stuName):
+        for student in self.students:
+            if student.name.casefold() == stuName.casefold(): 
+                return student
+        return None
 
 class Student:
     def __init__(self, name, firstTalk, subsequentTalk, answeredTalk, answer, answeredCorrect, answeredIncorrect):

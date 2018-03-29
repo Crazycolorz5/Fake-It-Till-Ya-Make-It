@@ -61,14 +61,13 @@ query _: queries Watson for given keyword/keyphrase'''
                 if classifiedName == "cancel":
                     self.state = PlayerState.DEFAULT
                     return "You decide against talking to a student right now."
-                studentList = self.location.students
-                for student in studentList:
-                    if student.name.casefold() == classifiedName.casefold(): 
-                        #Note: Student names (to the classifier) are case-insensitive, but commands ARE.
-                        self.lastStudent = student
-                        self.state = PlayerState.DEFAULT
-                        return student.talkTo() #breaks control flow.
-                return "Invalid student name. Please try again." #Note no state change.
+                student = self.location.findStudent(classifiedName)
+                if student == None:
+                    return "Invalid student name. Please try again." #Note no state change.
+                else:
+                    self.lastStudent = student
+                    self.state = PlayerState.DEFAULT
+                    return student.talkTo() #breaks control flow.
     
     @staticmethod
     def formatResponse(stringArr):
