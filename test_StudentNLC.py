@@ -36,6 +36,10 @@ def test_classify():
     result = nlc.classify(query)
     assert result == 'lin-manuel miranda'
 	
+    query = 'who else have a questions, does lin-Manuel Miranda have question'
+    result = nlc.classify(query)
+    assert result == 'lin-manuel miranda'
+	
 	
 	
 	
