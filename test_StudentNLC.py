@@ -31,10 +31,10 @@ def test_classify():
     result = nlc.classify(query)
     assert result == 'default'
 	
-    #testing without dash 	
+    #testing without dash works 	
     query = 'who else have a questions, does lin Manuel Miranda have question'
     result = nlc.classify(query)
-    assert result == 'lin-Manuel Miranda'
+    assert result == 'lin-manuel miranda'
 	
 	
 	
