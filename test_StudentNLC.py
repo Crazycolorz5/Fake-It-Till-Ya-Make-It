@@ -17,9 +17,13 @@ def test_classify():
     result = nlc.classify(query)
     assert result == 'john doe'
 	
+    #query = 'does sam have a question'
+    #result = nlc.classify(query)
+    #assert result == 'sam winchester'
+
     query = 'does sam have a question'
     result = nlc.classify(query)
-    assert result == 'sam winchester'
+    assert result == 'sam'
 	
     query = 'what Math question does Frank have'
     result = nlc.classify(query)
