@@ -8,6 +8,5 @@ def test_classify():
 
 	query = 'talk Francis Bacon'
 	result = nlc.classify(query)
-	assert result == 'Francis Bacon'
-	
+	assert result == 'Francis Bacon'	
 	
