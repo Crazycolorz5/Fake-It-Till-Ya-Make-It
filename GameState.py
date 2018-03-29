@@ -1,10 +1,8 @@
 from Discovery import Watson
 from NLC import *
 from enum import Enum
-from functools import * #I don't care, import them all!!
-
-WAR_OF_1812_DOCUMENT = '98e9b50f1327e045364f669dab17a2ea'
-MITOSIS_DOCUMENT = 'ad9d680ed1a99a7c856a89991d25d6f7'
+from StateBase import *
+from BiologyClassroom import makeBiologyClassroom
 
 class PlayerState(Enum):
     DEFAULT = 1
@@ -83,71 +81,19 @@ query _: queries Watson for given keyword/keyphrase'''
             i += 1
         return acc.strip()
 
-class LocationState:
-    def __init__(self):
-        # commandDictionary :: Dictionary String ((Player, LocationState) -> String)
-        self.commandDictionary = dict()
-        self.students = list()
-
-    # actOnIntent :: (LocationState, Player, String) -> Maybe String
-    def actOnIntent(self, Player, intent):
-        if intent in self.commandDictionary:
-            return self.commandDictionary[intent](Player, self)
-        else:
-            return None
-        
-    def answered(self, studentName):
-        for student in self.students:
-            if student.name == studentName:
-                return student.answered
-        return False
-        
-    def leaveHook(self, player):
-        player.lastStudent = None
-        pass
-
-class Student:
-    def __init__(self, name, firstTalk, subsequentTalk, answeredTalk, answer, answeredCorrect, answeredIncorrect):
-        self.name = name
-        self.firstTalk = firstTalk
-        self.subsequentTalk = subsequentTalk
-        self.answeredTalk = answeredTalk
-        self.correctAnswer = answer
-        self.talkedTo = False
-        self.answered = False
-        self.answeredCorrect = answeredCorrect
-        self.answeredIncorrect = answeredIncorrect
-    def talkTo(self):
-        if self.answered:
-            return self.answeredTalk
-        elif self.talkedTo:
-            return self.subsequentTalk
-        else:
-            self.talkedTo = True
-            return self.firstTalk
-    def answer(self, string): #Intend to overwrite?
-        if self.answered:
-            return self.answeredTalk
-        elif string.strip() == self.correctAnswer: #TODO: Better answer validation
-            self.answered = True
-            return self.answeredCorrect
-        else:
-            return self.answeredIncorrect
-
 class GameState:
     def __init__(self, playerName):
         self.Hallway = LocationState()
-        self.BiologyClassroom = LocationState()
+        self.Hallway2 = LocationState()
+        self.BiologyClassroom = makeBiologyClassroom()
         self.MathClassroom= LocationState()
         self.PhysicsClassroom = LocationState()
-        self.LitClassromm = LocationState()
+        self.LitClassroom = LocationState()
         self.USHistClassroom = LocationState()
         self.WorldHistClassroom = LocationState()
         
-        self.hallway2.commandDictionary = hallwayCommands
+        self.Hallway2.commandDictionary = hallwayCommands
         self.Hallway.commandDictionary = hallwayCommands
-   
-        self.BiologyClassroom.commandDictionary = classroomCommands
         self.MathClassroom.commandDictionary = classroomCommands
         self.PhysicsClassroom.commandDictionary = classroomCommands
         self.LitClassroom.commandDictionary = classroomCommands
@@ -163,22 +109,6 @@ class GameState:
                           '12/24/1814',
                           "Thanks for that answer!",
                           "Hm, I don't think that's quite right...")
-        self.BiologyClassroom.gotNotes = False
-        self.BiologyClassroom.gotWikipedia = False
-        JohnDoe = Student("John Doe",
-                              "Hey there Prof! Say, since you're just subbing, could you help me with this question on my Biology homework? What's the final phase of mitosis? (format: all lowercase)",
-                              "The question was, what's the final phase of mitosis?",
-                              "Thanks for the help!",
-                              "telophase",
-                              "Yeah, I do think the notes said something like that.",
-                              "I don't think that sounds right.")
-        SamWinchester = Student("Sam Winchester",
-                              "I can't remember what the latin name of the American Black Bear for our homework. Do you remember, Professor? (format: genus species)",
-                              "What is the latin name of the American Black Bear?",
-                              "Thank you, Professor!",
-                              "ursus americanus",
-                              "Oh yeah, Ursus Americanus. Thank you!",
-                              "I'm not sure that's correct, Professor.")
         # US History classroom student 2
         ElizabethRoss = Student("Elizabeth Ross",
                               "Hey Professor, I'm really bad with dates. What date was the 13th Amendment ratified? (format: MM/DD/YYYY)",
@@ -262,38 +192,17 @@ class GameState:
                               
                               
         # Add students to classrooms
-        self.BiologyClassroom.students = [JohnDoe, SamWinchester]
         self.MathClassroom.students = [HoldenCaulfield, SteveBoxwell]
         self.PhysicsClassroom.students = [BettyWhite, CharlesDickens]
         self.LitClassroom.students = [FrancisBacon, KevinPrice]
         self.USHistClassroom.students = [LinManuelMiranda, ElizabethRoss, FrankPierce]
         self.WorldHistClassroom.students = [MarieCurie, RosalindFranklin]
 
-
-def makeMoveCommand(locationAccessor, msgString):
-    def moveCommand(player, locationState):
-        player.location = locationAccessor(player.gameState)
-        locationState.leaveHook(player)
-        return msgString
-    return moveCommand
-
 def hallwayLookaround(player, locationState): 
     if locationState.students[0].answered: #TODO: Store this as a flag in the location.
         return "You see the student whose question you answered. There is also a door to the singular classroom of the school."
     else:
         return "There's a student who appears to want to ask you a question. There is also a door to the singular classroom of the school."
-
-def selectStudent(player, locationState):
-    studentList = locationState.students
-    if len(studentList) == 1:
-        return studentList[0].talkTo()
-    studentNames = list(map(lambda x: x.name, studentList))
-    studentString = [] if len(studentNames) == 0 else reduce(lambda a, b: a + ', ' + b, studentNames[1:], studentNames[0])
-    if not studentString:
-        return "No students are available to talk to." 
-    else:
-        player.state = PlayerState.CHOOSE_STUDENT
-        return ("Which student would you like to talk to: " + studentString + "?")
     
 hallwayCommands = {
     "move to classroom" : makeMoveCommand(lambda gs: gs.BiologyClassroom, "You move to the biology classroom."), #TODO: Ask which classroom once we have more.
