@@ -3,6 +3,7 @@ from NLC import *
 from enum import Enum
 from StateBase import *
 from BiologyClassroom import makeBiologyClassroom
+from MathClassroom import makeMathClassroom
 
 class PlayerState(Enum):
     DEFAULT = 1
@@ -86,7 +87,7 @@ class GameState:
         self.Hallway = LocationState()
         self.Hallway2 = LocationState()
         self.BiologyClassroom = makeBiologyClassroom()
-        self.MathClassroom= LocationState()
+        self.MathClassroom = makeMathClassroom()
         self.PhysicsClassroom = LocationState()
         self.LitClassroom = LocationState()
         self.USHistClassroom = LocationState()
@@ -94,7 +95,6 @@ class GameState:
         
         self.Hallway2.commandDictionary = hallwayCommands
         self.Hallway.commandDictionary = hallwayCommands
-        self.MathClassroom.commandDictionary = classroomCommands
         self.PhysicsClassroom.commandDictionary = classroomCommands
         self.LitClassroom.commandDictionary = classroomCommands
         self.USHistClassroom.commandDictionary = classroomCommands
@@ -157,22 +157,6 @@ class GameState:
                               "reed",
                               "That's what it was, of course! Thanks!",
                               "I don't think that's the right last name.")
-        # Math classroom student 1
-        HoldenCaulfield = Student("Holden Caulfield",
-                              "So apparently the quadratic equation is a special equation, because it contains only one unknown. What's the word for that?",
-                              "What is the name of a math function that contains only one unknown?",
-                              "Thanks for the help!",
-                              "univariate",
-                              "That makes sense, like one variable. Thanks!",
-                              "Math already doesn't make much sense, but I don't think that's right.")
-        # Math classroom student 2
-        SteveBoxwell = Student("Steve Boxwell",
-                              "In geometry, what's the name of a line segment that has its endpoints on the circle, but is not specifically filling any other requirement?",
-                              "You forget already? I asked you, what is the name of a line segment that has its endpoints on a circle?",
-                              "You're an alright substitute teacher, I guess.",
-                              "univariate",
-                              "I already knew that, but thanks anyway. You're not too bad.",
-                              "That's not right. You call yourself a substitude teacher?")
         # Physics classroom student 1
         BettyWhite = Student("Betty White",
                               "What's the name of the person that found the theory of general relativity? (format: first last)",
@@ -192,7 +176,6 @@ class GameState:
                               
                               
         # Add students to classrooms
-        self.MathClassroom.students = [HoldenCaulfield, SteveBoxwell]
         self.PhysicsClassroom.students = [BettyWhite, CharlesDickens]
         self.LitClassroom.students = [FrancisBacon, KevinPrice]
         self.USHistClassroom.students = [LinManuelMiranda, ElizabethRoss, FrankPierce]
