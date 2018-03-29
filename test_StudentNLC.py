@@ -26,11 +26,13 @@ def test_classify():
     result = nlc.classify(query)
     assert result == 'default'
 	
-    query = 'what Math question does Frank have'
+    #testing with last names	
+    query = 'what Math question does pierce have'
     result = nlc.classify(query)
-    assert result == 'frank Pierce'
+    assert result == 'frank pierce'
 	
-    query = 'who else have a questions, does lin have question'
+    #testing without dash 	
+    query = 'who else have a questions, does lin Manuel Miranda have question'
     result = nlc.classify(query)
     assert result == 'lin-Manuel Miranda'
 	
