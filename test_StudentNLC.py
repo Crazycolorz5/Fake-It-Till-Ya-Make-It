@@ -14,15 +14,25 @@ def test_classify():
     assert result == 'francis bacon'
 	
 	query = 'say what john doe'
-	result = nlc.clasify(query)
-	assert result == 'john doe'
+    result = nlc.classify(query)
+    assert result == 'john doe'
 	
 	query = 'does sam have a question'
-	result == nlc.classify(query)
-	assert result == 'sam winchester'
+    result = nlc.classify(query)
+    assert result == 'sam winchester'
 	
 	query = 'what Math question does Frank have'
-	result == nlc.classify(query)
-	assert result == 'frank Pierce'
+    result = nlc.classify(query)
+    assert result == 'frank Pierce'
+	
+	query = 'who else have a questions, does lin have question'
+    result = nlc.classify(query)
+    assert result == 'lin-Manuel Miranda'
+	
+	
+	
+	
+	
+
 
 
