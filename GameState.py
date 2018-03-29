@@ -99,7 +99,7 @@ class GameState:
         self.LitClassroom.commandDictionary = classroomCommands
         self.USHistClassroom.commandDictionary = classroomCommands
         self.WorldHistClassroom.commandDictionary = classroomCommands
-        
+        '''
         # US History classroom student 1
         # In the hallway currently for testing.
         LinManuelMiranda = Student("Lin-Manuel Miranda",
@@ -141,22 +141,7 @@ class GameState:
                               "artemis",
                               "Yeah! Like that Eoin Colfer series! Thanks!",
                               "Hm, that doesn't sound like the right Greek goddess.")
-        # Literature classroom student 1
-        FrancisBacon = Student("Francis Bacon",
-                              "So what year was \"Tale of Two Cities\", by Charles Dickens, published?",
-                              "I know, it's confusing to me too. \"Tale of Two Cities\" was published in what year?",
-                              "Thanks for your help!",
-                              "1859",
-                              "That's it! Thanks, Professor! I could have just looked in the book I guess, but I really hate it.",
-                              "I don't think that's right.")
-        # Literature classroom student 2
-        KevinPrice = Student("Kevin Price",
-                              "So in \"Jane Eyre\", by Charlotte Bronte, what's the name of the family she moves in with in her childhood?",
-                              "What's the name of her uncle's family in \"Jane Eyre\"?",
-                              "I wish you were my full time teacher!",
-                              "reed",
-                              "That's what it was, of course! Thanks!",
-                              "I don't think that's the right last name.")
+        
         # Math classroom student 1
         HoldenCaulfield = Student("Holden Caulfield",
                               "So apparently the quadratic equation is a special equation, because it contains only one unknown. What's the word for that?",
@@ -170,7 +155,7 @@ class GameState:
                               "In geometry, what's the name of a line segment that has its endpoints on the circle, but is not specifically filling any other requirement?",
                               "You forget already? I asked you, what is the name of a line segment that has its endpoints on a circle?",
                               "You're an alright substitute teacher, I guess.",
-                              "univariate",
+                              "chord",
                               "I already knew that, but thanks anyway. You're not too bad.",
                               "That's not right. You call yourself a substitude teacher?")
         # Physics classroom student 1
@@ -197,7 +182,7 @@ class GameState:
         self.LitClassroom.students = [FrancisBacon, KevinPrice]
         self.USHistClassroom.students = [LinManuelMiranda, ElizabethRoss, FrankPierce]
         self.WorldHistClassroom.students = [MarieCurie, RosalindFranklin]
-
+        '''
 def hallwayLookaround(player, locationState): 
     if locationState.students[0].answered: #TODO: Store this as a flag in the location.
         return "You see the student whose question you answered. There is also a door to the singular classroom of the school."

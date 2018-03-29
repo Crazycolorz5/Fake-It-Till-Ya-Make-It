@@ -8,7 +8,7 @@ def literatureClassroomLookaround(player, locationState):
     deskStatus = "There's a teacher's desk at the front of the classroom, with a pile of papers on it." if not locationState.gotNotes else "There's a huge desk, where you found the notes on \"A Tale of Two Cities\"."
     computerStatus = "There's a computer on the Teacher's desk that they might use for entering grades and the like." if not locationState.gotWikipedia else "There's a computer on the Teacher's desk, that you used to research \"Jane Eyre\"."
     door = "There is a door to the hallway."
-    return "%s\n%s\n%s\n%s\n%s" % (fancisBaconStatus, kevinPriceStatus, deskStatus, computerStatus, door)
+    return "%s\n%s\n%s\n%s\n%s" % (francisBaconStatus, kevinPriceStatus, deskStatus, computerStatus, door)
 
 def literatureClassroomDesk(player, locationState):
     if locationState.gotNotes:
@@ -39,25 +39,27 @@ literatureClassroomCommands = {
 
 
 def makeLiteratureClassroom():
-    BiologyClassroom = LocationState()
+    LiteratureClassroom = LocationState()
     
-    BiologyClassroom.commandDictionary = biologyClassroomCommands
+    LiteratureClassroom.commandDictionary = literatureClassroomCommands
     
-    BiologyClassroom.gotNotes = False
-    BiologyClassroom.gotWikipedia = False
-    JohnDoe = Student("John Doe",
-                        "Hey there Prof! Say, since you're just subbing, could you help me with this question on my Literature homework? What's the final phase of mitosis? (format: all lowercase)",
-                        "The question was, what's the final phase of mitosis?",
-                        "Thanks for the help!",
-                        "telophase",
-                        "Yeah, I do think the notes said something like that.",
-                        "I don't think that sounds right.")
-    SamWinchester = Student("Sam Winchester",
-                        "I can't remember what the latin name of the American Black Bear for our homework. Do you remember, Professor? (format: genus species)",
-                        "What is the latin name of the American Black Bear?",
-                        "Thank you, Professor!",
-                        "ursus americanus",
-                        "Oh yeah, Ursus Americanus. Thank you!",
-                        "I'm not sure that's correct, Professor.")
-    BiologyClassroom.students = [JohnDoe, SamWinchester]
-    return BiologyClassroom
+    LiteratureClassroom.gotNotes = False
+    LiteratureClassroom.gotWikipedia = False
+    # Literature classroom student 1
+    FrancisBacon = Student("Francis Bacon",
+                          "So what year was \"Tale of Two Cities\", by Charles Dickens, published?",
+                          "I know, it's confusing to me too. \"Tale of Two Cities\" was published in what year?",
+                          "Thanks for your help!",
+                          "1859",
+                          "That's it! Thanks, Professor! I could have just looked in the book I guess, but I really hate it.",
+                          "I don't think that's right.")
+    # Literature classroom student 2
+    KevinPrice = Student("Kevin Price",
+                          "So in \"Jane Eyre\", by Charlotte Bronte, what's the name of the family she moves in with in her childhood?",
+                          "What's the name of her uncle's family in \"Jane Eyre\"?",
+                          "I wish you were my full time teacher!",
+                          "reed",
+                          "That's what it was, of course! Thanks!",
+                          "I don't think that's the right last name.")
+    LiteratureClassroom.students = [FrancisBacon, KevinPrice]
+    return LiteratureClassroom
