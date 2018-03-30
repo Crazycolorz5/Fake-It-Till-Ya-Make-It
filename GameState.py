@@ -98,32 +98,7 @@ class GameState:
         self.LitClassroom.commandDictionary = classroomCommands
         self.USHistClassroom.commandDictionary = classroomCommands
         self.WorldHistClassroom.commandDictionary = classroomCommands
-        
-        # US History classroom student 1
-        # In the hallway currently for testing.
-        LinManuelMiranda = Student("Lin-Manuel Miranda",
-                          "Hey Prof. %s, I have a question. What date was the treaty of Ghent signed? (format: MM/DD/YYYY)" % playerName,
-                          "To repeat my question, what date was the treaty of Ghent signed? (format: MM/DD/YYYY)",
-                          "Thank you for answering my question!",
-                          '12/24/1814',
-                          "Thanks for that answer!",
-                          "Hm, I don't think that's quite right...")
-        # US History classroom student 2
-        ElizabethRoss = Student("Elizabeth Ross",
-                              "Hey Professor, I'm really bad with dates. What date was the 13th Amendment ratified? (format: MM/DD/YYYY)",
-                              "What was my question? I'm asking what date the 13th Amendment was ratified.",
-                              "Thanks so much!",
-                              "12/06/1865",
-                              "That doesn't sound super familiar, but I'll trust you, thanks Professor!",
-                              "I'm not entirely sure, but that doesn't sound like the right answer.")
-        # US History classroom student 3
-        FrankPierce = Student("Frank Pierce",
-                              "Hi! So, how many people have served as the President of the U.S.? Like, total?",
-                              "Hi again. If it isn't too much trouble, how many people have been president?",
-                              "You're the best!",
-                              "44",
-                              "Oh, I should have known that! Thank you!",
-                              "Are you sure?")
+        '''
         # World History classroom student 1
         MarieCurie = Student("Marie Curie",
                               "Hey, this question is kinda specific. Who was the German emperor during WWI? (format: title lastname suffix)",
@@ -196,7 +171,7 @@ class GameState:
         self.LitClassroom.students = [FrancisBacon, KevinPrice]
         self.USHistClassroom.students = [LinManuelMiranda, ElizabethRoss, FrankPierce]
         self.WorldHistClassroom.students = [MarieCurie, RosalindFranklin]
-
+        '''
 def hallwayLookaround(player, locationState): 
     if locationState.students[0].answered: #TODO: Store this as a flag in the location.
         return "You see the student whose question you answered. There is also a door to the singular classroom of the school."
