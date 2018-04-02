@@ -10,7 +10,14 @@ def mathClassroomLookaround(player, locationState):
         steveString = "Steve is sitting at his desk, playing remotely with a hovercraft."
 
 def mathBackpack(player, locationState):
-    pass
+    if locationState.backpackNotes:
+        return "You have no further reason to search Steve Boxwell's backpack."
+    elif locationState.findStudent("Steve Boxwell").talkedTo:
+        locationState.backpackNotes = True
+        player.watson.findDocument(CIRCLE_DOCUMENT)
+        return "You take Steve Boxwell's notes on circles. You attempt to read it, but\nthen decide to just send it to Watson to make sense of the handwriting automatically.\nYou got a document on circles!"
+    else:
+        return "You shouldn't be going through students' personal belongings without their permission."
 
 mathClassroomCommands = {
     "move to hallway": makeMoveCommand(lambda gs: gs.Hallway, "You move to the sciences hallway."),
