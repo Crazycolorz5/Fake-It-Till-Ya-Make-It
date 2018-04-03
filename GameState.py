@@ -25,7 +25,7 @@ Otherwise, just say what you want to do!'''
         self.studentNLC = StudentNLC()
         self.subjectNLC = SubjectNLC()
         self.gameState = GameState(name)
-        self.location = self.gameState.Hallway
+        self.location = self.gameState.SciencesHallway
         self.lastStudent = None
         self.state = PlayerState.DEFAULT
 
