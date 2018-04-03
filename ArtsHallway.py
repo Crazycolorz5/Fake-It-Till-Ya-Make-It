@@ -13,3 +13,5 @@ def makeArtsHallway(classrooms):
     ArtsHallway = LocationState()
     ArtsHallway.classrooms = classrooms
     ArtsHallway.commandDictionary = artHallwayCommands
+    
+    return ArtsHallway
