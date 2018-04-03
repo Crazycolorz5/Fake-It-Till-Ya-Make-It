@@ -5,7 +5,7 @@ from BiologyClassroom import makeBiologyClassroom
 from MathClassroom import makeMathClassroom
 from PhysicsClassroom import makePhysicsClassroom
 from LiteratureClassroom import makeLiteratureClassroom
-from HistoryClassroom import makeUSHistoryClassroom
+from USHistoryClassroom import makeUSHistoryClassroom
 from WorldHistoryClassroom import makeWorldHistoryClassroom
 
 class Player:
