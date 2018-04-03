@@ -14,7 +14,9 @@ class Player:
     helpString = '''help: gives a brief description of basic commands user can enter
 quit: quits the demo
 answer _: submits an answer to the current question
-query _: queries Watson for given keyword/keyphrase'''
+query _: queries Watson for given keyword/keyphrase
+You can look around to see the environment around you.
+Otherwise, just say what you want to do!'''
     
     def __init__(self, name):
         self.name = name
