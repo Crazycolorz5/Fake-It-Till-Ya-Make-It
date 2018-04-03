@@ -100,55 +100,5 @@ class GameState:
         self.USHistClassroom = makeUSHistoryClassroom()
         self.WorldHistClassroom = makeWorldHistoryClassroom()
         
-        self.Hallway2.commandDictionary = hallwayCommands
-        self.Hallway.commandDictionary = hallwayCommands
-        
-        self.Hallway.classrooms = { "math" : self.MathClassroom, "biology" : self.BiologyClassroom, "physics" : self.PhysicsClassroom }
-
-def hallwayLookaround(player, locationState): 
-    if locationState.students[0].answered: #TODO: Store this as a flag in the location.
-        return "You see the student whose question you answered. There is also a door to the singular classroom of the school."
-    else:
-        return "There's a student who appears to want to ask you a question. There is also a door to the singular classroom of the school."
-    
-hallwayCommands = {
-    "move to classroom" : makeMoveCommand(lambda gs: gs.BiologyClassroom, "You move to the biology classroom."), #TODO: Ask which classroom once we have more.
-    "talk to student" : selectStudent,
-    "look around" : hallwayLookaround
-    }
-
-def classroomLookaround(player, locationState):
-    answeredJohnDoe = locationState.answered("John Doe")
-    answeredSamWinchester = locationState.answered("Sam Winchester")
-    johnDoeStatus = "There's a student looking at a diagram of cells, loking somewhat confused." if not answeredJohnDoe else "John Doe is sitting at their desk." #TODO: Store this as a flag in the location.
-    samWinchesterStatus = "There's a student waiting by the teacher's desk to ask a question." if not answeredSamWinchester else "Sam Winchester has returned to their desk and is waiting for the school day to end."
-    deskStatus = "There's a teacher's desk." if not locationState.gotNotes else "There's a teacher's desk, where you got the lecture notes from."
-    computerStatus = "There are several computers in the corner of the room, presumably for students to use during a free period." if not locationState.gotWikipedia else "There are several computers, including the one you get the Wikipedia article from. You have to remember to tell your students not to cite Wikipedia."
-    door = "There is a door to the hallway."
-    return "%s\n%s\n%s\n%s\n%s" % (johnDoeStatus, samWinchesterStatus, deskStatus, computerStatus, door)
-
-def classroomDesk(player, locationState):
-    if locationState.gotNotes:
-        return "You've already gotten the lecture notes from the teacher's desk."
-    else:
-        locationState.gotNotes = True
-        player.watson.findDocument(WAR_OF_1812_DOCUMENT)
-        return "You open the drawer and grab the lecture notes the regular teacher left you. To reduce prep time, you pull out your phone, take a picture of the notes, and send it to IBM Watson for analysis.\nYou got a document on the War of 1812!"
-
-def classroomComputer(player, locationState):
-    if locationState.gotWikipedia:
-        return "You have no further use for the computer at this time."
-    elif locationState.students[0].talkedTo: #TODO: Store this as a flag in the location.
-        locationState.gotWikipedia = True
-        player.watson.findDocument(MITOSIS_DOCUMENT)
-        return "As per the student's request, you search the web for an article on mitosis.\nYou grab the Wikipedia page and send it to IBM Watson for analysis.\nYou got a document on mitosis!"
-    else:
-        return "You have no reason to use a computer at the moment."
-
-classroomCommands = {
-    "move to hallway": makeMoveCommand(lambda gs: gs.Hallway, "You move to the hallway."),
-    "talk to student" : selectStudent,
-    "look around" : classroomLookaround,
-    "interact with desk" : classroomDesk,
-    "interact with computer" : classroomComputer
-}
+        self.SciencesHallway = makeSciencesHallway({ "math" : self.MathClassroom, "biology" : self.BiologyClassroom, "physics" : self.PhysicsClassroom })
+        self.ArtsHallway = makeArtsHallway({ "us history" : self.USHistClassroom, "world history" : self.WorldHistClassroom, "literature" : self.LitClassroom })
