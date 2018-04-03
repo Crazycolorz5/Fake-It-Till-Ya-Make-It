@@ -30,7 +30,7 @@ def worldHistoryClassroomComputer(player, locationState):
 
 
 worldHistoryClassroomCommands = {
-    "move to hallway": makeMoveCommand(lambda gs: gs.Hallway, "You move to the hallway."),
+    "move to hallway": makeMoveCommand(lambda gs: gs.ArtsHallway, "You move to the arts hallway."),
     "talk to student" : selectStudent,
     "look around" : worldHistoryClassroomLookaround,
     "interact with backpack" : worldHistoryClassroomBackpack,

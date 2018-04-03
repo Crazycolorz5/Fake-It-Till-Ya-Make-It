@@ -30,7 +30,7 @@ def literatureClassroomComputer(player, locationState):
 
 
 literatureClassroomCommands = {
-    "move to hallway": makeMoveCommand(lambda gs: gs.Hallway, "You move to the hallway."),
+    "move to hallway": makeMoveCommand(lambda gs: gs.ArtsHallway, "You move to the arts hallway."),
     "talk to student" : selectStudent,
     "look around" : literatureClassroomLookaround,
     "interact with desk" : literatureClassroomDesk,

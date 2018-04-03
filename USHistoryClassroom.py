@@ -39,7 +39,7 @@ def USHistoryClassroomBookshelf(player, locationState):
         return "You get on your tiptoes to peek at the top of a bookshelf, and see some papers scattered around up there.\nYou got a document on the 13th Amendment!"
 
 USHistoryClassroomCommands = {
-    "move to hallway": makeMoveCommand(lambda gs: gs.Hallway, "You move to the hallway."),
+    "move to hallway": makeMoveCommand(lambda gs: gs.ArtsHallway, "You move to the arts hallway."),
     "talk to student" : selectStudent,
     "look around" : USHistoryClassroomLookaround,
     "interact with desk" : USHistoryClassroomDesk,
