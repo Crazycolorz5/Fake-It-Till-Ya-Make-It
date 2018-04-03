@@ -1,6 +1,5 @@
 from Discovery import Watson
 from NLC import *
-from enum import Enum
 from StateBase import *
 from BiologyClassroom import makeBiologyClassroom
 from MathClassroom import makeMathClassroom

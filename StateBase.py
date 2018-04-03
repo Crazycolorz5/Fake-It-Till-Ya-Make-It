@@ -1,3 +1,4 @@
+from enum import Enum
 from functools import *
 
 WAR_OF_1812_DOCUMENT = '98e9b50f1327e045364f669dab17a2ea'
@@ -94,4 +95,4 @@ def selectStudent(player, locationState):
         return "No students are available to talk to." 
     else:
         player.state = PlayerState.CHOOSE_STUDENT
-return ("Which student would you like to talk to: " + studentString + "?")
+        return ("Which student would you like to talk to: " + studentString + "?")
