@@ -7,6 +7,8 @@ from PhysicsClassroom import makePhysicsClassroom
 from LiteratureClassroom import makeLiteratureClassroom
 from USHistoryClassroom import makeUSHistoryClassroom
 from WorldHistoryClassroom import makeWorldHistoryClassroom
+from ArtsHallway import makeArtsHallway
+from SciencesHallway import makeSciencesHallway
 
 class Player:
     helpString = '''help: gives a brief description of basic commands user can enter
