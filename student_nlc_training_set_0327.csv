@@ -1,5 +1,5 @@
 Sam Winchester,sam winchester
-Sam Winchester,sam winchester
+Sam,sam winchester
 Winchester,sam winchester
 John Doe,john doe
 John,john doe
@@ -29,7 +29,7 @@ Currie,marie currie
 Elizabeth Ross,elizabeth ross
 Elizabeth,elizabeth ross
 Ross,elizabeth ross
-Betsy,elizabeth ross
+Betsy Ross,elizabeth ross
 Charles Dickens,charles dickens
 Charles,charles dickens
 Dickens,charles dickens
@@ -40,3 +40,8 @@ Miranda,lin-manuel miranda
 Holden Caulfield,holden caulfield
 Holden,holden caulfield
 Caulfield,holden caulfield
+stop,cancel
+cancel,cancel
+go back,cancel
+I don't want to talk to a student,cancel
+exit,cancel
