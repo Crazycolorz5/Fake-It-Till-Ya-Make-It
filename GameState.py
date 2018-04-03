@@ -8,7 +8,6 @@ from PhysicsClassroom import makePhysicsClassroom
 from LiteratureClassroom import makeLiteratureClassroom
 from HistoryClassroom import makeUSHistoryClassroom
 from WorldHistoryClassroom import makeWorldHistoryClassroom
-        self.WorldHistClassroom = makeWorldHistoryClassroom()
 
 class Player:
     helpString = '''help: gives a brief description of basic commands user can enter
