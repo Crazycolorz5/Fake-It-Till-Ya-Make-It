@@ -3,7 +3,7 @@ from StateBase import *
 def biologyClassroomLookaround(player, locationState):
     answeredJohnDoe = locationState.answered("John Doe")
     answeredSamWinchester = locationState.answered("Sam Winchester")
-    johnDoeStatus = "There's a student looking at a diagram of cells, loking somewhat confused." if not answeredJohnDoe else "John Doe is sitting at their desk."
+    johnDoeStatus = "There's a student looking at a diagram of cells, loking somewhat confused." if not answeredJohnDoe else "John Doe is sitting at their desk." #TODO: Store this as a flag in the location.
     samWinchesterStatus = "There's a student waiting by the teacher's desk to ask a question." if not answeredSamWinchester else "Sam Winchester has returned to their desk and is waiting for the school day to end."
     deskStatus = "There's a teacher's desk." if not locationState.gotNotes else "There's a teacher's desk, where you got the lecture notes from."
     computerStatus = "There are several computers in the corner of the room, presumably for students to use during a free period." if not locationState.gotWikipedia else "There are several computers, including the one you get the Wikipedia article from. You have to remember to tell your students not to cite Wikipedia."
@@ -15,13 +15,13 @@ def biologyClassroomDesk(player, locationState):
         return "You've already gotten the lecture notes from the teacher's desk."
     else:
         locationState.gotNotes = True
-        player.watson.findDocument(BLACK_BEAR_DOCUMENT)
-        return "You open the drawer and grab the lecture notes the regular teacher left you. To reduce prep time, you pull out your phone, take a picture of the notes, and send it to IBM Watson for analysis.\nYou got a document on the black bears of America!"
+        player.watson.findDocument(WAR_OF_1812_DOCUMENT)
+        return "You open the drawer and grab the lecture notes the regular teacher left you. To reduce prep time, you pull out your phone, take a picture of the notes, and send it to IBM Watson for analysis.\nYou got a document on the War of 1812!"
 
 def biologyClassroomComputer(player, locationState):
     if locationState.gotWikipedia:
         return "You have no further use for the computer at this time."
-    elif locationState.findStudent("John Doe").talkedTo:
+    elif locationState.students[0].talkedTo: #TODO: Store this as a flag in the location.
         locationState.gotWikipedia = True
         player.watson.findDocument(MITOSIS_DOCUMENT)
         return "As per the student's request, you search the web for an article on mitosis.\nYou grab the Wikipedia page and send it to IBM Watson for analysis.\nYou got a document on mitosis!"
@@ -30,7 +30,7 @@ def biologyClassroomComputer(player, locationState):
 
 
 biologyClassroomCommands = {
-    "move to hallway": makeMoveCommand(lambda gs: gs.Hallway, "You move to the sciences hallway."),
+    "move to hallway": makeMoveCommand(lambda gs: gs.Hallway, "You move to the hallway."),
     "talk to student" : selectStudent,
     "look around" : biologyClassroomLookaround,
     "interact with desk" : biologyClassroomDesk,

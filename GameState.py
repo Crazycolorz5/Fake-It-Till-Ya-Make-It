@@ -3,7 +3,6 @@ from NLC import *
 from enum import Enum
 from StateBase import *
 from BiologyClassroom import makeBiologyClassroom
-from MathClassroom import makeMathClassroom
 
 class PlayerState(Enum):
     DEFAULT = 1
@@ -21,7 +20,6 @@ query _: queries Watson for given keyword/keyphrase'''
         self.watson = Watson()
         self.nlc = NLC()
         self.studentNLC = StudentNLC()
-        self.SubjectNLC = SubjectNLC()
         self.gameState = GameState(name)
         self.location = self.gameState.Hallway
         self.lastStudent = None
@@ -57,20 +55,20 @@ query _: queries Watson for given keyword/keyphrase'''
                 retStr = self.location.actOnIntent(self, intent)
                 return "Invalid command." if retStr is None else retStr
             elif self.state == PlayerState.CHOOSE_ROOM:
-                classifiedClassroom == self.subjectNLC.classify(inputString)
                 pass #TODO
             elif self.state == PlayerState.CHOOSE_STUDENT:
                 classifiedName = self.studentNLC.classify(inputString)
                 if classifiedName == "cancel":
                     self.state = PlayerState.DEFAULT
                     return "You decide against talking to a student right now."
-                student = self.location.findStudent(classifiedName)
-                if student == None:
-                    return "Invalid student name. Please try again." #Note no state change.
-                else:
-                    self.lastStudent = student
-                    self.state = PlayerState.DEFAULT
-                    return student.talkTo() #breaks control flow.
+                studentList = self.location.students
+                for student in studentList:
+                    if student.name.casefold() == classifiedName.casefold(): 
+                        #Note: Student names (to the classifier) are case-insensitive, but commands ARE.
+                        self.lastStudent = student
+                        self.state = PlayerState.DEFAULT
+                        return student.talkTo() #breaks control flow.
+                return "Invalid student name. Please try again." #Note no state change.
     
     @staticmethod
     def formatResponse(stringArr):
@@ -88,7 +86,7 @@ class GameState:
         self.Hallway = LocationState()
         self.Hallway2 = LocationState()
         self.BiologyClassroom = makeBiologyClassroom()
-        self.MathClassroom = makeMathClassroom()
+        self.MathClassroom= LocationState()
         self.PhysicsClassroom = LocationState()
         self.LitClassroom = LocationState()
         self.USHistClassroom = LocationState()
@@ -96,11 +94,12 @@ class GameState:
         
         self.Hallway2.commandDictionary = hallwayCommands
         self.Hallway.commandDictionary = hallwayCommands
+        self.MathClassroom.commandDictionary = classroomCommands
         self.PhysicsClassroom.commandDictionary = classroomCommands
         self.LitClassroom.commandDictionary = classroomCommands
         self.USHistClassroom.commandDictionary = classroomCommands
         self.WorldHistClassroom.commandDictionary = classroomCommands
-        '''
+        
         # US History classroom student 1
         # In the hallway currently for testing.
         LinManuelMiranda = Student("Lin-Manuel Miranda",
@@ -158,6 +157,22 @@ class GameState:
                               "reed",
                               "That's what it was, of course! Thanks!",
                               "I don't think that's the right last name.")
+        # Math classroom student 1
+        HoldenCaulfield = Student("Holden Caulfield",
+                              "So apparently the quadratic equation is a special equation, because it contains only one unknown. What's the word for that?",
+                              "What is the name of a math function that contains only one unknown?",
+                              "Thanks for the help!",
+                              "univariate",
+                              "That makes sense, like one variable. Thanks!",
+                              "Math already doesn't make much sense, but I don't think that's right.")
+        # Math classroom student 2
+        SteveBoxwell = Student("Steve Boxwell",
+                              "In geometry, what's the name of a line segment that has its endpoints on the circle, but is not specifically filling any other requirement?",
+                              "You forget already? I asked you, what is the name of a line segment that has its endpoints on a circle?",
+                              "You're an alright substitute teacher, I guess.",
+                              "univariate",
+                              "I already knew that, but thanks anyway. You're not too bad.",
+                              "That's not right. You call yourself a substitude teacher?")
         # Physics classroom student 1
         BettyWhite = Student("Betty White",
                               "What's the name of the person that found the theory of general relativity? (format: first last)",
@@ -177,11 +192,12 @@ class GameState:
                               
                               
         # Add students to classrooms
+        self.MathClassroom.students = [HoldenCaulfield, SteveBoxwell]
         self.PhysicsClassroom.students = [BettyWhite, CharlesDickens]
         self.LitClassroom.students = [FrancisBacon, KevinPrice]
         self.USHistClassroom.students = [LinManuelMiranda, ElizabethRoss, FrankPierce]
         self.WorldHistClassroom.students = [MarieCurie, RosalindFranklin]
-        '''
+
 def hallwayLookaround(player, locationState): 
     if locationState.students[0].answered: #TODO: Store this as a flag in the location.
         return "You see the student whose question you answered. There is also a door to the singular classroom of the school."

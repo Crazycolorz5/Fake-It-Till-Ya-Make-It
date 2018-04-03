@@ -2,17 +2,6 @@ from functools import *
 
 WAR_OF_1812_DOCUMENT = '98e9b50f1327e045364f669dab17a2ea'
 MITOSIS_DOCUMENT = 'ad9d680ed1a99a7c856a89991d25d6f7'
-GENERAL_RELATIVITY_DOCUMENT = 'fb37bbd8b218a05f8507af653948ba64'
-BLACK_BEAR_DOCUMENT = '41009df362f8fe05beadcfe162c03cdd'
-ANCIENT_GREECE_DOCUMENT = 'f2c002562bb849b53180ac628da192f5'
-PRESIDENTS_DOCUMENT = '2d43e8f7832fbc02fda4bcfbea514667'
-QUADRATIC_EQUATION_DOCUMENT = '27ce78f83dc0d72d96e3f5766736992d'
-CIRCLE_DOCUMENT = 'ab7facd3213a7156e24ad5f23548f1fd'
-JANE_EYRE_DOCUMENT = '33700eb6b0e66773a97012125ba6d800'
-THERMODYNAMICS_DOCUMENT = '62108334cc73caa68c4ef1f21c4c7be3'
-TALE_OF_TWO_CITIES_DOCUMENT = '181f74c2c11aede44654b969e5d18676'
-THIRTEENTH_AMENDMENT_DOCUMENT = '114ec7d948248dd6ff7fc25f82d1c52a'
-WORLD_WAR_I_DOCUMENT = '227192aab28b637c7ad5477d012595d0'
 
 class LocationState:
     def __init__(self):
@@ -28,19 +17,14 @@ class LocationState:
             return None
         
     def answered(self, studentName):
-        student = self.findStudent(studentName)
-        return False if student == None else student.answered
+        for student in self.students:
+            if student.name == studentName:
+                return student.answered
+        return False
         
     def leaveHook(self, player):
         player.lastStudent = None
         pass
-    
-    #Finds student object with given name (case insensitive) if in the location, otherwise gives None
-    def findStudent(self, stuName):
-        for student in self.students:
-            if student.name.casefold() == stuName.casefold(): 
-                return student
-        return None
 
 class Student:
     def __init__(self, name, firstTalk, subsequentTalk, answeredTalk, answer, answeredCorrect, answeredIncorrect):
