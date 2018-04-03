@@ -95,8 +95,6 @@ Otherwise, just say what you want to do!'''
 
 class GameState:
     def __init__(self, playerName):
-        self.SciencesHallway = makeSciencesHallway()
-        self.ArtsHallway = makeArtsHallway()
         self.BiologyClassroom = makeBiologyClassroom()
         self.MathClassroom = makeMathClassroom()
         self.PhysicsClassroom = makePhysicsClassroom()
