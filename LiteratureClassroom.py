@@ -21,7 +21,7 @@ def literatureClassroomDesk(player, locationState):
 def literatureClassroomComputer(player, locationState):
     if locationState.gotWikipedia:
         return "You have no further use for the computer at this time."
-    else
+    else:
         locationState.gotWikipedia = True
         player.watson.findDocument(JANE_EYRE_DOCUMENT)
         return "As per the student's request, you search the web for an article on mitosis.\nYou grab the Wikipedia page and send it to IBM Watson for analysis.\nYou got a document on \"Jane Eyre\"!"
