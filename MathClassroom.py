@@ -51,7 +51,7 @@ def makeMathClassroom():
     MathClassroom.backpackNotes = False
     MathClassroom.deskNotes = False;
     
-    MathClassroom.commandDictionary = classroomCommands
+    MathClassroom.commandDictionary = mathClassroomCommands
     
     # Math classroom student 1
     HoldenCaulfield = Student("Holden Caulfield",
