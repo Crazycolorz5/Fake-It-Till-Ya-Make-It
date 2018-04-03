@@ -3,11 +3,12 @@ from NLC import *
 from enum import Enum
 from StateBase import *
 from BiologyClassroom import makeBiologyClassroom
-
-class PlayerState(Enum):
-    DEFAULT = 1
-    CHOOSE_ROOM = 2
-    CHOOSE_STUDENT = 3
+from MathClassroom import makeMathClassroom
+from PhysicsClassroom import makePhysicsClassroom
+from LiteratureClassroom import makeLiteratureClassroom
+from HistoryClassroom import makeUSHistoryClassroom
+from WorldHistoryClassroom import makeWorldHistoryClassroom
+        self.WorldHistClassroom = makeWorldHistoryClassroom()
 
 class Player:
     helpString = '''help: gives a brief description of basic commands user can enter
@@ -95,11 +96,11 @@ class GameState:
         self.Hallway = LocationState()
         self.Hallway2 = LocationState()
         self.BiologyClassroom = makeBiologyClassroom()
-        self.MathClassroom= LocationState()
-        self.PhysicsClassroom = LocationState()
-        self.LitClassroom = LocationState()
-        self.USHistClassroom = LocationState()
-        self.WorldHistClassroom = LocationState()
+        self.MathClassroom = makeMathClassroom()
+        self.PhysicsClassroom = makePhysicsClassroom()
+        self.LitClassroom = makeLiteratureClassroom()
+        self.USHistClassroom = makeUSHistoryClassroom()
+        self.WorldHistClassroom = makeWorldHistoryClassroom()
         
         self.Hallway2.commandDictionary = hallwayCommands
         self.Hallway.commandDictionary = hallwayCommands
