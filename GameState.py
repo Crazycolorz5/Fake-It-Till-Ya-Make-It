@@ -20,6 +20,7 @@ query _: queries Watson for given keyword/keyphrase'''
         self.watson = Watson()
         self.nlc = NLC()
         self.studentNLC = StudentNLC()
+        self.subjectNLC = SubjectNLC()
         self.gameState = GameState(name)
         self.location = self.gameState.Hallway
         self.lastStudent = None
@@ -55,7 +56,15 @@ query _: queries Watson for given keyword/keyphrase'''
                 retStr = self.location.actOnIntent(self, intent)
                 return "Invalid command." if retStr is None else retStr
             elif self.state == PlayerState.CHOOSE_ROOM:
-                pass #TODO
+                classifiedClassroom = self.subjectNLC.classify(inputString)
+                connections = self.location.classrooms
+                if classifiedClassroom in connections:
+                    self.location = connections[classifiedClassroom]
+                    self.state = PlayerState.DEFAULT
+                    return "You move to the %s classroom." % classifiedClassroom.title()
+                else:
+                    self.state = PlayerState.DEFAULT
+                    return "That's an invalid classroom. You decide against moving for now."                
             elif self.state == PlayerState.CHOOSE_STUDENT:
                 classifiedName = self.studentNLC.classify(inputString)
                 if classifiedName == "cancel":
@@ -94,11 +103,8 @@ class GameState:
         
         self.Hallway2.commandDictionary = hallwayCommands
         self.Hallway.commandDictionary = hallwayCommands
-        self.MathClassroom.commandDictionary = classroomCommands
-        self.PhysicsClassroom.commandDictionary = classroomCommands
-        self.LitClassroom.commandDictionary = classroomCommands
-        self.USHistClassroom.commandDictionary = classroomCommands
-        self.WorldHistClassroom.commandDictionary = classroomCommands
+        
+        self.Hallway.classrooms = { "math" : self.MathClassroom, "biology" : self.BiologyClassroom, "physics" : self.PhysicsClassroom }
         '''
         # World History classroom student 1
         MarieCurie = Student("Marie Curie",
