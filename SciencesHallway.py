@@ -1,22 +1,18 @@
 from StateBase import *
 
 def sciencesHallwayLookaround(player, locationState):
-    status = "There is a Math classroom, a Physics classroom, and a Biology classroom in this hallway.\nThere is also a door to the Arts hallway."
-    return "%s" % (status)
-
+    return "You are in the sciences hallway.\nThere are neighboring classrooms for the sciences and maths.\nThe arts hallway is on the other end."
 
 sciencesHallwayCommands = {
-    "move to classroom" : makeMoveCommand(lambda gs: gs.BiologyClassroom, "You move to the biology classroom."), #TODO: Ask which classroom once we have more.
-    "talk to student" : selectStudent,
-    "look around" : hallwayLookaround
+    "move to hallway" : makeMoveCommand(lambda gs: gs.ArtsHallway, "You move to the arts hallway."),
+    "move to classroom" : selectClassroom,
+    "look around" : sciencesHallwayLookaround
     }
 
-
-def makeSciencesHallway():
+def makeSciencesHallway(classrooms):
     SciencesHallway = LocationState()
-    
-    SciencesHallway.commandDictionary = sciencesHallwaycommands
-    
+    SciencesHallway.classrooms = classrooms
+    Sciences.commandDictionary = sciencesHallwayCommands
     return SciencesHallway
     
 
