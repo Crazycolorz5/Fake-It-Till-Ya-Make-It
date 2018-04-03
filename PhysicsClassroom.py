@@ -38,7 +38,7 @@ physicsClassroomCommands = {
 }
 
 
-def makephysicsClassroom():
+def makePhysicsClassroom():
     physicsClassroom = LocationState()
     
     physicsClassroom.commandDictionary = physicsClassroomCommands
