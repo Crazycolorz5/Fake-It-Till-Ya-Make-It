@@ -20,6 +20,7 @@ query _: queries Watson for given keyword/keyphrase'''
         self.watson = Watson()
         self.nlc = NLC()
         self.studentNLC = StudentNLC()
+        self.SubjectNLC = SubjectNLC()
         self.gameState = GameState(name)
         self.location = self.gameState.Hallway
         self.lastStudent = None
@@ -55,6 +56,7 @@ query _: queries Watson for given keyword/keyphrase'''
                 retStr = self.location.actOnIntent(self, intent)
                 return "Invalid command." if retStr is None else retStr
             elif self.state == PlayerState.CHOOSE_ROOM:
+                classifiedClassroom == self.subjectNLC.classify(inputString)
                 pass #TODO
             elif self.state == PlayerState.CHOOSE_STUDENT:
                 classifiedName = self.studentNLC.classify(inputString)
