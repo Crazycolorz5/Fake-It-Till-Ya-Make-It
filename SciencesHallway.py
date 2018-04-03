@@ -13,5 +13,6 @@ def makeSciencesHallway(classrooms):
     SciencesHallway = LocationState()
     SciencesHallway.classrooms = classrooms
     Sciences.commandDictionary = sciencesHallwayCommands
+    return SciencesHallway
     
 
