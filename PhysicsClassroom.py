@@ -16,21 +16,19 @@ def physicsClassroomDesk(player, locationState):
     else:
         locationState.gotNotes = True
         player.watson.findDocument(THERMODYNAMICS_DOCUMENT)
-        return "You open the drawer and grab the lecture notes the regular teacher left you. To reduce prep time, you pull out your phone, take a picture of the notes, and send it to IBM Watson for analysis.\nYou got a document on the THERMODYNAMICS document!"
+        return "You open the drawer and grab the lecture notes the regular teacher left you. To reduce prep time, you pull out your phone, take a picture of the notes, and send it to IBM Watson for analysis.\nYou got a document on thermodynamics!"
 
 def physicsClassroomComputer(player, locationState):
     if locationState.gotWikipedia:
         return "You have no further use for the computer at this time."
-    elif locationState.students[0].talkedTo: #TODO: Store this as a flag in the location.
+    else:
         locationState.gotWikipedia = True
         player.watson.findDocument(GENERAL_RELATIVITY_DOCUMENT)
         return "As per the student's request, you search the web for an article on general relativity.\nYou grab the Wikipedia page and send it to IBM Watson for analysis.\nYou got a document on general relativity!"
-    else:
-        return "You have no reason to use a computer at the moment."
 
 
 physicsClassroomCommands = {
-    "move to hallway": makeMoveCommand(lambda gs: gs.Hallway, "You move to the hallway."),
+    "move to hallway": makeMoveCommand(lambda gs: gs.SciencesHallway, "You move to the sciences hallway."),
     "talk to student" : selectStudent,
     "look around" : physicsClassroomLookaround,
     "interact with desk" : physicsClassroomDesk,

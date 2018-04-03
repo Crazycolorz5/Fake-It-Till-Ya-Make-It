@@ -21,12 +21,10 @@ def worldHistoryClassroomBackpack(player, locationState):
 def worldHistoryClassroomComputer(player, locationState):
     if locationState.gotWikipedia:
         return "You have no further use for the computer at this time."
-    elif locationState.students[0].talkedTo: #TODO: Store this as a flag in the location.
+    else:
         locationState.gotWikipedia = True
         player.watson.findDocument(ANCIENT_GREECE_DOCUMENT)
         return "You search the web and soon found a page on Wikipedia about ancient Greece. You copy the article and send it to IBM Watson for analysis.\nYou got a document on ancient Greece!"
-    else:
-        return "You have no reason to use a computer at the moment."
 
 
 worldHistoryClassroomCommands = {

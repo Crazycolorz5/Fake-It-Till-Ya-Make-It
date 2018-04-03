@@ -21,16 +21,14 @@ def biologyClassroomDesk(player, locationState):
 def biologyClassroomComputer(player, locationState):
     if locationState.gotWikipedia:
         return "You have no further use for the computer at this time."
-    elif locationState.students[0].talkedTo: #TODO: Store this as a flag in the location.
+    else:
         locationState.gotWikipedia = True
         player.watson.findDocument(MITOSIS_DOCUMENT)
         return "As per the student's request, you search the web for an article on mitosis.\nYou grab the Wikipedia page and send it to IBM Watson for analysis.\nYou got a document on mitosis!"
-    else:
-        return "You have no reason to use a computer at the moment."
 
 
 biologyClassroomCommands = {
-    "move to hallway": makeMoveCommand(lambda gs: gs.Hallway, "You move to the hallway."),
+    "move to hallway": makeMoveCommand(lambda gs: gs.SciencesHallway, "You move to the hallway."),
     "talk to student" : selectStudent,
     "look around" : biologyClassroomLookaround,
     "interact with desk" : biologyClassroomDesk,

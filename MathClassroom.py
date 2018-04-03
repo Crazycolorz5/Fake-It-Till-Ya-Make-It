@@ -16,7 +16,6 @@ def mathClassroomLookaround(player, locationState):
     deskString = "The teacher's desk is at the front of the room."
     doorString = "The door to the sciences hallway is near the teacher's desk."
     return "%s\n%s\n%s\n%s" % (steveString, holdenString, deskString, doorString)
-    
 
 def mathBackpack(player, locationState):
     if locationState.backpackNotes:
@@ -37,7 +36,7 @@ def mathDesk(player, locationState):
         return "You open the teacher's desk to get the day's lesson plan.\nYou send it to Watson for instant analysis.\nYou got a document on the quadratic formula!"
 
 mathClassroomCommands = {
-    "move to hallway": makeMoveCommand(lambda gs: gs.Hallway, "You move to the sciences hallway."),
+    "move to hallway": makeMoveCommand(lambda gs: gs.SciencesHallway, "You move to the sciences hallway."),
     "talk to student" : selectStudent,
     "look around" : mathClassroomLookaround,
     "interact with backpack" : mathBackpack,
@@ -66,8 +65,9 @@ def makeMathClassroom():
                             "In geometry, what's the name of a line segment that has its endpoints on the circle, but is not specifically filling any other requirement?\nNeed help? I'll let you look at my notes. They're in my backpack.",
                             "You forget already? I asked you, what is the name of a line segment that has its endpoints on a circle?",
                             "You're an alright substitute teacher, I guess. My hovercraft is full of eels.",
-                            "univariate",
+                            "chord",
                             "I already knew that, but thanks anyway. You're not too bad.",
                             "That's not right. You call yourself a substitute teacher?")
     MathClassroom.students = [HoldenCaulfield, SteveBoxwell]
+    return MathClassroom
 
