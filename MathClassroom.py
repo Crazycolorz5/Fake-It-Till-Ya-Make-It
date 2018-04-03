@@ -8,6 +8,15 @@ def mathClassroomLookaround(player, locationState):
         steveString = "Steve is impatiently waiting at his desk. His backpack is on the floor next to him."
     else:
         steveString = "Steve is sitting at his desk, playing remotely with a hovercraft."
+    holden = locationState.findStudent("Holden Caulfield")
+    if holden.answered:
+        holdenString = "Holden is waiting impatiently for class to start."
+    else:
+        holdenString = "Holden is at his desk, studying a bit before class. He seems confused."
+    deskString = "The teacher's desk is at the front of the room."
+    doorString = "The door to the sciences hallway is near the teacher's desk."
+    return "%s\n%s\n%s\n%s" % (steveString, holdenString, deskString, doorString)
+    
 
 def mathBackpack(player, locationState):
     if locationState.backpackNotes:
@@ -19,11 +28,20 @@ def mathBackpack(player, locationState):
     else:
         return "You shouldn't be going through students' personal belongings without their permission."
 
+def mathDesk(player, locationState):
+    if locationState.deskNotes:
+        return "You've already retrieved today's lesson plan."
+    else:
+        locationState.deskNotes = True
+        player.watson.findDocument(QUADRATIC_EQUATION_DOCUMENT)
+        return "You open the teacher's desk to get the day's lesson plan.\nYou send it to Watson for instant analysis.\nYou got a document on the quadratic formula!"
+
 mathClassroomCommands = {
     "move to hallway": makeMoveCommand(lambda gs: gs.Hallway, "You move to the sciences hallway."),
     "talk to student" : selectStudent,
     "look around" : mathClassroomLookaround,
-    "interact with backpack" : mathBackpack
+    "interact with backpack" : mathBackpack,
+    "interact with desk" : mathDesk
 }
 
 
@@ -31,6 +49,7 @@ def makeMathClassroom():
     MathClassroom = LocationState()
     
     MathClassroom.backpackNotes = False
+    MathClassroom.deskNotes = False;
     
     MathClassroom.commandDictionary = classroomCommands
     
