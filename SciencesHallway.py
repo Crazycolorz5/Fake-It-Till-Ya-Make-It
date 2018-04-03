@@ -12,7 +12,7 @@ sciencesHallwayCommands = {
 def makeSciencesHallway(classrooms):
     SciencesHallway = LocationState()
     SciencesHallway.classrooms = classrooms
-    Sciences.commandDictionary = sciencesHallwayCommands
+    SciencesHallway.commandDictionary = sciencesHallwayCommands
     return SciencesHallway
     
 
