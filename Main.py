@@ -44,7 +44,8 @@ async def gameLoop(handler):
         name = await handler.inp()
         player = Player(name)
         await handler.out("Nice to meet you, %s. \nGood luck as your first day as a substitute teacher!" % player.name)
-        await handler.out("You enter the hallway outside of your biology class.")
+        await handler.out("You enter the hallway outside the sciences classrooms.")
+        await handler.out("You worry for a second that you won't be able to remember any students' names, but luckily you have all the class rosters!")
         await handler.out("Type help for a few possible commands, or look around to get started!")
 
         while True:

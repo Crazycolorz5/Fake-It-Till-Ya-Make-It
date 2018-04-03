@@ -3,8 +3,8 @@ from StateBase import *
 def worldHistoryClassroomLookaround(player, locationState):
     answeredMarieCurie = locationState.answered("Marie Curie")
     answeredRosalindFranklin = locationState.answered("Rosalind Franklin")
-    marieCurieStatus = "There's a student studying WWI." if not answeredMarieCurie else "Marie Curie is sitting at her desk."
-    rosalindFranklinStatus = "There's a student arguing something about ancient Greece with other students." if not answeredRosalindFranklin else "Rosalind Franklin is waiting for the school day to end."
+    marieCurieStatus = "Marie is studying WWI at her desk." if not answeredMarieCurie else "Marie Curie is sitting at her desk."
+    rosalindFranklinStatus = "Rosalind is arguing something about ancient Greece with other students." if not answeredRosalindFranklin else "Rosalind Franklin is waiting for the school day to end, happy to have won her argument."
     backpackStatus = "There's a student's backpack under a chair." if not locationState.gotNotes else "There's a student's backpack, where you got the notes from."
     computerStatus = "There is a computer in the corner of the room."
     door = "There is a door to the hallway."

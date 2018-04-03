@@ -3,8 +3,8 @@ from StateBase import *
 def biologyClassroomLookaround(player, locationState):
     answeredJohnDoe = locationState.answered("John Doe")
     answeredSamWinchester = locationState.answered("Sam Winchester")
-    johnDoeStatus = "There's a student looking at a diagram of cells, looking somewhat confused." if not answeredJohnDoe else "John Doe is sitting at their desk." #TODO: Store this as a flag in the location.
-    samWinchesterStatus = "There's a student waiting by the teacher's desk to ask a question." if not answeredSamWinchester else "Sam Winchester has returned to their desk and is waiting for the school day to end."
+    johnDoeStatus = "John is looking at a diagram of cells, looking somewhat confused." if not answeredJohnDoe else "John Doe is sitting at their desk." #TODO: Store this as a flag in the location.
+    samWinchesterStatus = "There's a student waiting by the teacher's desk to ask a question. Looks like it is Sam Winchester." if not answeredSamWinchester else "Sam Winchester has returned to their desk and is waiting for the school day to end."
     deskStatus = "There's a teacher's desk." if not locationState.gotNotes else "There's a teacher's desk, where you got the lecture notes from."
     computerStatus = "There are several computers in the corner of the room, presumably for students to use during a free period." if not locationState.gotWikipedia else "There are several computers, including the one you get the Wikipedia article from. You have to remember to tell your students not to cite Wikipedia."
     door = "There is a door to the hallway."
