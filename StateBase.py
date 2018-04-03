@@ -96,3 +96,13 @@ def selectStudent(player, locationState):
     else:
         player.state = PlayerState.CHOOSE_STUDENT
         return ("Which student would you like to talk to: " + studentString + "?")
+        
+def selectClassroom(player, locationState):
+    classDict = locationState.classrooms
+    classNames = list(classDict.keys())
+    classString = [] if len(classNames) == 0 else reduce(lambda a, b: a + ', ' + b, classNames[1:], classNames[0])
+    if not classString:
+        return "There are no adjacent classrooms." 
+    else:
+        player.state = PlayerState.CHOOSE_ROOM
+        return ("Which classroom would you like to move to?: " + classString + "?")

@@ -91,8 +91,8 @@ query _: queries Watson for given keyword/keyphrase'''
 
 class GameState:
     def __init__(self, playerName):
-        self.Hallway = LocationState()
-        self.Hallway2 = LocationState()
+        self.SciencesHallway = makeSciencesHallway()
+        self.ArtsHallway = makeArtsHallway()
         self.BiologyClassroom = makeBiologyClassroom()
         self.MathClassroom = makeMathClassroom()
         self.PhysicsClassroom = makePhysicsClassroom()
