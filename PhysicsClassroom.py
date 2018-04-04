@@ -4,7 +4,7 @@ def physicsClassroomLookaround(player, locationState):
     answeredBettyWhite = locationState.answered("Betty White")
     answeredCharlesDickens = locationState.answered("Charles Dickens")
     bettyWhiteStatus =  "Betty is looking at a poster on the wall describing thermodynamics, looking a little lost." if not answeredBettyWhite else "Betty White is sitting at her desk patiently."
-    charlesDickensStatus = "Charles is looking at Laws of relativity, probably wondering what they are actually relative to." if not answeredCharlesDickens else "Charles Dickens is sitting at their desk."
+    charlesDickensStatus = "Charles is looking at the laws of relativity in his text, probably wondering what they are actually relative to." if not answeredCharlesDickens else "Charles Dickens is sitting at their desk."
     deskStatus = "There's a teacher's desk." if not locationState.gotNotes else "There's a teacher's desk, where you got the lecture notes from."
     computerStatus = "There are several computers in the corner of the room, presumably for students to use during a free period." if not locationState.gotWikipedia else "There are several computers, including the one you get the Wikipedia article from. You have to remember to tell your students not to cite Wikipedia."
     door = "There is a door to the hallway."

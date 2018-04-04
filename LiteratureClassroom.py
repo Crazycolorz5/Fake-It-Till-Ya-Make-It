@@ -45,8 +45,8 @@ def makeLiteratureClassroom():
     LiteratureClassroom.gotWikipedia = False
     # Literature classroom student 1
     FrancisBacon = Student("Francis Bacon",
-                          "So what year was \"Tale of Two Cities\", by Charles Dickens, published?",
-                          "I know, it's confusing to me too. \"Tale of Two Cities\" was published in what year?",
+                          "So what year was \"A Tale of Two Cities\", by Charles Dickens, published?",
+                          "I know, it's confusing to me too. \"A Tale of Two Cities\" was published in what year?",
                           "Thanks for your help!",
                           "1859",
                           "That's it! Thanks, Professor! I could have just looked in the book I guess, but I really hate it.",

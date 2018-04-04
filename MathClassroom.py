@@ -63,7 +63,7 @@ def makeMathClassroom():
     # Math classroom student 2
     SteveBoxwell = Student("Steve Boxwell",
                             "In geometry, what's the name of a line segment that has its endpoints on the circle, but is not specifically filling any other requirement?\nNeed help? I'll let you look at my notes. They're in my backpack.",
-                            "You forget already? I asked you, what is the name of a line segment that has its endpoints on a circle?",
+                            "You forgot already? I asked you, what is the name of a line segment that has its endpoints on a circle?",
                             "You're an alright substitute teacher, I guess. My hovercraft is full of eels.",
                             "chord",
                             "I already knew that, but thanks anyway. You're not too bad.",
