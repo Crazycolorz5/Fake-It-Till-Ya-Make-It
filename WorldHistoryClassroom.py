@@ -15,7 +15,7 @@ def worldHistoryClassroomBackpack(player, locationState):
         return "You've already gotten the notes taken by another student."
     else:
         locationState.gotNotes = True
-        player.watson.findDocument(WWI_DOCUMENT)
+        player.watson.findDocument(WORLD_WAR_I_DOCUMENT)
         return "You saw an open backpack under a chair and noticed the notes on WWI sticking out. You grab the notes for scanning, send it to IBM Watson, and quickly put the notes back.\nYou got a document on World War I!"
 
 def worldHistoryClassroomComputer(player, locationState):
