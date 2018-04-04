@@ -11,4 +11,4 @@ script:
  - python helloTravis.py
  - python GameState.py
  - pytest
- - echo "Steve Boxwell\nquit" | python Main.py 
+ - printf "Steve Boxwell\nquit" | python Main.py 
