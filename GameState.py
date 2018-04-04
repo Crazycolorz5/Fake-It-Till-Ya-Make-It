@@ -24,7 +24,7 @@ Otherwise, just say what you want to do!'''
         self.nlc = NLC()
         self.studentNLC = StudentNLC()
         self.subjectNLC = SubjectNLC()
-        self.gameState = GameState(name)
+        self.gameState = GameState()
         self.location = self.gameState.SciencesHallway
         self.lastStudent = None
         self.state = PlayerState.DEFAULT
@@ -94,7 +94,7 @@ Otherwise, just say what you want to do!'''
         return acc.strip()
 
 class GameState:
-    def __init__(self, playerName):
+    def __init__(self):
         self.BiologyClassroom = makeBiologyClassroom()
         self.MathClassroom = makeMathClassroom()
         self.PhysicsClassroom = makePhysicsClassroom()
