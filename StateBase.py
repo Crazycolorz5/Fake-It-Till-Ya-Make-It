@@ -105,4 +105,4 @@ def selectClassroom(player, locationState):
         return "There are no adjacent classrooms." 
     else:
         player.state = PlayerState.CHOOSE_ROOM
-        return ("Which classroom would you like to move to?: " + classString + "?")
+        return ("Which classroom would you like to move to: " + classString + "?")
