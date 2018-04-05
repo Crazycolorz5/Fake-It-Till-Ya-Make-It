@@ -26,7 +26,6 @@ class WebsocketHandler(IOHandler):
     async def out(self, string):
         await self.websocket.send(string)
     async def inp(self):
-        await self.websocket.send(">> ")
         return await self.websocket.recv()
     def multiInstance(self):
         return True

@@ -62,8 +62,12 @@ body {
 <script>
 var ws = null, term = null
 
-function connectToServer() {
-    ws = new WebSocket("ws://localhost:10000")
+function connectToServer(commands) {
+    var host = "localhost";
+    if (commands[1])
+        host = commands[1]
+
+    ws = new WebSocket("ws://" + host + ":10000")
 
     ws.onopen = function(e) {
     }
@@ -90,11 +94,14 @@ $(document).ready(function() {
     term = $("#div_output").terminal(function(input) {
         if (ws)
             ws.send(input)
-        else if (input === "connect")
-            connectToServer()
         else
-            term.echo("invalid command!")
-
+        {
+            commands = input.trim().split(/ +/, 2)
+            if (commands[0].toLowerCase() === "connect")
+                connectToServer(commands)
+            else
+                term.echo("Invalid command! Type 'connect' to connect to a server.")
+        }
     }, {
         "greetings" : "Fake It Till Ya Make It\n",
         "prompt" : ">>> "
