@@ -18,3 +18,7 @@ def test_acquireDocument():
     expectedRes2 = ['Peace negotiations began in August 1814 and the <a href="/wiki/Treaty_of_Ghent" title="Treaty of Ghent">Treaty of Ghent</a> was signed on December 24 as neither side wanted to continue fighting. News of the peace did not reach America for some time.', 'At the end of 1814, the British launched a double offensive in the South weeks before the Treaty of Ghent was signed. On the Atlantic coast, Admiral George Cockburn was to close the Intracoastal Waterway trade and land Royal Marine battalions to advance through Georgia to the western territories.', 'The British were then able to increase the strength of the blockade on the United States coast, annihilating American maritime trade and bringing the United States government near to bankruptcy. Peace negotiations began in August 1814 and the Treaty of Ghent was signed on December 24 as neither side wanted to continue fighting.']
     assert wat.ask(query) == expectedRes2
 
+def test_badQuery():
+    wat = Watson()
+    res = wat.ask(";{SELECT * from Students}--")
+    assert res == []

@@ -3,7 +3,7 @@ from Discovery import *
 import websockets
 import asyncio
 import _thread
-from GameState import PlayerState
+from GameState import Player
 from sys import argv
 
 class IOHandler:
@@ -26,7 +26,6 @@ class WebsocketHandler(IOHandler):
     async def out(self, string):
         await self.websocket.send(string)
     async def inp(self):
-        await self.websocket.send(">> ")
         return await self.websocket.recv()
     def multiInstance(self):
         return True
@@ -40,11 +39,12 @@ async def websocketHandler(websocket, path):
 
 async def gameLoop(handler):
     try:
-        await handler.out("Welcome to Washington Elementary! Please input your name:")
+        await handler.out("Welcome to Washington High School! Please input your name:")
         name = await handler.inp()
-        player = PlayerState(name)
+        player = Player(name)
         await handler.out("Nice to meet you, %s. \nGood luck as your first day as a substitute teacher!" % player.name)
-        await handler.out("You enter the hallway outside of your history class.")
+        await handler.out("You enter the hallway outside the sciences classrooms.")
+        await handler.out("You worry for a second that you won't be able to remember any students' names, but luckily you have all the class rosters!")
         await handler.out("Type help for a few possible commands, or look around to get started!")
 
         while True:

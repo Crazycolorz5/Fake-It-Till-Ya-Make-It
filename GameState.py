@@ -1,46 +1,86 @@
 from Discovery import Watson
-from NLC import NLC
+from NLC import *
+from StateBase import *
+from BiologyClassroom import makeBiologyClassroom
+from MathClassroom import makeMathClassroom
+from PhysicsClassroom import makePhysicsClassroom
+from LiteratureClassroom import makeLiteratureClassroom
+from USHistoryClassroom import makeUSHistoryClassroom
+from WorldHistoryClassroom import makeWorldHistoryClassroom
+from ArtsHallway import makeArtsHallway
+from SciencesHallway import makeSciencesHallway
 
-WAR_OF_1812_DOCUMENT = '98e9b50f1327e045364f669dab17a2ea'
-MITOSIS_DOCUMENT = 'ad9d680ed1a99a7c856a89991d25d6f7'
-        
-class PlayerState:
+class Player:
     helpString = '''help: gives a brief description of basic commands user can enter
 quit: quits the demo
 answer _: submits an answer to the current question
-query _: queries Watson for given keyword/keyphrase'''
+query _: queries Watson for given keyword/keyphrase
+You can look around to see the environment around you.
+Otherwise, just say what you want to do!'''
     
     def __init__(self, name):
         self.name = name
-        self.questionNumber = 0 #TODO
         self.watson = Watson()
         self.nlc = NLC()
-        self.gameState = GameState(name)
-        self.location = self.gameState.Hallway
+        self.studentNLC = StudentNLC()
+        self.subjectNLC = SubjectNLC()
+        self.gameState = GameState()
+        self.location = self.gameState.SciencesHallway
+        self.lastStudent = None
+        self.state = PlayerState.DEFAULT
 
-    # act :: (PlayerState, String) -> String
+    # act :: (Player, String) -> String
     def act(self, inputString):
         # Do some small string processing.
         words = inputString.split(' ', 1)
         if not words:
             return "No command specified!"
         elif words[0] == "help":
-            return PlayerState.helpString
+            return Player.helpString
         elif words[0] == "query":
             if len(words) == 1:
                 return "No query specified!"
             else:
                 argument = words[1].strip('"')
-                return PlayerState.formatResponse(self.watson.ask(argument))
+                return Player.formatResponse(self.watson.ask(argument))
         elif words[0] == "answer":
             if len(words) == 1:
                 return "No answer specified!"
+            elif self.lastStudent == None:
+                return "You have not spoken to a student!"
+            elif not self.lastStudent.talkedTo:
+                return "You haven't heard what this student has to say yet!"
             else:
-                return self.location.answer(words[1])
+                return self.lastStudent.answer(words[1])        
         else:
-            intent = self.nlc.classify(inputString) #TODO: Fake method
-            retStr = self.location.actOnIntent(self, intent)
-            return "Invalid command." if retStr is None else retStr
+            if self.state == PlayerState.DEFAULT:
+                self.lastStudent = None #Will be set later if we are to talk to a student.
+                intent = self.nlc.classify(inputString)
+                retStr = self.location.actOnIntent(self, intent)
+                return "Invalid command." if retStr is None else retStr
+            elif self.state == PlayerState.CHOOSE_ROOM:
+                classifiedClassroom = self.subjectNLC.classify(inputString)
+                connections = self.location.classrooms
+                if classifiedClassroom in connections:
+                    self.location = connections[classifiedClassroom]
+                    self.state = PlayerState.DEFAULT
+                    return "You move to the %s classroom." % classifiedClassroom.title()
+                else:
+                    self.state = PlayerState.DEFAULT
+                    return "That's an invalid classroom. You decide against moving for now."                
+            elif self.state == PlayerState.CHOOSE_STUDENT:
+                classifiedName = self.studentNLC.classify(inputString)
+                if classifiedName == "cancel":
+                    self.state = PlayerState.DEFAULT
+                    return "You decide against talking to a student right now."
+                studentList = self.location.students
+                for student in studentList:
+                    if student.name.casefold() == classifiedName.casefold(): 
+                        #Note: Student names (to the classifier) are case-insensitive, but commands ARE.
+                        self.lastStudent = student
+                        self.state = PlayerState.DEFAULT
+                        return student.talkTo() #breaks control flow.
+                return "Invalid student name. Please try again." #Note no state change.
     
     @staticmethod
     def formatResponse(stringArr):
@@ -53,130 +93,14 @@ query _: queries Watson for given keyword/keyphrase'''
             i += 1
         return acc.strip()
 
-class LocationState:
-    def __init__(self):
-        # commandDictionary :: Dictionary String ((PlayerState, LocationState) -> String)
-        self.commandDictionary = dict()
-        self.student = None
-
-    # actOnIntent :: (LocationState, PlayerState, String) -> Maybe String
-    def actOnIntent(self, playerState, intent):
-        if intent in self.commandDictionary:
-            return self.commandDictionary[intent](playerState, self)
-        else:
-            return None
-        
-    def answer(self, string):
-        if self.student is None:
-            return "No student to answer!"
-        elif not self.student.talkedTo:
-            return "You haven't heard what this student has to say yet!"
-        else:
-            return self.student.answer(string)
-        
-    def leaveHook(self):
-        pass
-
-class Student:
-    def __init__(self, firstTalk, subsequentTalk, answeredTalk, answer, answeredCorrect, answeredIncorrect):
-        self.firstTalk = firstTalk
-        self.subsequentTalk = subsequentTalk
-        self.answeredTalk = answeredTalk
-        self.correctAnswer = answer
-        self.talkedTo = False
-        self.answered = False
-        self.answeredCorrect = answeredCorrect
-        self.answeredIncorrect = answeredIncorrect
-    def talkTo(self):
-        if self.answered:
-            return self.answeredTalk
-        elif self.talkedTo:
-            return self.subsequentTalk
-        else:
-            self.talkedTo = True
-            return self.firstTalk
-    def answer(self, string): #Intend to overwrite?
-        if string.strip() == self.correctAnswer: #TODO: Better answer validation
-            self.answered = True
-            return self.answeredCorrect
-        else:
-            return self.answeredIncorrect
-
 class GameState:
-    def __init__(self, playerName):
-        self.Hallway = LocationState()
-        self.Classroom = LocationState()
-        self.Hallway.commandDictionary = hallwayCommands
-        self.Classroom.commandDictionary = classroomCommands
-        self.Hallway.student = Student("Hey Prof. %s, I have a question. What date was the treaty of Ghent signed? (format: MM/DD/YYYY)" % playerName,
-                          "To repeat my question, what date was the treaty of Ghent signed? (format: MM/DD/YYYY)",
-                          "Thank you for answering my question!",
-                          '12/24/1814',
-                          "Thanks for that answer!",
-                          "Hm, I don't think that's quite right...")
-        self.Classroom.gotNotes = False
-        self.Classroom.gotWikipedia = False
-        self.Classroom.student = Student("Hey there Prof! Say, since you're just subbing, could you help me with this question on my Biology homework? What's the final phase of mitosis? (format: all lowercase)",
-                                    "The question was, what's the final phase of mitosis?",
-                                    "Thanks for the help!",
-                                    "telophase",
-                                    "Yeah, I do think the notes said something like that.",
-                                    "I don't think that sounds right.")
-
-
-
-
-def makeMoveCommand(locationAccessor, msgString):
-    def moveCommand(playerState, locationState):
-        playerState.location = locationAccessor(playerState.gameState)
-        locationState.leaveHook()
-        return msgString
-    return moveCommand
-
-def talkToStudent(playerState, locationState):
-    return locationState.student.talkTo();
-
-def hallwayLookaround(playerState, locationState): 
-    if locationState.student.answered:
-        return "You see the student whose question you answered. There is also a door to the singular classroom of the school."
-    else:
-        return "There's a student who appears to want to ask you a question. There is also a door to the singular classroom of the school."
-    
-hallwayCommands = {
-    "move to classroom" : makeMoveCommand(lambda gs: gs.Classroom, "You move to the classroom."),
-    "talk to student" : talkToStudent,
-    "look around" : hallwayLookaround
-    }
-
-def classroomLookaround(playerState, locationState):
-    studentStatus = "There's a student looking at a diagram of cells, loking somewhat confused." if not locationState.student.answered else "There's the student you answered, sitting at their desk."
-    deskStatus = "There's a teacher's desk." if not locationState.gotNotes else "There's a teacher's desk, where you got the lecture notes from."
-    computerStatus = "There are several computers in the corner of the room, presumably for students to use during a free period." if not locationState.gotWikipedia else "There are several computers, including the one you get the Wikipedia article from. You have to remember to tell your students not to cite Wikipedia."
-    door = "There is a door to the hallway."
-    return "%s\n%s\n%s\n%s" % (studentStatus, deskStatus, computerStatus, door)
-
-def classroomDesk(playerState, locationState):
-    if locationState.gotNotes:
-        return "You've already gotten the lecture notes from the teacher's desk."
-    else:
-        locationState.gotNotes = True
-        playerState.watson.findDocument(WAR_OF_1812_DOCUMENT)
-        return "You open the drawer and grab the lecture notes the regular teacher left you. To reduce prep time, you pull out your phone, take a picture of the notes, and send it to IBM Watson for analysis.\nYou got a document on the War of 1812!"
-
-def classroomComputer(playerState, locationState):
-    if locationState.gotWikipedia:
-        return "You have no further use for the computer at this time."
-    elif locationState.student.talkedTo:
-        locationState.gotWikipedia = True
-        playerState.watson.findDocument(MITOSIS_DOCUMENT)
-        return "As per the student's request, you search the web for an article on mitosis.\nYou grab the Wikipedia page and send it to IBM Watson for analysis.\nYou got a document on mitosis!"
-    else:
-        return "You have no reason to use a computer at the moment."
-
-classroomCommands = {
-    "move to hallway": makeMoveCommand(lambda gs: gs.Hallway, "You move to the hallway."),
-    "talk to student" : talkToStudent,
-    "look around" : classroomLookaround,
-    "interact with desk" : classroomDesk,
-    "interact with computer" : classroomComputer
-}
+    def __init__(self):
+        self.BiologyClassroom = makeBiologyClassroom()
+        self.MathClassroom = makeMathClassroom()
+        self.PhysicsClassroom = makePhysicsClassroom()
+        self.LitClassroom = makeLiteratureClassroom()
+        self.USHistClassroom = makeUSHistoryClassroom()
+        self.WorldHistClassroom = makeWorldHistoryClassroom()
+        
+        self.SciencesHallway = makeSciencesHallway({ "math" : self.MathClassroom, "biology" : self.BiologyClassroom, "physics" : self.PhysicsClassroom })
+        self.ArtsHallway = makeArtsHallway({ "us history" : self.USHistClassroom, "world history" : self.WorldHistClassroom, "literature" : self.LitClassroom })
