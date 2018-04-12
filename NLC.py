@@ -8,28 +8,28 @@ naturalLanguageClassifier = NaturalLanguageClassifierV1(
 )
 #Classifiers that need kept for other branches
 
-#classifier "2fbbc6x326-nlc-1451"
-#created 03/27 from nlc data 03/23
+#classifier "2fbf5cx328-nlc-1775"
+#created 03/29 from nlc data 03/29
 
-#stduent classifier '539e6dx331-nlc-551'
-#created 03/27 from student nlc data 03/27
+#stduent classifier '2fbf5cx328-nlc-1761'
+#created 03/29 from student nlc data 03/29
 
-#subject classifier '2fbbc6x326-nlc-1454'
-#created 03/27 from subject nlc data 03/27
+#subject classifier '2fbda2x327-nlc-1810'
+#created 03/29 from subject nlc data 03/29
 
 
 #Create Classifier - keep commented
-#with open('subject_nlc_training_set_0329.csv', 'rb') as training_data:
+#with open('nlc_training_set_0412.csv', 'rb') as training_data:
 #    classroomClassifier = naturalLanguageClassifier.create(      
 #        training_data = training_data,
-#        name = 'subject0329'
+#        name = 'nlc0412'
 #        )
 #print(json.dumps(classifiers, indent=2))
-classifiers = naturalLanguageClassifier.list()
+#classifiers = naturalLanguageClassifier.list()
 #New classifiers
-classifierID =        '2fbf5cx328-nlc-1775'
-studentClassifierID = '2fbf5cx328-nlc-1761'
-subjectClassifierID = '2fbda2x327-nlc-1810'
+classifierID =        'ad3f68x345-nlc-417'
+studentClassifierID = 'ab2f65x344-nlc-484'
+subjectClassifierID = 'ab2f65x344-nlc-483'
 
 CONFIDENCE_THRESHOLD = 0.8
 STUDENT_CONFIDENCE_THRESHOLD = 0.9
@@ -38,7 +38,7 @@ SUBJECT_CONFIDENCE_THRESHOLD = 0.9
 class NLC:
 
     def __init__(self):
-        classifierID = '2fbf5cx328-nlc-1775'
+        classifierID = 'ad3f68x345-nlc-417'
         self.status = tryStatus(classifierID)
         self.subject = SubjectNLC()
         self.student = StudentNLC()
@@ -70,7 +70,7 @@ class NLC:
 
 class StudentNLC:
     def __init__(self):
-        studentClassifierID = '2fbf5cx328-nlc-1761'
+        studentClassifierID = 'ab2f65x344-nlc-484'
         self.status = tryStatus(studentClassifierID)
 
     #returns the intent of the classifier given a string
@@ -91,7 +91,7 @@ class StudentNLC:
 
 class SubjectNLC:
     def __init__(self):
-        subjectClassifierID = '2fbda2x327-nlc-1810'
+        subjectClassifierID = 'ab2f65x344-nlc-483'
         self.status = tryStatus(subjectClassifierID)
 
     #returns the intent of the classifier given a string
