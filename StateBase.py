@@ -55,6 +55,13 @@ class LocationState:
             if student.name.casefold() == stuName.casefold(): 
                 return student
         return None
+        
+class HallwayState(LocationState):
+    def actOnIntent(self, Player, intent):
+        for classroom in self.classrooms:
+            if classroom.casefold() == intent.casefold():
+                return moveToRoom(Player, classroom, self.classrooms[classroom])
+        return LocationState.actOnIntent(self, Player, intent)
 
 class Student:
     def __init__(self, name, firstTalk, subsequentTalk, answeredTalk, answer, answeredCorrect, answeredIncorrect):
@@ -114,3 +121,8 @@ def selectClassroom(player, locationState):
     else:
         player.state = PlayerState.CHOOSE_ROOM
         return ("Which classroom would you like to move to: " + classString + "?")
+
+def moveToRoom(player, classroomName, location):
+    Player.location = location
+    return "You move to the %s classroom." % classroomName.title()
+    

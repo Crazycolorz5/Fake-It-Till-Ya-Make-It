@@ -65,9 +65,8 @@ Otherwise, just say what you want to do!'''
                     return "You decide against moving to a classroom right now."
                 connections = self.location.classrooms
                 if classifiedClassroom in connections:
-                    self.location = connections[classifiedClassroom]
                     self.state = PlayerState.DEFAULT
-                    return "You move to the %s classroom." % classifiedClassroom.title()
+                    return moveToRoom(self, classifiedClassroom.title(), connections[classifiedClassroom])
                 else:
                     self.state = PlayerState.DEFAULT
                     return "That's an invalid classroom. You decide against moving for now."                
