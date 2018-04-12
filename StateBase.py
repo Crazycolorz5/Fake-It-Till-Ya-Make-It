@@ -127,6 +127,6 @@ def selectClassroom(player, locationState):
         return ("Which classroom would you like to move to: " + classString + "?")
 
 def moveToRoom(player, classroomName, location):
-    Player.location = location
+    player.location = location
     return "You move to the %s classroom." % classroomName.title()
     
