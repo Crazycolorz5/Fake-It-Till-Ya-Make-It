@@ -30,6 +30,9 @@ class LocationState:
     def actOnIntent(self, Player, intent):
         if intent in self.commandDictionary:
             return self.commandDictionary[intent](Player, self)
+        for student in self.students:
+            if intent.casefold() == student.name.casefold():
+                return student.talkTo()
         else:
             return None
         

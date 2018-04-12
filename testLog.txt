@@ -1,0 +1,236 @@
+Fake It Till Ya Make It
+>>> connect
+Welcome to Washington High School! Please input your name:
+>>> Malloc
+Nice to meet you, Malloc. 
+Good luck as your first day as a substitute teacher!
+You enter the hallway outside the sciences classrooms.
+You worry for a second that you won't be able to remember any students' names, but luckil
+y you have all the class rosters!
+Type help for a few possible commands, or look around to get started!
+>>> help
+help: gives a brief description of basic commands user can enter
+quit: quits the demo
+answer _: submits an answer to the current question
+query _: queries Watson for given keyword/keyphrase
+You can look around to see the environment around you.
+Otherwise, just say what you want to do!
+>>> look around
+You are in the sciences hallway.
+There are neighboring classrooms for the sciences and maths.
+The arts hallway is on the other end.
+>>> go to a classroom
+Which classroom would you like to move to: math, biology, physics?
+>>> math
+You move to the Math classroom.
+>>> look
+Steve is sitting at his desk, playing remotely with a hovercraft.
+Holden is at his desk, studying a bit before class. He seems confused.
+The teacher's desk is at the front of the room.
+The door to the sciences hallway is near the teacher's desk.
+>>> talk to a  student
+Which student would you like to talk to: Holden Caulfield, Steve Boxwell?
+>>> steve boxwell
+In geometry, what's the name of a line segment that has its endpoints on the circle, but 
+is not specifically filling any other requirement?
+Need help? I'll let you look at my notes. They're in my backpack.
+>>> look into Steve's backpack
+You take Steve Boxwell's notes on circles. You attempt to read it, but
+then decide to just send it to Watson to make sense of the handwriting automatically.
+You got a document on circles!
+>>> query line segment endpoints on circle
+Result 1: Diameter: a line segment whose endpoints lie on the circle and which passes thr
+ough the centre; or the length of such a line segment, which is the largest distance betw
+een any two points on the circle.
+Result 2: </li>
+<li><a href="https://en.wikipedia.org/wiki/Diameter" title="Diameter">Diameter</a>: a lin
+e segment whose endpoints lie on the circle and which passes through the centre; or the l
+ength of such a line segment, which is the largest distance between any two points on the
+ circle.
+Result 3: Centre: the point equidistant from the points on the circle.
+Chord: a line segment whose endpoints lie on the circle.
+Circumference: the length of one circuit along the circle, or the distance around the cir
+cle.
+Diameter
+>>> talk to student
+Which student would you like to talk to: Holden Caulfield, Steve Boxwell?
+>>> steve
+You forgot already? I asked you, what is the name of a line segment that has its endpoint
+s on a circle?
+>>> answer chord
+I already knew that, but thanks anyway. You're not too bad.
+>>> talk student
+Which student would you like to talk to: Holden Caulfield, Steve Boxwell?
+>>> holden
+So apparently the quadratic equation is a special equation, because it contains only one 
+unknown. What's the word for that?
+>>> answer univariate
+That makes sense, like one variable. Thanks!
+>>> look around
+Steve is sitting at his desk. You think he's looking a bit smug. Maybe it's the fact that
+ he has a hovercraft.
+Holden is waiting impatiently for class to start.
+The teacher's desk is at the front of the room.
+The door to the sciences hallway is near the teacher's desk.
+>>> leave classroom
+You move to the sciences hallway.
+>>> look around
+You are in the sciences hallway.
+There are neighboring classrooms for the sciences and maths.
+The arts hallway is on the other end.
+>>> enter the science classroom
+Which classroom would you like to move to: math, biology, physics?
+>>> biology
+You move to the Biology classroom.
+>>> look at the things
+Invalid command.
+>>> look around
+John is looking at a diagram of cells, looking somewhat confused.
+There's a student waiting by the teacher's desk to ask a question. Looks like it is Sam W
+inchester.
+There's a teacher's desk.
+There are several computers in the corner of the room, presumably for students to use dur
+ing a free period.
+There is a door to the hallway.
+>>> Talk to Sam
+Invalid command.
+>>> Salk
+Invalid command.
+>>> Talk
+Invalid command.
+>>> Talk to student
+Which student would you like to talk to: John Doe, Sam Winchester?
+>>> Sam
+I can't remember what the latin name of the American Black Bear for our homework. Do you 
+remember, Professor? (format: genus species)
+>>> search the desk
+You open the drawer and grab the lecture notes the regular teacher left you. To reduce pr
+ep time, you pull out your phone, take a picture of the notes, and send it to IBM Watson 
+for analysis.
+You got a document on the American Black Bear!
+>>> query What do you call an American Black Bear in Latin?
+Result 1: American black bear - Wikipedia
+American black bear
+From Wikipedia, the free encyclopedia
+Jump to: navigation, search
+American black bear Temporal range: 2.6–0 Ma PreЄ Є O S D C P T J K Pg N
+Result 2: A small primitive bear called Ursus abstrusus is the oldest known North America
+n fossil member of the genus Ursus, dated to 4.95 mya. This suggests that U. abstrusus ma
+y be the direct ancestor of the American black bear, which evolved in North America.
+Result 3: "/>
+<title>American black bear - Wikipedia</title>
+<link href="./American black bear - Wikipedia_files/load.php" rel="stylesheet"/>
+<style>/**/
+.cite-accessibility-label{ top:-99999px;clip:rect( 1px 1px 1px 1px ); clip:rect( 1px,1px,
+1px,1px ); position:absolute !
+>>> answer
+No answer specified!
+>>> answer Usrus AbstususAAAAAjklfdsj
+>>> 
+You have not spoken to a student!
+Invalid command.
+>>> talk to student
+Which student would you like to talk to: John Doe, Sam Winchester?
+>>> talk to Sam
+What is the latin name of the American Black Bear?
+>>> answer Ursus Abstrusus
+I'm not sure that's correct, Professor.
+>>> query Latin name black bear
+Result 1: and skull. DNA testing was unable to determine whether it was a large black bea
+r or grizzly.
+Subspecies
+Listed alphabetically.
+American black bear sub-species
+Sub-species name Common name
+Result 2: Relationships with humans
+In British Columbia a group of black bears were used as guard animals to protect a mariju
+ana plantation.
+In folklore, mythology and culture
+Harry Colebourn and Winnie, the bear from which Winnie the Pooh derives his name
+Black bears feature prominently in the stories of some of America's indigenous peoples.
+Result 3: DNA testing was unable to determine whether it was a large black bear or grizzl
+y.</p>
+<h3>Subspecies</h3>
+<p>Listed alphabetically.</p>
+<table class="wikitable">
+<caption>American black bear sub-species</caption>
+<tbody><tr>
+<th>Sub-species name</th>
+<th>Common name</th>
+<th
+>>> look
+John is looking at a diagram of cells, looking somewhat confused.
+There's a student waiting by the teacher's desk to ask a question. Looks like it is Sam W
+inchester.
+There's a teacher's desk, where you got the lecture notes from.
+There are several computers in the corner of the room, presumably for students to use dur
+ing a free period.
+There is a door to the hallway.
+>>> talk to John
+Which student would you like to talk to: John Doe, Sam Winchester?
+>>> John
+Hey there Prof! Say, since you're just subbing, could you help me with this question on m
+y Biology homework? What's the final phase of mitosis? (format: all lowercase)
+>>> query mitosis phase final
+No results!
+>>> use computer
+As per the student's request, you search the web for an article on mitosis.
+You grab the Wikipedia page and send it to IBM Watson for analysis.
+You got a document on mitosis!
+>>> talk to John
+Which student would you like to talk to: John Doe, Sam Winchester?
+>>> John
+The question was, what's the final phase of mitosis?
+>>> query mitosis phase final
+Result 1: Thus, a cell grows (G1), continues to grow as it duplicates its chromosomes (S)
+, grows more and prepares for mitosis (G2), and finally divides (M) before restarting the
+ cycle. All these phases in the cell cycle are highly regulated by cyclins, cyclin-depend
+ent kinases, and other cell cycle proteins.
+Result 2: Thus, a cell grows (G<sub>1</sub>), continues to grow as it duplicates its chro
+mosomes (S), grows more and prepares for mitosis (G<sub>2</sub>), and finally divides (M)
+ before restarting the cycle. All these phases in the cell cycle are highly regulated by 
+<a class
+Result 3: Jump to: navigation, search
+Not to be confused with Meiosis, Miosis, Myiasis, Myositis, or Myosotis.
+Mitosis in an animal cell (phases ordered counter-clockwise).
+Mitosis divides the chromosomes in a cell nucleus.
+Onion (Allium) cells in different phases
+>>> query mitosis phases
+Result 1: Jump to: navigation, search
+Not to be confused with Meiosis, Miosis, Myiasis, Myositis, or Myosotis.
+Mitosis in an animal cell (phases ordered counter-clockwise).
+Mitosis divides the chromosomes in a cell nucleus.
+Onion (Allium) cells in different phases
+Result 2: before mitosis. This occurs during the S phase of interphase. Chromosome duplic
+ation results in two identical sister chromatids bound together by cohesin proteins at th
+e centromere.
+When mitosis begins, the chromosomes condense and become visible.
+Result 3: </a></li>
+<li class="toclevel-1 tocsection-3"><a href="#Phases_of_cell_cycle_and_mitosis">3 Phases 
+of cell cycle and mitosis</a>
+<ul>
+<li class="toclevel-2 tocsection-4"><a href="#Interphase">3.1 Interphase
+>>> query mitosis stages
+Result 1: In cell biology, mitosis is a part of the cell cycle when replicated chromosome
+s are separated into two new nuclei. In general, mitosis (division of the nucleus) is pre
+ceded by the S stage
+Result 2: to each other.
+The process of mitosis is divided into stages corresponding to the completion of one set 
+of activities and the start of the next. These stages are prophase, prometaphase, metapha
+se, anaphase, and telophase.
+Result 3: /Cell_division" title="Cell division">division</a> of the mother cell into two 
+daughter cells genetically identical to each other.</p>
+<p>The process of mitosis is divided into stages corresponding to the completion of one s
+et of activities and the start of the next.
+>>> talk to John
+Which student would you like to talk to: John Doe, Sam Winchester?
+>>> john
+The question was, what's the final phase of mitosis?
+>>> answer telophase
+Yeah, I do think the notes said something like that.
+>>> ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+Invalid command.
+>>> e')-- DROP TABLE STUDENTS
+Which student would you like to talk to: John Doe, Sam Winchester?
+>>> 
+ 
