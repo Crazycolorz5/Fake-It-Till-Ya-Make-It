@@ -60,6 +60,9 @@ Otherwise, just say what you want to do!'''
                 return "Invalid command." if retStr is None else retStr
             elif self.state == PlayerState.CHOOSE_ROOM:
                 classifiedClassroom = self.subjectNLC.classify(inputString)
+                if classifiedClassroom == "cancel":
+                    self.state = PlayerState.DEFAULT
+                    return "You decide against moving to a classroom right now."
                 connections = self.location.classrooms
                 if classifiedClassroom in connections:
                     self.location = connections[classifiedClassroom]
