@@ -10,30 +10,26 @@ naturalLanguageClassifier = NaturalLanguageClassifierV1(
 
 #classifier "2fbbc6x326-nlc-1451"
 #created 03/27 from nlc data 03/23
-#classifier '2fbf5cx328-nlc-1775'
-#created 03/29 from nlc data 0329
 
 #stduent classifier '539e6dx331-nlc-551'
 #created 03/27 from student nlc data 03/27
 
 #subject classifier '2fbbc6x326-nlc-1454'
 #created 03/27 from subject nlc data 03/27
-#subject classifier '2fbda2x327-nlc-1810'
-#created 03/29 from subject nlc data 0329
 
 
 #Create Classifier - keep commented
-#with open('nlc_training_set_0412.csv', 'rb') as training_data:
+#with open('subject_nlc_training_set_0329.csv', 'rb') as training_data:
 #    classroomClassifier = naturalLanguageClassifier.create(      
 #        training_data = training_data,
-#        name = 'nlc0412'
+#        name = 'subject0329'
 #        )
 #print(json.dumps(classifiers, indent=2))
 
 #New classifiers
-classifierID =        'ab2c7bx342-nlc-478'
+classifierID =        '2fbf5cx328-nlc-1775'
 studentClassifierID = '2fbf5cx328-nlc-1761'
-subjectClassifierID = 'ab2c7bx342-nlc-477'
+subjectClassifierID = '2fbda2x327-nlc-1810'
 
 CONFIDENCE_THRESHOLD = 0.8
 STUDENT_CONFIDENCE_THRESHOLD = 0.9
@@ -42,11 +38,8 @@ SUBJECT_CONFIDENCE_THRESHOLD = 0.9
 class NLC:
 
     def __init__(self):
-        self.classifierID = 'ab2c7bx342-nlc-478'
+        classifierID = '2fbf5cx328-nlc-1775'
         self.status = tryStatus(classifierID)
-        self.subject = SubjectNLC()
-        self.student = StudentNLC()
-
 
     #returns the intent of the classifier given a string
     def classify(self, string):
@@ -54,40 +47,26 @@ class NLC:
         confidence = None
         if self.status and self.status['status'] == 'Available' and string and not string.isspace():
 
-            classes = naturalLanguageClassifier.classify(self.classifierID, string)
+            classes = naturalLanguageClassifier.classify(classifierID, string)
             confidence = classes['classes'][0]['confidence']
             if confidence > CONFIDENCE_THRESHOLD:
                 topClass = classes['top_class']
-                
-            #send to StudentNLC/SubjectNLC if needed
-            if topClass == 'move to classroom':
-                #print('In subject')
-                tempClass = self.subject.classify(string)
-                if tempClass != 'default' and tempClass != 'cancel':
-                    topClass = tempClass
-
-            if topClass == 'talk to student':
-                #print('In student')
-                tempClass = self.student.classify(string)
-                if tempClass != 'default' and tempClass != 'cancel':
-                    topClass = tempClass
         elif not self.status:
             topClass = string
-
         return topClass
 
 class StudentNLC:
     def __init__(self):
-        self.studentClassifierID = '2fbf5cx328-nlc-1761'
+        studentClassifierID = '2fbf5cx328-nlc-1761'
         self.status = tryStatus(studentClassifierID)
-        
+
     #returns the intent of the classifier given a string
     def classify(self, string):
         topClass = 'default'
         confidence = None
         if self.status and self.status['status'] == 'Available' and string and not string.isspace():
 
-            classes = naturalLanguageClassifier.classify(self.studentClassifierID, string)
+            classes = naturalLanguageClassifier.classify(studentClassifierID, string)
             confidence = classes['classes'][0]['confidence']
             #print(classes['top_class'])
             #print(confidence)
@@ -99,17 +78,15 @@ class StudentNLC:
 
 class SubjectNLC:
     def __init__(self):
-        self.subjectClassifierID = 'ab2c7bx342-nlc-477'
+        subjectClassifierID = '2fbda2x327-nlc-1810'
         self.status = tryStatus(subjectClassifierID)
 
     #returns the intent of the classifier given a string
     def classify(self, string):
         topClass = 'default'
         confidence = None
-
         if self.status and self.status['status'] == 'Available' and string and not string.isspace():
             classes = naturalLanguageClassifier.classify(subjectClassifierID, string)
-
             confidence = classes['classes'][0]['confidence']
             #print(classes['top_class'])
             #print(confidence)
