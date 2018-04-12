@@ -9,6 +9,6 @@ install:
  
 script: 
  - python helloTravis.py
- - python Discovery.py
+ - python GameState.py
  - pytest
- 
+ - printf "Steve Boxwell\nquit" | python Main.py 

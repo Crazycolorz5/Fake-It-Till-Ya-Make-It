@@ -1,5 +1,10 @@
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+<title>Fake It Till Ya Make It</title>
+
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/jcubic/jquery.terminal/master/css/jquery.terminal.css">
 
 <style>
 * {
@@ -9,51 +14,35 @@
 }
 
 body {
-    padding: 20px;
-    background: #364e6f;
+    background: #333;
+}
+
+.command, .cmd {
+    color: green;
+}
+
+.terminal, .cmd, .terminal .terminal-output div div, .cmd .prompt {
+    font-size: 18px;
+    line-height: 22px;
 }
 
 
 #main_container {
     margin-left: auto;
     margin-right: auto;
-    width: 800px;
-}
-
-#btn_connect {
     width: 100%;
-    height: 24px;
-    font-size: 16px;
-    border-radius: 4px;
-    outline: none;
-    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
-    background: #fff;
+    max-width: 1000px;
 }
-
-#btn_connect:hover {
-    background: #eee;
-}
-
-#btn_connect:active {
-    background: #ccc;
-}
-
 
 #div_output {
-    margin-top: 10px;
-    border: 1px solid #ccc;
     width: 100%;
-    height: 400px;
-    font-size: 20px;
+    height: 100%;
     overflow-y: auto;
-    border-radius: 4px;
-    padding: 2px 5px;
-    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
-    background: #fff;
+    background: #000;
 }
 
-input {
-    margin-top: 20px;
+#input_user {
+    margin-top: 10px;
     width: 100%;
     font-size: 20px;
     border-radius: 4px;
@@ -67,62 +56,55 @@ input {
 </style>
 
 
-<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://rawgit.com/jcubic/jquery.terminal/master/js/jquery.terminal.js"></script>
 
 <script>
-var ws = null
+var ws = null, term = null
 
+function connectToServer(commands) {
+    var host = "localhost";
+    if (commands[1])
+        host = commands[1]
 
-function formatResponse(text) {
-    var lines = text.split("\n")
-    var result = []
+    ws = new WebSocket("ws://" + host + ":10000")
 
-    for (var i in lines) {
-        result.push("<p>")
-        result.push(lines[i])
-        result.push("</p>")
+    ws.onopen = function(e) {
     }
-    
-    return result.join("")
+
+    ws.onmessage = function(e) {
+        if (term)
+            term.echo(e.data)
+    }
+
+    ws.onerror = function(e) {
+        ws = null
+        if (term)
+            term.echo("websocket error")
+    }
+
+    ws.onclose = function(e) {
+        ws = null
+        if (term)
+            term.echo("connection closed")
+    }
 }
 
-
 $(document).ready(function() {
-    $("#btn_connect").click(function() {
-        ws = new WebSocket("ws://localhost:10000")
-
-        ws.onopen = function(e) {
-            //$("#div_output").html("connected<br />")
+    term = $("#div_output").terminal(function(input) {
+        if (ws)
+            ws.send(input)
+        else
+        {
+            commands = input.trim().split(/ +/, 2)
+            if (commands[0].toLowerCase() === "connect")
+                connectToServer(commands)
+            else
+                term.echo("Invalid command! Type 'connect' to connect to a server.")
         }
-
-        ws.onmessage = function(e) {
-            $("#div_output").html($("#div_output").html() + formatResponse(e.data) + "<br />")
-            $("#div_output").animate({scrollTop: $('#div_output').prop("scrollHeight")}, 300)
-        }
-
-        ws.onerror = function(e) {
-            $("#div_output").html("error!")
-
-            ws = null
-            $("#btn_connect").show()
-        }
-
-        ws.onclose = function(e) {
-            $("#div_output").html("connection closed")
-
-            ws = null
-            $("#btn_connect").show()
-        }
-
-        $("#btn_connect").hide()
-    })
-
-
-    $("input").keydown(function(e) {
-        if (ws && 13 == e.keyCode) {
-            ws.send($("input").val())
-            $("input").val("")
-        }
+    }, {
+        "greetings" : "Fake It Till Ya Make It\n",
+        "prompt" : ">>> "
     })
 })
 
@@ -133,9 +115,7 @@ $(document).ready(function() {
 <body>
 
 <div id="main_container">
-    <div><button id="btn_connect">Connect</button></div>
     <div id="div_output"></div>
-    <input type="text" />
 </div>
 
 </body>

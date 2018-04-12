@@ -30,7 +30,6 @@ naturalLanguageClassifier = NaturalLanguageClassifierV1(
 #        )
 #print(json.dumps(classifiers, indent=2))
 
-classifiers = naturalLanguageClassifier.list()
 #New classifiers
 classifierID =        'ab2c7bx342-nlc-478'
 studentClassifierID = '2fbf5cx328-nlc-1761'
@@ -44,22 +43,22 @@ class NLC:
 
     def __init__(self):
         self.classifierID = 'ab2c7bx342-nlc-478'
-        self.status = naturalLanguageClassifier.status(self.classifierID)
+        self.status = tryStatus(classifierID)
         self.subject = SubjectNLC()
         self.student = StudentNLC()
+
 
     #returns the intent of the classifier given a string
     def classify(self, string):
         topClass = 'default'
         confidence = None
-        if self.status['status'] == 'Available' and string and not string.isspace():
+        if self.status and self.status['status'] == 'Available' and string and not string.isspace():
 
             classes = naturalLanguageClassifier.classify(self.classifierID, string)
             confidence = classes['classes'][0]['confidence']
-            #print(classes['top_class'])
-            #print(confidence)
             if confidence > CONFIDENCE_THRESHOLD:
                 topClass = classes['top_class']
+                
             #send to StudentNLC/SubjectNLC if needed
             if topClass == 'move to classroom':
                 #print('In subject')
@@ -72,19 +71,21 @@ class NLC:
                 tempClass = self.student.classify(string)
                 if tempClass != 'default' and tempClass != 'cancel':
                     topClass = tempClass
-                    
+        elif not self.status:
+            topClass = string
+
         return topClass
 
 class StudentNLC:
     def __init__(self):
         self.studentClassifierID = '2fbf5cx328-nlc-1761'
-        self.status = naturalLanguageClassifier.status(self.studentClassifierID)
-
+        self.status = tryStatus(studentClassifierID)
+        
     #returns the intent of the classifier given a string
     def classify(self, string):
         topClass = 'default'
         confidence = None
-        if self.status['status'] == 'Available' and string and not string.isspace():
+        if self.status and self.status['status'] == 'Available' and string and not string.isspace():
 
             classes = naturalLanguageClassifier.classify(self.studentClassifierID, string)
             confidence = classes['classes'][0]['confidence']
@@ -92,22 +93,34 @@ class StudentNLC:
             #print(confidence)
             if confidence > STUDENT_CONFIDENCE_THRESHOLD:
                 topClass = classes['top_class']
+        elif not self.status:
+            topClass = string
         return topClass
 
 class SubjectNLC:
     def __init__(self):
         self.subjectClassifierID = 'ab2c7bx342-nlc-477'
-        self.status = naturalLanguageClassifier.status(self.subjectClassifierID)
+        self.status = tryStatus(subjectClassifierID)
 
     #returns the intent of the classifier given a string
     def classify(self, string):
         topClass = 'default'
         confidence = None
-        if self.status['status'] == 'Available' and string and not string.isspace():
-            classes = naturalLanguageClassifier.classify(self.subjectClassifierID, string)
+
+        if self.status and self.status['status'] == 'Available' and string and not string.isspace():
+            classes = naturalLanguageClassifier.classify(subjectClassifierID, string)
+
             confidence = classes['classes'][0]['confidence']
             #print(classes['top_class'])
             #print(confidence)
             if confidence > SUBJECT_CONFIDENCE_THRESHOLD:
                 topClass = classes['top_class']
+        elif not self.status:
+            topClass = string
         return topClass
+
+def tryStatus(id):
+    try:
+        return naturalLanguageClassifier.status(id)
+    except:
+        return None
