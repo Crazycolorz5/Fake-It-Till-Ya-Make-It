@@ -57,6 +57,10 @@ class LocationState:
         return None
         
 class HallwayState(LocationState):
+    def __init__(self, classrooms):
+        self.classrooms = classrooms
+        LocationState.__init__(self)
+    
     def actOnIntent(self, Player, intent):
         for classroom in self.classrooms:
             if classroom.casefold() == intent.casefold():
