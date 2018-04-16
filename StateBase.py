@@ -35,6 +35,7 @@ class LocationState:
         
     def answered(self, studentName):
         student = self.findStudent(studentName)
+       
         return False if student == None else student.answered
         
     def leaveHook(self, player):
@@ -49,6 +50,7 @@ class LocationState:
         return None
 
 class Student:
+    score =0
     def __init__(self, name, firstTalk, subsequentTalk, answeredTalk, answer, answeredCorrect, answeredIncorrect):
         self.name = name
         self.firstTalk = firstTalk
@@ -69,9 +71,12 @@ class Student:
             return self.firstTalk
     def answer(self, string): #Intend to overwrite?
         if self.answered:
+            score +=1
+            print(score)
             return self.answeredTalk
         elif string.strip() == self.correctAnswer: #TODO: Better answer validation
             self.answered = True
+
             return self.answeredCorrect
         else:
             return self.answeredIncorrect
