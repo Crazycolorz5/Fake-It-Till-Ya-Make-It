@@ -54,8 +54,8 @@ def makeWorldHistoryClassroom():
                           "Okay, so in Ancient Greece, they used some sort of coin with an owl on it. Who was the goddess on the other side?",
                           "What is the name of the goddess on the coins in Ancient Greece?",
                           "Thanks so much, Professor!",
-                          "artemis",
-                          "Yeah! Like that Eoin Colfer series! Thanks!",
+                          "athena",
+                          "Yeah! The one that like busted out of Zeus's head or something! Thanks!",
                           "Hm, that doesn't sound like the right Greek goddess.")
     WorldHistoryClassroom.students = [MarieCurie, RosalindFranklin]
     return WorldHistoryClassroom
