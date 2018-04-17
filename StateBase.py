@@ -123,7 +123,7 @@ def selectStudent(player, locationState):
 def selectClassroom(player, locationState):
     classDict = locationState.classrooms
     classNames = list(classDict.keys())
-    classString = [] if len(classNames) == 0 else reduce(lambda a, b: a + ', ' + b, classNames[1:], classNames[0])
+    classString = [] if len(classNames) == 0 else reduce(lambda a, b: a + ', ' + b.title(), classNames[1:], classNames[0].title())
     if not classString:
         return "There are no adjacent classrooms." 
     else:
@@ -153,7 +153,7 @@ def moveToRoom(player, classroomName, location):
             break
 
     if not valid:
-        return "You can't move to the {0} classroom right now.\nYou must first help all students in the following classrooms: ".format(classroomName.title()) + reduce(lambda acc, e: acc + ' ' + e, map(str.title, prerequisites))
+        return "You can't move to the {0} classroom right now.\nYou must first help all students in the following classrooms: ".format(classroomName.title()) + reduce(lambda acc, e: acc + ' ' + e, map(str.title, [room for room in prerequisites if room not in progress]))
 
     player.state = PlayerState.DEFAULT
     player.location = location

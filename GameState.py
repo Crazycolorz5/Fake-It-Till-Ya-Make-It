@@ -114,4 +114,4 @@ class GameState:
         self.SciencesHallway = makeSciencesHallway({ "math" : self.MathClassroom, "biology" : self.BiologyClassroom, "physics" : self.PhysicsClassroom })
         self.ArtsHallway = makeArtsHallway({ "us history" : self.USHistClassroom, "world history" : self.WorldHistClassroom, "literature" : self.LitClassroom })
 
-        self.prerequisites = { "math" : [], "biology" : ["math"], "physics" : ["math"], "us history" : ["biology", "physics"], "world history" : ["us history"], "literature" : ["us history"] }
+        self.prerequisites = { "math" : [], "biology" : ["math"], "physics" : ["math"], "us history" : ["math", "biology", "physics"], "world history" : ["math", "biology", "physics", "us history"], "literature" : ["math", "biology", "physics", "us history"] }
