@@ -74,7 +74,7 @@ function connectToServer(commands) {
 
     ws.onmessage = function(e) {
         if (term)
-            term.echo(e.data, {"raw" : true})
+            term.echo(e.data.replace("\n", "<br />"), {"raw" : true})
     }
 
     ws.onerror = function(e) {
