@@ -72,7 +72,8 @@ class Student:
     def answer(self, string): #Intend to overwrite?
         if self.answered:
             score +=1
-            print(score)
+            print("score: {0}".format(score))
+           # print("{0} out of {1} completed".format(i, total))
             return self.answeredTalk
         elif string.strip() == self.correctAnswer: #TODO: Better answer validation
             self.answered = True
