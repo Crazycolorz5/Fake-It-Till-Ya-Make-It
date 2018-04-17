@@ -131,6 +131,31 @@ def selectClassroom(player, locationState):
         return ("Which classroom would you like to move to: " + classString + "?")
 
 def moveToRoom(player, classroomName, location):
+    progress = []
+    if player.gameState.BiologyClassroom.allAnswered():
+        progress.append("biology")
+    if player.gameState.MathClassroom.allAnswered():
+        progress.append("math")
+    if player.gameState.PhysicsClassroom.allAnswered():
+        progress.append("physics")
+    if player.gameState.LitClassroom.allAnswered():
+        progress.append("literature")
+    if player.gameState.USHistClassroom.allAnswered():
+        progress.append("us history")
+    if player.gameState.WorldHistClassroom.allAnswered():
+        progress.append("world history")
+    
+    prerequisites = player.gameState.prerequisites[classifiedClassroom]
+    valid = True
+    for p in prerequisites:
+        if p not in progress:
+            valid = False
+            break
+
+    if not valid:
+        return "You can't move to the {0} classroom right now.".format(classroomName.title())
+
+    player.state = PlayerState.DEFAULT
     player.location = location
     return "You move to the %s classroom." % classroomName.title()
     
