@@ -28,6 +28,7 @@ Otherwise, just say what you want to do!'''
         self.location = self.gameState.SciencesHallway
         self.lastStudent = None
         self.state = PlayerState.DEFAULT
+        self.progress = []
         self.score = 0
 
     # act :: (Player, String) -> String
@@ -73,6 +74,35 @@ Otherwise, just say what you want to do!'''
                     return "You decide against moving to a classroom right now."
                 connections = self.location.classrooms
                 if classifiedClassroom in connections:
+                    progress = []
+                    if self.gameState.BiologyClassroom.allAnswered():
+                        progress.append("biology")
+
+                    if self.gameState.MathClassroom.allAnswered():
+                        progress.append("math")
+
+                    if self.gameState.PhysicsClassroom.allAnswered():
+                        progress.append("physics")
+
+                    if self.gameState.LitClassroom.allAnswered():
+                        progress.append("literature")
+
+                    if self.gameState.USHistClassroom.allAnswered():
+                        progress.append("us history")
+
+                    if self.gameState.WorldHistClassroom.allAnswered():
+                        progress.append("world history")
+                    
+                    prerequisites = self.gameState.prerequisites[classifiedClassroom]
+                    valid = True
+                    for p in prerequisites:
+                        if p not in progress:
+                            valid = False
+                            break
+
+                    if not valid:
+                        return "You can't move to the {0} classroom right now.".format(classifiedClassroom.title())
+
                     self.state = PlayerState.DEFAULT
                     return moveToRoom(self, classifiedClassroom.title(), connections[classifiedClassroom])
                 else:
@@ -114,3 +144,5 @@ class GameState:
         
         self.SciencesHallway = makeSciencesHallway({ "math" : self.MathClassroom, "biology" : self.BiologyClassroom, "physics" : self.PhysicsClassroom })
         self.ArtsHallway = makeArtsHallway({ "us history" : self.USHistClassroom, "world history" : self.WorldHistClassroom, "literature" : self.LitClassroom })
+
+        self.prerequisites = { "math" : [], "biology" : ["math"], "physics" : ["math"], "us history" : ["biology", "physics"], "world history" : ["us history"], "literature" : ["us history"] }
