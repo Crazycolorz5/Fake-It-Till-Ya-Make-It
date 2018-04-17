@@ -36,6 +36,13 @@ class LocationState:
     def answered(self, studentName):
         student = self.findStudent(studentName)
         return False if student == None else student.answered
+
+    def allAnswered(self):
+        for student in self.students:
+            if not student.answered:
+                return False
+        
+        return True
         
     def leaveHook(self, player):
         player.lastStudent = None
