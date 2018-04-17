@@ -153,7 +153,7 @@ def moveToRoom(player, classroomName, location):
             break
 
     if not valid:
-        return "You can't move to the {0} classroom right now.".format(classroomName.title())
+        return "You can't move to the {0} classroom right now.\nYou must first help all students in the following classrooms: ".format(classroomName.title()) + reduce(lambda acc, e: acc + ' ' + e, map(str.title, prerequisites))
 
     player.state = PlayerState.DEFAULT
     player.location = location
