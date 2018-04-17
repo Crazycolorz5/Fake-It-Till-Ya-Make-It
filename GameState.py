@@ -40,12 +40,6 @@ Otherwise, just say what you want to do!'''
             return "Current score: " + str(player.score)
         elif words[0] == "help":
             return Player.helpString
-        elif words[0] == "query":
-            if len(words) == 1:
-                return "No query specified!"
-            else:
-                argument = words[1].strip('"')
-                return Player.formatResponse(self.watson.ask(argument))
         elif words[0] == "answer":
             if len(words) == 1:
                 return "No answer specified!"
@@ -54,13 +48,24 @@ Otherwise, just say what you want to do!'''
             elif not self.lastStudent.talkedTo:
                 return "You haven't heard what this student has to say yet!"
             else:
-                return self.lastStudent.answer(self, words[1])        
+                return self.lastStudent.answer(self, words[1])  
+        if words[0] == "query":
+            if len(words) == 1:
+                return "No query specified!"
+            else:
+                player.score -= 1
+                argument = words[1].strip('"')
+                return Player.formatResponse(self.watson.ask(argument))
         else:
             if self.state == PlayerState.DEFAULT:
                 self.lastStudent = None #Will be set later if we are to talk to a student.
                 intent = self.nlc.classify(inputString)
                 retStr = self.location.actOnIntent(self, intent)
-                return "Invalid command." if retStr is None else retStr
+                if retStr is None:
+                    return "Invalid command."
+                else:
+                    self.score -= 1
+                    return retStr
             elif self.state == PlayerState.CHOOSE_ROOM:
                 classifiedClassroom = self.subjectNLC.classify(inputString)
                 if classifiedClassroom == "cancel":

@@ -91,10 +91,11 @@ class Student:
         if self.answered:
             return self.answeredTalk
         elif string.strip() == self.correctAnswer: #TODO: Better answer validation
-            player.score += 1
+            player.score += 20
             self.answered = True
             return self.answeredCorrect
         else:
+            player.score -= 3
             return self.answeredIncorrect
 
 
