@@ -28,6 +28,7 @@ Otherwise, just say what you want to do!'''
         self.location = self.gameState.SciencesHallway
         self.lastStudent = None
         self.state = PlayerState.DEFAULT
+        self.score = 0
 
     # act :: (Player, String) -> String
     def act(self, inputString):
@@ -35,6 +36,8 @@ Otherwise, just say what you want to do!'''
         words = inputString.split(' ', 1)
         if not words:
             return "No command specified!"
+        elif words[0] == "score":
+            return "Current score: " + str(player.score)
         elif words[0] == "help":
             return Player.helpString
         elif words[0] == "query":
@@ -51,7 +54,7 @@ Otherwise, just say what you want to do!'''
             elif not self.lastStudent.talkedTo:
                 return "You haven't heard what this student has to say yet!"
             else:
-                return self.lastStudent.answer(words[1])        
+                return self.lastStudent.answer(self, words[1])        
         else:
             if self.state == PlayerState.DEFAULT:
                 self.lastStudent = None #Will be set later if we are to talk to a student.

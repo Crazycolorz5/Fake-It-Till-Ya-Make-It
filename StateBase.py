@@ -86,10 +86,11 @@ class Student:
         else:
             self.talkedTo = True
             return self.firstTalk
-    def answer(self, string): #Intend to overwrite?
+    def answer(self, player, string): #Intend to overwrite?
         if self.answered:
             return self.answeredTalk
         elif string.strip() == self.correctAnswer: #TODO: Better answer validation
+            player.score += 1
             self.answered = True
             return self.answeredCorrect
         else:
