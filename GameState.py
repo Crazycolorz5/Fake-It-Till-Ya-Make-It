@@ -37,7 +37,7 @@ Otherwise, just say what you want to do!'''
         if not words:
             return "No command specified!"
         elif words[0] == "score":
-            return "Current score: " + str(player.score)
+            return "Current score: " + str(self.score)
         elif words[0] == "help":
             return Player.helpString
         elif words[0] == "answer":
@@ -53,7 +53,7 @@ Otherwise, just say what you want to do!'''
             if len(words) == 1:
                 return "No query specified!"
             else:
-                player.score -= 1
+                self.score -= 1
                 argument = words[1].strip('"')
                 return Player.formatResponse(self.watson.ask(argument))
         else:
