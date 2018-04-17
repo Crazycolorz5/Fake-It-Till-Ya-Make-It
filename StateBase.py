@@ -27,11 +27,12 @@ class LocationState:
         self.students = list()
 
     # actOnIntent :: (LocationState, Player, String) -> Maybe String
-    def actOnIntent(self, Player, intent):
+    def actOnIntent(self, player, intent):
         if intent in self.commandDictionary:
-            return self.commandDictionary[intent](Player, self)
+            return self.commandDictionary[intent](player, self)
         for student in self.students:
             if intent.casefold() == student.name.casefold():
+                player.lastStudent = student
                 return student.talkTo()
         else:
             return None
