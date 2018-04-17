@@ -27,23 +27,26 @@ class LocationState:
         self.students = list()
 
     # actOnIntent :: (LocationState, Player, String) -> Maybe String
-    def actOnIntent(self, Player, intent):
+    def actOnIntent(self, player, intent):
         if intent in self.commandDictionary:
-            return self.commandDictionary[intent](Player, self)
+            return self.commandDictionary[intent](player, self)
+        for student in self.students:
+            if intent.casefold() == student.name.casefold():
+                player.lastStudent = student
+                return student.talkTo()
         else:
             return None
         
     def answered(self, studentName):
         student = self.findStudent(studentName)
         return False if student == None else student.answered
-
+    
     def allAnswered(self):
         for student in self.students:
             if not student.answered:
                 return False
-        
         return True
-        
+    
     def leaveHook(self, player):
         player.lastStudent = None
         pass
@@ -54,6 +57,17 @@ class LocationState:
             if student.name.casefold() == stuName.casefold(): 
                 return student
         return None
+        
+class HallwayState(LocationState):
+    def __init__(self, classrooms):
+        self.classrooms = classrooms
+        LocationState.__init__(self)
+    
+    def actOnIntent(self, Player, intent):
+        for classroom in self.classrooms:
+            if classroom.casefold() == intent.casefold():
+                return moveToRoom(Player, classroom, self.classrooms[classroom])
+        return LocationState.actOnIntent(self, Player, intent)
 
 class Student:
     def __init__(self, name, firstTalk, subsequentTalk, answeredTalk, answer, answeredCorrect, answeredIncorrect):
@@ -74,13 +88,15 @@ class Student:
         else:
             self.talkedTo = True
             return self.firstTalk
-    def answer(self, string): #Intend to overwrite?
+    def answer(self, player, string): #Intend to overwrite?
         if self.answered:
             return self.answeredTalk
         elif string.strip() == self.correctAnswer: #TODO: Better answer validation
+            player.score += 20
             self.answered = True
             return self.answeredCorrect
         else:
+            player.score -= 3
             return self.answeredIncorrect
 
 
@@ -113,3 +129,8 @@ def selectClassroom(player, locationState):
     else:
         player.state = PlayerState.CHOOSE_ROOM
         return ("Which classroom would you like to move to: " + classString + "?")
+
+def moveToRoom(player, classroomName, location):
+    player.location = location
+    return "You move to the %s classroom." % classroomName.title()
+    
