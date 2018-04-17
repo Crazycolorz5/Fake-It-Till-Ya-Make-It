@@ -145,7 +145,7 @@ def moveToRoom(player, classroomName, location):
     if player.gameState.WorldHistClassroom.allAnswered():
         progress.append("world history")
     
-    prerequisites = player.gameState.prerequisites[classifiedClassroom]
+    prerequisites = player.gameState.prerequisites[classroomName]
     valid = True
     for p in prerequisites:
         if p not in progress:
