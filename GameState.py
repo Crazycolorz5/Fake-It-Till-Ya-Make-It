@@ -15,6 +15,7 @@ class Player:
 quit: quits the demo
 answer _: submits an answer to the current question
 query _: queries Watson for given keyword/keyphrase
+score: gives your score thus far
 You can look around to see the environment around you.
 Otherwise, just say what you want to do!'''
     
