@@ -4,7 +4,7 @@
 
 <title>Fake It Till Ya Make It</title>
 
-<link rel="stylesheet" type="text/css" href="https://rawgit.com/jcubic/jquery.terminal/master/css/jquery.terminal.css">
+<link rel="stylesheet" type="text/css" href="jquery.terminal.css">
 
 <style>
 * {
@@ -56,8 +56,8 @@ body {
 </style>
 
 
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://rawgit.com/jcubic/jquery.terminal/master/js/jquery.terminal.js"></script>
+<script src="jquery-3.1.1.min.js"></script>
+<script src="jquery.terminal.js"></script>
 
 <script>
 var ws = null, term = null
@@ -76,6 +76,8 @@ function connectToServer(commands) {
         if (term)
         {
             var content = e.data
+            content = content.replace(/\r\n/g, "<br />")
+            content = content.replace(/\r/g, "<br />")
             content = content.replace(/\n/g, "<br />")
             term.echo(content, {"raw" : true})
         }
