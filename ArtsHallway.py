@@ -10,8 +10,7 @@ artHallwayCommands = {
     }
 
 def makeArtsHallway(classrooms):
-    ArtsHallway = LocationState()
-    ArtsHallway.classrooms = classrooms
+    ArtsHallway = HallwayState(classrooms)
     ArtsHallway.commandDictionary = artHallwayCommands
     
     return ArtsHallway
