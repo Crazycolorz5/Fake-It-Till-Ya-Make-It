@@ -132,7 +132,7 @@ body.terminal {
     height: auto;
 }
 .terminal .terminal-output > div:not(.raw) div {
-    white-space: nowrap;
+    /*white-space: nowrap;*/
 }
 .cmd .prompt > span {
     float: left;

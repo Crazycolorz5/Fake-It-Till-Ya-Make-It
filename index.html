@@ -7,14 +7,11 @@
 <link rel="stylesheet" type="text/css" href="jquery.terminal.css">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 body {
     background: #333;
+	margin: 0;
+	padding: 0;
 }
 
 .command, .cmd {
@@ -41,16 +38,8 @@ body {
     background: #000;
 }
 
-#input_user {
-    margin-top: 10px;
-    width: 100%;
-    font-size: 20px;
-    border-radius: 4px;
-    border: 1px solid #999;
-    outline: none;
-    padding: 2px 5px;
-    box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.5);
-    background: #fff;
+a {
+	text-decoration: none;
 }
 
 </style>
@@ -76,8 +65,6 @@ function connectToServer(commands) {
         if (term)
         {
             var content = e.data
-            content = content.replace(/\r\n/g, "<br />")
-            content = content.replace(/\r/g, "<br />")
             content = content.replace(/\n/g, "<br />")
             term.echo(content, {"raw" : true})
         }
@@ -99,7 +86,12 @@ function connectToServer(commands) {
 $(document).ready(function() {
     term = $("#div_output").terminal(function(input) {
         if (ws)
-            ws.send(input)
+		{
+			if (input.length > 80)
+				term.echo("Command too long! Please try something shorter.")
+			else
+				ws.send(input)
+		}
         else
         {
             commands = input.trim().split(/ +/, 2)
